@@ -1,0 +1,68 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#2196f3">
+    <title>Coined Coin</title>
+    <link rel="stylesheet" href="/css/main.css">
+
+</head>
+
+<body>
+
+</body>
+
+<template name="AppLayout">
+    <div id="app">
+        <div class="statusbar"></div>
+
+        <div class="panel panel-left panel-reveal">
+            ... panel content goes here ...
+        </div>
+
+        <div class="view view-main">
+            <div data-name="main" class="page">
+                {{>navbar}}
+                {{>toolbar}}
+                <div class="page-content">
+                    {{>yield}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="navbar">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="title">Coined Coin</div>
+        </div>
+    </div>
+</template>
+
+<template name="toolbar">
+    <div class="toolbar tabbar-labels">
+
+        <div class="toolbar-inner">
+            {{#each list}}
+                <a href="{{pathFor path}}" class="link external tab-link {{#if isActive}}tab-link-active{{/if}}">
+                    <i class="icon f7-icons ios-only">{{icon1}}</i>
+                    <i class="icon material-icons md-only">{{icon2}}</i>
+                    <span class="tabbar-label">{{name}}</span>
+                </a>
+            {{/each}}
+        </div>
+    </div>
+</template>
+
+<template name="Error404">
+    Error 404
+</template>
+
+<template name="Loading">
+    <div class="display-flex justify-content-center align-content-center align-items-center">
+        <div class="preloader" style="width: 44px; height: 44px"></div>
+    </div>
+</template>
+
