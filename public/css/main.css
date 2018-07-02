@@ -7,3 +7,50 @@
 .demo-card-header-pic .card-content-padding .date{
     color: #8e8e93;
 }
+
+.demo-swiper .swiper-slide {
+    font-size: 25px;
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    color: #000;
+}
+.demo-swiper .swiper-slide {
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.demo-swiper {
+    margin: 0px 0 35px;
+    font-size: 18px;
+    height: 120px;
+}
+.demo-swiper.demo-swiper-auto .swiper-slide {
+    width: 85%;
+}
+.demo-swiper.demo-swiper-auto .swiper-slide:nth-child(2n) {
+    width: 70%;
+}
+.demo-swiper.demo-swiper-auto .swiper-slide:nth-child(3n) {
+    width: 30%;
+}
+
+.demo-swiper.font-small .swiper-slide {
+    font-size: 15px;
+}
+
+.string1 {
+    background: rgba(240, 240, 240, 0.9);
+    padding: 0.3em;
+    margin-bottom: 0.2em;
+    border-radius: 7px;
+}
+
+.string2 {
+    background: rgba(240, 240, 240, 0.5);
+    padding: 0.3em;
+    margin-bottom: 0.1em;
+    border-radius: 7px;
+}

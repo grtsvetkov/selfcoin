@@ -17,15 +17,12 @@
     <div id="app">
         <div class="statusbar"></div>
 
-        <div class="panel panel-left panel-reveal">
-            ... panel content goes here ...
-        </div>
-
         <div class="view view-main">
             <div data-name="main" class="page">
-                {{>navbar}}
+
                 {{>toolbar}}
                 <div class="page-content">
+                    {{>navbar}}
                     {{>yield}}
                 </div>
             </div>
@@ -36,7 +33,14 @@
 <template name="navbar">
     <div class="navbar">
         <div class="navbar-inner">
+            <div class="left">
+                <a class="link external icon-only back" href="#">
+                    <i class="icon icon-back"></i>
+                </a>
+            </div>
             <div class="title">Coined Coin</div>
+            <div class="right">
+            </div>
         </div>
     </div>
 </template>
