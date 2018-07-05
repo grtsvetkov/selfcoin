@@ -17,7 +17,7 @@
     <div id="app">
         <div class="statusbar"></div>
 
-        <div class="view view-main">
+        <div class="view view-main ios-edges">
             <div data-name="main" class="page">
 
                 {{>toolbar}}
@@ -34,11 +34,13 @@
     <div class="navbar">
         <div class="navbar-inner">
             <div class="left">
-                <a class="link external icon-only back" href="#">
-                    <i class="icon icon-back"></i>
-                </a>
+                {{#with backButton}}
+                    <a id="backButton" href="{{href}}" onclick="{{onclick}}" class="link icon-only">
+                        <i class="icon icon-back"></i>
+                    </a>
+                {{/with}}
             </div>
-            <div class="title">Coined Coin</div>
+            <div class="title">{{title}}</div>
             <div class="right">
             </div>
         </div>
@@ -50,9 +52,8 @@
 
         <div class="toolbar-inner">
             {{#each list}}
-                <a href="{{pathFor path}}" class="link external tab-link {{#if isActive}}tab-link-active{{/if}}">
-                    <i class="icon f7-icons ios-only">{{icon1}}</i>
-                    <i class="icon material-icons md-only">{{icon2}}</i>
+                <a href="{{pathFor path}}" class="link tab-link {{#if isActive}}tab-link-active{{/if}}">
+                    <i class="icon f7-icons">{{icon}}</i>
                     <span class="tabbar-label">{{name}}</span>
                 </a>
             {{/each}}
@@ -70,3 +71,6 @@
     </div>
 </template>
 
+<template name="inputMask">
+    <input id="{{id}}" placeholder="{{placeholder}}" name="{{name}}" class="{{class}}" value="{{value}}" data-mask="{{mask}}" type="{{type}}"/>
+</template>

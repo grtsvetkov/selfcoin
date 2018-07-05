@@ -1,39 +1,126 @@
-import  Framework7 from 'framework7';
-
+import Framework7 from "framework7";
 import "framework7/css/framework7.min.css";
-import 'framework7-icons';
+import "framework7-icons";
+import "jquery-mask-plugin";
 
-F7 = Framework7, app = null, mainView = null;
+app = null, mainView = null;
 
-Template.AppLayout.rendered = function() {
+let flag_welcome = localStorage.getItem('_firstTimeOpenedApp') || null;
+
+if (flag_welcome != "true") {
+    localStorage.setItem('_firstTimeOpenedApp', true);
+    Router.go('welcome');
+}
+
+Tracker.autorun(function () {
+    if (!Meteor.userId()) {
+
+        let token = localStorage.getItem('_storedLoginToken');
+
+        if (token) {
+            Meteor.loginWithToken(token, function (err) {
+                if (!err) {
+                    if (mainView && Router.current().route.getName() == 'signin') {
+                        Router.go('dashboard');
+                    }
+                } else {
+                    console.log(err);
+                    localStorage.removeItem('_storedLoginToken');
+                    Router.go('signin');
+                }
+            });
+        } else {
+            console.log('Я должен перейти на страницу логина');
+            Router.go(( localStorage.getItem('_firstTimeOpenedApp') || null ) == "true" ? 'signin' : 'welcome');
+        }
+    }
+});
+
+Template.AppLayout.rendered = function () {
     app = new Framework7({
         root: '#app',
         name: 'Coined Coin',
-        id: 'com.coinedcoin.test'
+        id: 'com.coinedcoin.test',
+        clicks: {
+            externalLinks: '*'
+        }
     });
 
     mainView = app.views.create('.view-main');
 };
 
+Template.navbar.helpers({
+    'title': function () {
+        return currentTitle.get();
+    },
+
+    'backButton': function () {
+        return currentBackButton.get();
+    }
+});
+
 Template.toolbar.helpers({
-    'list': function() {
-        
+    'list': function () {
+
         let crn = currentRouterName.get();
-        
+
         return [
-            //{name: 'Welcome', path: 'welcome', icon1: 'today_fill', icon2: 'today', isActive: crn == 'welcome'},
-            {name: 'SignIn', path: 'signin', icon1: 'today_fill', icon2: 'today', isActive: crn == 'signin'},
-
-            {name: 'Главная', path: 'index', icon1: 'email_fill', icon2: 'email', isActive: crn == 'index'},
-            //{name: 'Биржа', path: 'market', icon1: 'graph_square_fill', icon2: 'graph_square', isActive: crn == 'market'},
-            {name: 'Профиль', path: 'profile', icon1: 'person_fill', icon2: 'person', isActive: crn == 'profile'},
-
-            {name: 'Монета', path: 'coin', icon1: 'money_dollar_fill', icon2: 'money_dollar', isActive: crn == 'coin'},
+            {name: 'Главная', path: 'index', icon: 'home_fill', isActive: crn == 'index'},
+            {name: 'Биржа', path: 'market', icon: 'graph_round_fill', isActive: crn == 'market'},
+            {name: 'Мои монеты', path: 'coin', icon: 'money_dollar_fill', isActive: crn == 'coin'},
+            {name: 'Контакты', path: 'contact', icon: 'persons_fill', isActive: crn == 'contact'},
+            {name: 'Профиль', path: 'profile', icon: 'person_fill', isActive: crn == 'profile'},
         ]
     }
 });
 
+Template.inputMask.rendered = function () {
+    $(this.firstNode).mask(this.data.mask, {reverse: this.data.reverse ? this.data.reverse : false});
+};
+
+// =============== GLOBAL FUNCTIONS
+
+appAlert = function (text) {
+    app.notification.create({
+        subtitle: text,
+        closeTimeout: 4000,
+        closeOnClick: true
+    }).open();
+};
+
+getDataFromStruct = function (struct) {
+
+    let data = {};
+
+    for (let key in struct) {
+
+        let el = struct[key];
+
+        if ((_.isUndefined(el.notRequired) || !el.notRequired) && !el.val.length) {
+            appAlert('Заполните поле "' + el.field + '"');
+            return false;
+        }
+
+        data[key] = el.val;
+    }
+
+    return data;
+};
+
+// =============== GLOBAL FUNCTIONS
+
+// =============== GLOBAL HELPERS
 
 Template.registerHelper('eq', function (op1, op2) {
     return op1 == op2;
 });
+
+Template.registerHelper('moneyFormat', function (num) {
+    return String(Number(num ? num : 0) + '|').replace(/\d(?=(\d{3})+\|)/g, '$& ').replace('|','');
+});
+
+Template.registerHelper('consoleLog', function (obj) {
+    console.log(obj);
+});
+
+// =============== GLOBAL HELPERS

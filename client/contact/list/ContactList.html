@@ -1,0 +1,20 @@
+<template name="ContactList">
+    <div class="list">
+        {{#each contact_list}}
+            <div class="list-group">
+                <ul>
+                    <li class="list-group-title">{{litera}}</li>
+                    {{#each list}}
+                        <li data-id="{{_id}}">
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">{{name}}</div>
+                                </div>
+                            </div>
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
+        {{/each}}
+    </div>
+</template>
