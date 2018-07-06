@@ -1,4 +1,4 @@
-Template.CoinList.helpers({
+Template.coinList.helpers({
     'list': function () {
         return Coin.find({user_id: Meteor.userId()}).fetch();
     },
@@ -8,7 +8,7 @@ Template.CoinList.helpers({
     }
 });
 
-Template.CoinList.events({
+Template.coinList.events({
     'click .goToMoney': function (e) {
         let _id = e.currentTarget.dataset.id;
 

@@ -1,4 +1,4 @@
-Template.CoinItem.helpers({
+Template.coinItem.helpers({
     'item': function() {
         let _id = Router.current().params._id;
         

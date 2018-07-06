@@ -10,7 +10,7 @@ let tmpList = [
     'Candy'
 ];
 
-Template.ContactList.helpers({
+Template.contactList.helpers({
     'contact_list': function() {
         
         let list = {};
