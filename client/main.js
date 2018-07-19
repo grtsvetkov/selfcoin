@@ -8,7 +8,7 @@ app = null, mainView = null;
 let flag_welcome = localStorage.getItem('_firstTimeOpenedApp') || null;
 
 if (flag_welcome != "true") {
-    localStorage.setItem('_firstTimeOpenedApp', true);
+    //localStorage.setItem('_firstTimeOpenedApp', true);
     Router.go('welcome');
 }
 

@@ -44,6 +44,17 @@ App.accessRule('http://*', { type: 'network' } );
 App.accessRule('https://*/*', { type: 'network' } );
 App.accessRule('*', { type: 'network' } );
 
+App.accessRule('https://hotsfun.ru/*', { type: 'navigation' } );
+App.accessRule('*://hotsfun.ru/*', { type: 'navigation' } );
+
+App.accessRule('https://hotsfun.ru/*', { type: 'network' } );
+App.accessRule('*://hotsfun.ru/*', { type: 'network' } );
+
+App.accessRule('https://hotsfun.ru', {
+    'minimum-tls-version': 'TLSv1.0',
+    'requires-forward-secrecy': false
+});
+
 /* localhos:3000 */
 App.accessRule('https://localhos:3000/*', { type: 'navigation' } );
 App.accessRule('*://localhos:3000/*', { type: 'navigation' } );
