@@ -1,57 +1,47 @@
 <template name="index">
     {{>toolbar}}
     {{>navbar}}
-    <div class="page-content">
+    <div class="page-content index">
+        <div>
         <div class="block-title">Популярные монеты</div>
-        <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="3"
-             class="swiper-container swiper-init demo-swiper">
+        <div class="popular swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">Coin 1</div>
-                <div class="swiper-slide">Coin 2</div>
-                <div class="swiper-slide">Coin 3</div>
-                <div class="swiper-slide">Coin 4</div>
-                <div class="swiper-slide">Coin 5</div>
-                <div class="swiper-slide">Coin 6</div>
-                <div class="swiper-slide">Coin 7</div>
-                <div class="swiper-slide">Coin 8</div>
-                <div class="swiper-slide">Coin 9</div>
-                <div class="swiper-slide">Coin 10</div>
+                {{#each block1}}
+                    <div class="swiper-slide">
+                        <img src="{{img}}"/>
+                        <span>{{name}}</span>
+                    </div>
+                {{/each}}
             </div>
         </div>
+        </div>
 
+        <div>
         <div class="block-title">Рекомендуемые монеты</div>
-        <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="3"
-             class="swiper-container swiper-init demo-swiper">
+        <div class="popular swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">Coin 1</div>
-                <div class="swiper-slide">Coin 2</div>
-                <div class="swiper-slide">Coin 3</div>
-                <div class="swiper-slide">Coin 4</div>
-                <div class="swiper-slide">Coin 5</div>
-                <div class="swiper-slide">Coin 6</div>
-                <div class="swiper-slide">Coin 7</div>
-                <div class="swiper-slide">Coin 8</div>
-                <div class="swiper-slide">Coin 9</div>
-                <div class="swiper-slide">Coin 10</div>
+                {{#each block2}}
+                    <div class="swiper-slide">
+                        <img src="{{img}}"/>
+                        <span>{{name}}</span>
+                    </div>
+                {{/each}}
             </div>
         </div>
+        </div>
 
-
+        <div>
         <div class="block-title">Новые монеты</div>
-        <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="3"
-             class="swiper-container swiper-init demo-swiper">
+        <div class="popular swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">Coin 1</div>
-                <div class="swiper-slide">Coin 2</div>
-                <div class="swiper-slide">Coin 3</div>
-                <div class="swiper-slide">Coin 4</div>
-                <div class="swiper-slide">Coin 5</div>
-                <div class="swiper-slide">Coin 6</div>
-                <div class="swiper-slide">Coin 7</div>
-                <div class="swiper-slide">Coin 8</div>
-                <div class="swiper-slide">Coin 9</div>
-                <div class="swiper-slide">Coin 10</div>
+                {{#each block3}}
+                    <div class="swiper-slide">
+                        <img src="{{img}}"/>
+                        <span>{{name}}</span>
+                    </div>
+                {{/each}}
             </div>
+        </div>
         </div>
     </div>
 

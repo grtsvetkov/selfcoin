@@ -1,7 +1,7 @@
 currentRouterName = new ReactiveVar();
 
 navbarF7 = {
-    title: new ReactiveVar('Стильные кухни'),
+    title: new ReactiveVar('Coined Coin'),
     left: new ReactiveVar(false),
     right: new ReactiveVar(false)
 };
@@ -45,7 +45,7 @@ Router.configure({
 
             navbarF7.left.set(false);
             navbarF7.right.set(false);
-            navbarF7.title.set(this.route.options.title ? this.route.options.title : 'Стильные кухни');
+            navbarF7.title.set(this.route.options.title ? this.route.options.title : 'Coined Coin');
             currentRouterName.set(this.route.options.menu ? this.route.options.menu : this.route.getName());
 
             F7PageInit(this.route.getName(), 0);

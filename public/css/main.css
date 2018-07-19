@@ -240,3 +240,29 @@
         stroke-dashoffset: 0;
     }
 }
+
+
+.index {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+/* POPULAR */
+
+.popular {
+    margin-bottom: 35px;
+}
+
+.popular .swiper-slide {
+    text-align: center;
+}
+
+.popular .swiper-slide img{
+
+}
+
+.popular .swiper-slide span{
+    font-size: 110%;
+}
