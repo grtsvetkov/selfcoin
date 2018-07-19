@@ -5,7 +5,11 @@ Template.coinItem.helpers({
         let item = Coin.findOne({_id: _id}); 
         
         item.user = Meteor.user();
-        
+
+
+
         return item;
     }
 });
+
+

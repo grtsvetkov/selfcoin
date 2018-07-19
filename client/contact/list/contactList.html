@@ -1,20 +1,29 @@
 <template name="contactList">
-    <div class="list">
-        {{#each contact_list}}
-            <div class="list-group">
-                <ul>
-                    <li class="list-group-title">{{litera}}</li>
-                    {{#each list}}
-                        <li data-id="{{_id}}">
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title">{{name}}</div>
+    {{>toolbar}}
+    {{>navbar}}
+    <div class="page-content">
+
+
+
+        <a href="{{pathFor 'contactCreate'}}" class="margin button button-big margin-vertical">Добавить контакт</a>
+
+        <div class="list">
+            {{#each contact_list}}
+                <div class="list-group">
+                    <ul>
+                        <li class="list-group-title">{{litera}}</li>
+                        {{#each list}}
+                            <li data-id="{{_id}}">
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title">{{name}}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    {{/each}}
-                </ul>
-            </div>
-        {{/each}}
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            {{/each}}
+        </div>
     </div>
 </template>

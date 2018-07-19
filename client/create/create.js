@@ -2,7 +2,7 @@ let condition = new ReactiveVar(),
     spend = new ReactiveVar();
 
 Template.create.rendered = function() {
-    currentBackButton.set({href:'/mycoin'});
+    //currentBackButton.set({href:'/mycoin'});
     condition.set([1]);
     spend.set([1]);
 };
@@ -91,7 +91,7 @@ Template.create.events({
             if (err) {
                 appAlert(err.reason);
             } else {
-                console.log(data);
+                Router.go('coinItem', {_id: data});
             }
         });
     }

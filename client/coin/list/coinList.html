@@ -1,26 +1,31 @@
 <template name="coinList">
-    <a href="{{pathFor 'create'}}" class="margin button button-big margin-vertical">Создать новую монету</a>
+    {{>toolbar}}
+    {{>navbar}}
+    <div class="page-content">
 
-    <div class="block-title">
-        Мои монеты
-    </div>
+        <a href="{{pathFor 'create'}}" class="margin button button-big margin-vertical">Создать новую монету</a>
 
-    <div class="data-table">
-        <table>
-            <thead>
-            <tr>
-                <th class="label-cell">Название</th>
-                <th class="numeric-cell">выпущено</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#each list}}
-                <tr class="{{backgroundByIndex @index}} goToMoney" data-id="{{_id}}">
-                    <td class="label-cell">{{name}}</td>
-                    <td class="numeric-cell">{{moneyFormat count}}</td>
+        <div class="block-title">
+            Мои монеты
+        </div>
+
+        <div class="data-table">
+            <table>
+                <thead>
+                <tr>
+                    <th class="label-cell">Название</th>
+                    <th class="numeric-cell">выпущено</th>
                 </tr>
-            {{/each}}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {{#each list}}
+                    <tr class="{{backgroundByIndex @index}} goToMoney" data-id="{{_id}}">
+                        <td class="label-cell">{{name}}</td>
+                        <td class="numeric-cell">{{moneyFormat count}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>

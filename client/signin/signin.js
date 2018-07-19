@@ -3,7 +3,7 @@ let signinAction = new ReactiveVar('phone'),
     init = function () {
         signinAction.set('phone');
         phone = false;
-        currentBackButton.set(false);
+        //currentBackButton.set(false);
         $('#phone').val('');
         Meteor.setTimeout(function () {
             $('#phone').focus();
@@ -12,17 +12,17 @@ let signinAction = new ReactiveVar('phone'),
     };
 
 
-Template.signin.rendered = function () {
+Template.signinBlock.renderedF7 = function () {
     init();
 };
 
-Template.signin.helpers({
+Template.signinBlock.helpers({
     'action': function () {
         return signinAction.get();
     }
 });
 
-Template.signin.events({
+Template.signinBlock.events({
 
     'click #fackeBackButton': function () {
         init();
@@ -46,7 +46,7 @@ Template.signin.events({
                 appAlert(err.reason);
             } else {
                 signinAction.set('code');
-                currentBackButton.set({onclick: '$(\'#fackeBackButton\').click()'});
+                //currentBackButton.set({onclick: '$(\'#fackeBackButton\').click()'});
                 Meteor.setTimeout(function () {
                     $('#code').focus();
                 }, 555);

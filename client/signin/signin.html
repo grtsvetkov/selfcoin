@@ -1,4 +1,11 @@
 <template name="signin">
+    {{>navbar}}
+    <div class="page-content">
+        {{>signinBlock}}
+    </div>
+</template>
+
+<template name="signinBlock">
     <div id="signin-block">
         <button class="hidden" id="fackeBackButton"></button>
         {{#if eq action 'phone'}}

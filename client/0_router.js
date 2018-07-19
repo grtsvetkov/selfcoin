@@ -1,31 +1,39 @@
 currentRouterName = new ReactiveVar();
-currentTitle = new ReactiveVar('Coined Coin');
-currentBackButton = new ReactiveVar(false);
 
-F7PageInit = function (attempt) {
-    if (typeof mainView != 'undefined' && mainView != null) {
+navbarF7 = {
+    title: new ReactiveVar('Стильные кухни'),
+    left: new ReactiveVar(false),
+    right: new ReactiveVar(false)
+};
 
-        let tmpF = function () {
-            },
-            rName = Router.current().route.getName();
+F7PageInit = function (rName, attempt) {
 
+    if(attempt == 0) {
 
-        if (Template && Template[rName]) {
-            if (typeof Template[rName].rendered == 'function') {
-                tmpF = Template[rName].rendered;
-            }
+        if (Template && Template[rName] && typeof Template[rName].renderedF7 == 'function') {
+            this.tmpF = Template[rName].renderedF7;
+        } else {
+            this.tmpF = () => {
+            };
         }
+    }
+
+    if (app != null && typeof mainView != 'undefined' && mainView != null) {
+
+        let self = this;
 
         Template[rName].rendered = function () {
             mainView.emit('pageInit', {$el: $('.page-current')});
-            tmpF();
+            self.tmpF();
         };
+
+        Template[rName].rendered.call(Template[rName]);
+
     } else if (attempt <= 10) {
         Meteor.setTimeout(function () {
-            F7PageInit(attempt + 1);
+            F7PageInit(rName, attempt + 1);
         }, 333);
     }
-
 };
 
 Router.configure({
@@ -35,16 +43,16 @@ Router.configure({
     controller: RouteController.extend({
         after: function () {
 
-            currentBackButton.set(false);
+            navbarF7.left.set(false);
+            navbarF7.right.set(false);
+            navbarF7.title.set(this.route.options.title ? this.route.options.title : 'Стильные кухни');
+            currentRouterName.set(this.route.options.menu ? this.route.options.menu : this.route.getName());
 
-            currentTitle.set(Router.current().route.options.title ? Router.current().route.options.title : 'Coined Coin');
-
-            currentRouterName.set(Router.current().route.options.menu ? Router.current().route.options.menu : Router.current().route.getName());
-
-            F7PageInit(0);
+            F7PageInit(this.route.getName(), 0);
         }
     })
 });
+
 
 Router.route('/', {
     title: 'Рабочий стол',
@@ -59,6 +67,18 @@ Router.route('/market', {
 Router.route('/profile', {
     title: 'Профиль',
     name: 'profile'
+});
+
+Router.route('/contact/create', {
+    title: 'Контакты',
+    name: 'contactCreate',
+    menu: 'contact',
+
+    waitOn: function () {
+        return [
+            Meteor.subscribe('contact', 'only_my')
+        ];
+    }
 });
 
 Router.route('/contact/:_id', {

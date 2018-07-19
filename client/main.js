@@ -50,14 +50,13 @@ Template.AppLayout.rendered = function () {
 };
 
 Template.navbar.helpers({
-    'title': function () {
-        return currentTitle.get();
-    },
-
-    'backButton': function () {
-        return currentBackButton.get();
-    }
-});
+    'navbarF5': function () {
+        return {
+            title: navbarF7.title.get(),
+            left: navbarF7.left.get(),
+            right: navbarF7.right.get()
+        };
+    }});
 
 Template.toolbar.helpers({
     'list': function () {

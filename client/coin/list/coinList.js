@@ -12,6 +12,6 @@ Template.coinList.events({
     'click .goToMoney': function (e) {
         let _id = e.currentTarget.dataset.id;
 
-        Router.go('coin', {_id: _id});
+        Router.go('coinItem', {_id: _id});
     }
 });

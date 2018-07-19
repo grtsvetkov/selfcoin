@@ -1,13 +1,20 @@
 ContactModel = {
-    add: function (username, name, desciption, avatar) {
+    add: function (username, name, description, avatar) {
+        ContactModel._add(Meteor.userId(), username, name, description, avatar);
+    },
+
+    _add: function (user_id, username, name, description, avatar) {
 
         username = UserModel._normalizeUsername(username);
 
-        let owner = Meteor.users.findOne({_id: Meteor.userId()}),
+        let owner = Meteor.users.findOne({_id: user_id}),
             contact = UserModel._getUserByUsername(username);
 
         if (!contact) {
             contact = UserModel.add(username);
+
+            //@TODO надо что-то придумать
+            ContactModel._add(contact._id, owner.username, owner.username, '', '');
 
             let twilioClient = require('twilio')(twilioConfig.sid, twilioConfig.token);
 
@@ -25,13 +32,15 @@ ContactModel = {
         }
 
         Contact.insert({
-            owner_id: Meteor.userId(),
+            owner_id: user_id,
             contact_id: contact._id,
             name: name,
             description: description,
             avatar: avatar
         });
     },
+
+
 
     edit: function(contact_id, data) {
         Contact.update({owner_id: Meteor.userId(), contact_id: contact_id}, { $set: data });

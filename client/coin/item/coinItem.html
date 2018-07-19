@@ -1,188 +1,193 @@
 <template name="coinItem">
-    {{#with item}}
+    {{>toolbar}}
+    {{>navbar}}
+    <div class="page-content">
+
+        {{#with item}}
+            <div class="block-title">
+                <img src="https://picsum.photos/70/70/?random" align="left" style="margin-right: 1em">
+                <h3 style="vertical-align: middle">{{name}}</h3>
+            </div>
+
+            <div class="block">
+                <div class="list">
+                    <ul>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">
+                                        <div class="item-header">Создатель</div>
+                                        {{item.user.username}}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">
+                                        <div class="item-header">Видимость</div>
+                                        {{#if public}}
+                                            Публичная
+                                        {{else}}
+                                            Не публичная
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">
+                                        <div class="item-header">Монет в обращении</div>
+                                        {{moneyFormat count}}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-item">
+                            <div class="item-content item-link">
+                                <div class="item-inner">
+                                    <div class="item-title">Краткое описание</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item-content">
+                                <div class="block">
+                                    <p>
+                                        {{description}}
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-item">
+                            <div class="item-content item-link">
+                                <div class="item-inner">
+                                    <div class="item-title">Как можно заработать</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item-content">
+                                <div class="block">
+                                    <ul>
+                                        {{#each condition}}
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-title">{{name}}</div>
+                                                        <div class="item-after">{{moneyFormat price}}</div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="accordion-item">
+                            <div class="item-content item-link">
+                                <div class="item-inner">
+                                    <div class="item-title">На что можно потратить</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item-content">
+                                <div class="block">
+                                    <ul>
+                                        {{#each spend}}
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-media"><img
+                                                                src="https://picsum.photos/30/30/?random"
+                                                                style="margin-right: 10px"></div>
+                                                        <div class="item-title">{{name}}</div>
+                                                        <div class="item-after">{{moneyFormat price}}</div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {{/with}}
+
+
         <div class="block-title">
-            <img src="https://picsum.photos/70/70/?random" align="left" style="margin-right: 1em">
-            <h3 style="vertical-align: middle">{{name}}</h3>
+            ТОП владельцев монет
         </div>
 
         <div class="block">
-            <div class="list">
-                <ul>
-                    <li>
+            <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="2"
+                 class="swiper-container swiper-init demo-swiper font-small">
+                <div class="swiper-pagination"></div>
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
                         <div class="item-content">
                             <div class="item-inner">
-                                <div class="item-title">
-                                    <div class="item-header">Создатель</div>
-                                    {{item.user.username}}
+                                <div class="item-media">
+                                    <i class="icon f7-icons ios-only">person_fill</i>
+                                    <i class="icon material-icons md-only">person</i>
                                 </div>
+                                <div class="item-title">Виталий</div>
+                                <div class="item-after">9 600</div>
                             </div>
                         </div>
-                    </li>
-                    <li>
+                    </div>
+                    <div class="swiper-slide">
                         <div class="item-content">
                             <div class="item-inner">
-                                <div class="item-title">
-                                    <div class="item-header">Видимость</div>
-                                    {{#if public}}
-                                        Публичная
-                                    {{else}}
-                                        Не публичная
-                                    {{/if}}
+                                <div class="item-media">
+                                    <i class="icon f7-icons ios-only">person_fill</i>
+                                    <i class="icon material-icons md-only">person</i>
                                 </div>
+                                <div class="item-title">Семён</div>
+                                <div class="item-after">7 450</div>
                             </div>
                         </div>
-                    </li>
-                    <li>
+                    </div>
+                    <div class="swiper-slide">
                         <div class="item-content">
                             <div class="item-inner">
-                                <div class="item-title">
-                                    <div class="item-header">Монет в обращении</div>
-                                    {{moneyFormat count}}
+                                <div class="item-media">
+                                    <i class="icon f7-icons ios-only">person_fill</i>
+                                    <i class="icon material-icons md-only">person</i>
                                 </div>
+                                <div class="item-title">Евгений</div>
+                                <div class="item-after">6 315</div>
                             </div>
                         </div>
-                    </li>
-                    <li class="accordion-item">
-                        <div class="item-content item-link">
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="item-content">
                             <div class="item-inner">
-                                <div class="item-title">Краткое описание</div>
+                                <div class="item-media">
+                                    <i class="icon f7-icons ios-only">person_fill</i>
+                                    <i class="icon material-icons md-only">person</i>
+                                </div>
+                                <div class="item-title">Григорий</div>
+                                <div class="item-after">4 250</div>
                             </div>
                         </div>
-                        <div class="accordion-item-content">
-                            <div class="block">
-                                <p>
-                                    {{description}}
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="accordion-item">
-                        <div class="item-content item-link">
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="item-content">
                             <div class="item-inner">
-                                <div class="item-title">Как можно заработать</div>
+                                <div class="item-media">
+                                    <i class="icon f7-icons ios-only">person_fill</i>
+                                    <i class="icon material-icons md-only">person</i>
+                                </div>
+                                <div class="item-title">Дарья</div>
+                                <div class="item-after">1 350</div>
                             </div>
-                        </div>
-                        <div class="accordion-item-content">
-                            <div class="block">
-                                <ul>
-                                    {{#each condition}}
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-inner">
-                                                    <div class="item-title">{{name}}</div>
-                                                    <div class="item-after">{{moneyFormat price}}</div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    {{/each}}
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="accordion-item">
-                        <div class="item-content item-link">
-                            <div class="item-inner">
-                                <div class="item-title">На что можно потратить</div>
-                            </div>
-                        </div>
-                        <div class="accordion-item-content">
-                            <div class="block">
-                                <ul>
-                                    {{#each spend}}
-                                        <li>
-                                            <div class="item-content">
-                                                <div class="item-inner">
-                                                    <div class="item-media"><img
-                                                            src="https://picsum.photos/30/30/?random"
-                                                            style="margin-right: 10px"></div>
-                                                    <div class="item-title">{{name}}</div>
-                                                    <div class="item-after">{{moneyFormat price}}</div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    {{/each}}
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    {{/with}}
-
-
-    <div class="block-title">
-        ТОП владельцев монет
-    </div>
-
-    <div class="block">
-        <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="2"
-             class="swiper-container swiper-init demo-swiper font-small">
-            <div class="swiper-pagination"></div>
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="item-content">
-                        <div class="item-inner">
-                            <div class="item-media">
-                                <i class="icon f7-icons ios-only">person_fill</i>
-                                <i class="icon material-icons md-only">person</i>
-                            </div>
-                            <div class="item-title">Виталий</div>
-                            <div class="item-after">9 600</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="item-content">
-                        <div class="item-inner">
-                            <div class="item-media">
-                                <i class="icon f7-icons ios-only">person_fill</i>
-                                <i class="icon material-icons md-only">person</i>
-                            </div>
-                            <div class="item-title">Семён</div>
-                            <div class="item-after">7 450</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="item-content">
-                        <div class="item-inner">
-                            <div class="item-media">
-                                <i class="icon f7-icons ios-only">person_fill</i>
-                                <i class="icon material-icons md-only">person</i>
-                            </div>
-                            <div class="item-title">Евгений</div>
-                            <div class="item-after">6 315</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="item-content">
-                        <div class="item-inner">
-                            <div class="item-media">
-                                <i class="icon f7-icons ios-only">person_fill</i>
-                                <i class="icon material-icons md-only">person</i>
-                            </div>
-                            <div class="item-title">Григорий</div>
-                            <div class="item-after">4 250</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="item-content">
-                        <div class="item-inner">
-                            <div class="item-media">
-                                <i class="icon f7-icons ios-only">person_fill</i>
-                                <i class="icon material-icons md-only">person</i>
-                            </div>
-                            <div class="item-title">Дарья</div>
-                            <div class="item-after">1 350</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </template>

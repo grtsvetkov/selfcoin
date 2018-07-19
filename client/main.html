@@ -19,12 +19,7 @@
 
         <div class="view view-main ios-edges">
             <div data-name="main" class="page">
-
-                {{>toolbar}}
-                <div class="page-content">
-                    {{>navbar}}
-                    {{>yield}}
-                </div>
+                {{>yield}}
             </div>
         </div>
     </div>
@@ -32,17 +27,12 @@
 
 <template name="navbar">
     <div class="navbar">
-        <div class="navbar-inner">
-            <div class="left">
-                {{#with backButton}}
-                    <a id="backButton" href="{{href}}" onclick="{{onclick}}" class="link icon-only">
-                        <i class="icon icon-back"></i>
-                    </a>
-                {{/with}}
-            </div>
-            <div class="title">{{title}}</div>
-            <div class="right">
-            </div>
+        <div class="navbar-inner navbar-current">
+            {{#with navbarF5}}
+                <div class="left">{{{left}}}</div>
+                <div class="title">{{title}}</div>
+                <div class="right">{{{right}}}</div>
+            {{/with}}
         </div>
     </div>
 </template>
