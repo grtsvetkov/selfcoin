@@ -1,18 +1,132 @@
 <template name="profile">
-    {{>toolbar}}
-    {{>navbar}}
-    <div class="page-content">
-        <div class="block-title">
-            <h3>Профиль</h3>
+    <div data-name="profile" class="page">
+        {{>toolbar}}
+        {{>navbar}}
+        <div class="page-content">
+            <div class="block-title">
+                <h3>Профиль</h3>
+            </div>
+            <div class="block">
+                <div class="list links-list">
+                    <ul>
+                        <li><a id="goTo_profileEdit" href="#">Редактировать профиль</a></li>
+                        <li><a href="#">Настройки</a></li>
+                        <li><a href="#">Помощь</a></li>
+                        <li><a href="#">Выход из профиля</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="block">
-            <div class="list links-list">
+    </div>
+
+    {{>profileEdit}}
+</template>
+
+<template name="profileEdit">
+    <div data-name="profileEdit" class="page stacked">
+        {{>toolbar}}
+        {{>navbar}}
+        <div class="page-content">
+
+            <div class="list no-hairlines-md">
                 <ul>
-                    <li><a href="#">Редактировть профиль</a></li>
-                    <li><a href="#">Настройки</a></li>
-                    <li><a href="#">Помощь</a></li>
-                    <li><a href="#">Выход из профиля</a></li>
+                    <li class="item-content item-input item-input-with-value">
+                        <div class="item-inner">
+                            <div class="item-title item-label">Имя</div>
+                            <div class="item-input-wrap">
+                                <input type="text" placeholder="Ваше имя" class="" value="Иван">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-content item-input item-input-with-value">
+                        <div class="item-inner">
+                            <div class="item-title item-label">Фамилия</div>
+                            <div class="item-input-wrap">
+                                <input type="text" placeholder="Ваша фамилия" class="" value="Петров">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-content item-input">
+                        <div class="item-inner">
+                            <div class="item-title item-label">Телефон</div>
+                            <div class="item-input-wrap">
+                                {{> inputMask id='phone' value='+7 (911) 536-95-72' type='tel' name='phone' mask='+7 (000) 000-00-00' placeholder='' }}
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-content item-input">
+                        <div class="item-inner">
+                            <div class="item-title item-label">E-mail</div>
+                            <div class="item-input-wrap">
+                                <input type="email" placeholder="Your e-mail" value="ivan.petrov@gmail.com">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-content item-input item-input-with-value">
+                        <div class="item-inner">
+                            <div class="item-title item-label">Город</div>
+                            <div class="item-input-wrap">
+                                <input type="text" placeholder="Ваш гоород" class="" value="Москва">
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" id="editPasswordButton" class="item-link item-content">
+                            <div class="item-inner">
+                                <div class="item-title">Изменить пароль</div>
+                            </div>
+                        </a>
+                    </li>
                 </ul>
+                <div class="list inset">
+                    <ul>
+                        <li><a href="#" id="saveButton" class="list-button item-link color-blue">Сохранить изменения</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-name="profileEditPassword" class="page stacked">
+        {{>toolbar}}
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="left" style="">
+                    <a href="#" onclick="event.preventDefault();mainView.router.back()" class="back">
+                        <i class="icon icon-back" style=""></i>
+                        <span class="ios-only">Назад</span>
+                    </a>
+                </div>
+                <div class="title">Изменение пароля</div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="list no-hairlines-md">
+                <ul>
+                    <li class="item-content item-input item-input-with-value">
+                        <div class="item-inner">
+                            <div class="item-title item-label">Новый пароль</div>
+                            <div class="item-input-wrap">
+                                <input type="password" placeholder="Введите новый пароль" class="" value="">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-content item-input item-input-with-value">
+                        <div class="item-inner">
+                            <div class="item-title item-label">Новый пароль ещё раз</div>
+                            <div class="item-input-wrap">
+                                <input type="password" placeholder="Подтвердите новый пароль еще раз" class="" value="">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="list inset">
+                    <ul>
+                        <li><a href="#" onclick="Template.profileEdit.passwordEdit(event)"
+                               class="list-button item-link color-blue">Изменить пароль</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

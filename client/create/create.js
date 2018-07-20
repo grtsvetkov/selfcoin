@@ -1,7 +1,7 @@
 let condition = new ReactiveVar(),
     spend = new ReactiveVar();
 
-Template.create.rendered = function() {
+Template.create.renderedF7 = function() {
     //currentBackButton.set({href:'/mycoin'});
     condition.set([1]);
     spend.set([1]);

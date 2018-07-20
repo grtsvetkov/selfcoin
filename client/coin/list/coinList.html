@@ -1,31 +1,33 @@
 <template name="coinList">
-    {{>toolbar}}
-    {{>navbar}}
-    <div class="page-content">
+    <div data-name="main" class="page">
+        {{>toolbar}}
+        {{>navbar}}
+        <div class="page-content">
 
-        <a href="{{pathFor 'create'}}" class="margin button button-big margin-vertical">Создать новую монету</a>
+            <a href="{{pathFor 'create'}}" class="margin button button-big margin-vertical">Создать новую монету</a>
 
-        <div class="block-title">
-            Мои монеты
-        </div>
+            <div class="block-title">
+                Мои монеты
+            </div>
 
-        <div class="data-table">
-            <table>
-                <thead>
-                <tr>
-                    <th class="label-cell">Название</th>
-                    <th class="numeric-cell">выпущено</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#each list}}
-                    <tr class="{{backgroundByIndex @index}} goToMoney" data-id="{{_id}}">
-                        <td class="label-cell">{{name}}</td>
-                        <td class="numeric-cell">{{moneyFormat count}}</td>
+            <div class="data-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="label-cell">Название</th>
+                        <th class="numeric-cell">выпущено</th>
                     </tr>
-                {{/each}}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {{#each list}}
+                        <tr class="{{backgroundByIndex @index}} goToMoney" data-id="{{_id}}">
+                            <td class="label-cell">{{name}}</td>
+                            <td class="numeric-cell">{{moneyFormat count}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </template>

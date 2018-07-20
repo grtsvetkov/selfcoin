@@ -50,6 +50,11 @@ Template.AppLayout.rendered = function () {
         id: 'com.coinedcoin.test',
         clicks: {
             externalLinks: '*'
+        },
+        view: {
+            main: true,
+            stackPages: true,
+            animate: true
         }
     });
 

@@ -61,6 +61,10 @@
     border-radius: 7px;
 }
 
+.block-title-first {
+    margin-top: 15px !important;
+}
+
 /***********************welcome**************************/
 .welcome {
     height: 100%;

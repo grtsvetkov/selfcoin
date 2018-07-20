@@ -1,36 +1,38 @@
 <template name="contactCreate">
-    {{>toolbar}}
-    {{>navbar}}
-    <div class="page-content">
+    <div data-name="main" class="page">
+        {{>toolbar}}
+        {{>navbar}}
+        <div class="page-content">
 
-        <div class="block-title">Добавить новый контакт</div>
-        <div class="list inline-labels no-hairlines-md">
-            <ul>
-                <li class="item-content item-input">
-                    <div class="item-media">
-                        <i class="icon demo-list-icon"></i>
-                    </div>
-                    <div class="item-inner">
-                        <div class="item-title item-label">Имя</div>
-                        <div class="item-input-wrap">
-                            <input id="name" type="text" placeholder="">
+            <div class="block-title">Добавить новый контакт</div>
+            <div class="list inline-labels no-hairlines-md">
+                <ul>
+                    <li class="item-content item-input">
+                        <div class="item-media">
+                            <i class="icon demo-list-icon"></i>
                         </div>
-                    </div>
-                </li>
-                <li class="item-content item-input">
-                    <div class="item-media">
-                        <i class="icon demo-list-icon"></i>
-                    </div>
-                    <div class="item-inner">
-                        <div class="item-title item-label">Телефон</div>
-                        <div class="item-input-wrap">
-                            {{> inputMask id='phone' value='' type='tel' name='phone' mask='+7 (000) 000-00-00' placeholder='' }}
+                        <div class="item-inner">
+                            <div class="item-title item-label">Имя</div>
+                            <div class="item-input-wrap">
+                                <input id="name" type="text" placeholder="">
+                            </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                    <li class="item-content item-input">
+                        <div class="item-media">
+                            <i class="icon demo-list-icon"></i>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-title item-label">Телефон</div>
+                            <div class="item-input-wrap">
+                                {{> inputMask id='phone' value='' type='tel' name='phone' mask='+7 (000) 000-00-00' placeholder='' }}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <a href="#" id="create" class="margin button button-big margin-vertical">Добавить контакт</a>
         </div>
-        <a href="#" id="create" class="margin button button-big margin-vertical">Добавить контакт</a>
     </div>
 
 </template>
