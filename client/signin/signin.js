@@ -24,7 +24,7 @@ Template.signinBlock.helpers({
 
 Template.signinBlock.events({
 
-    'click .item-input': (e) => {
+    'click .list ul': (e) => {
         $(e.currentTarget).find('input').focus();
     },
 
