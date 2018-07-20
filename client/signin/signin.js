@@ -24,8 +24,8 @@ Template.signinBlock.helpers({
 
 Template.signinBlock.events({
 
-    'click .item-input': () => {
-        $('#phone').focus();
+    'click .item-input': (e) => {
+        $(e.currentTarget).find('input').focus();
     },
 
     'click #sendPhone': function () {

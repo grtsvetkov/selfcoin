@@ -39,12 +39,12 @@
 
 #signin-block #phone, #signin-block #code {
     height: 60px;
-    font-size: 30px;
+    font-size: 27px;
     text-align: center;
 }
 
 #signin-block #code {
-    letter-spacing: 7px;
+    letter-spacing: 4px;
 }
 
 .string1 {
