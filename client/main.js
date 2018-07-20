@@ -3,7 +3,8 @@ import "framework7/css/framework7.min.css";
 import "framework7-icons";
 import "jquery-mask-plugin";
 
-app = null, mainView = null;
+app = null,
+    mainView = null;
 
 let flag_welcome = localStorage.getItem('_firstTimeOpenedApp') || null;
 
@@ -11,6 +12,12 @@ if (flag_welcome != "true") {
     //localStorage.setItem('_firstTimeOpenedApp', true);
     Router.go('welcome');
 }
+
+document.addEventListener('deviceready', function () {
+    if (cordova && cordova.plugins && cordova.plugins.statusbarOverlay) {
+        cordova.plugins.statusbarOverlay.show();
+    }
+});
 
 Tracker.autorun(function () {
     if (!Meteor.userId()) {
@@ -56,7 +63,8 @@ Template.navbar.helpers({
             left: navbarF7.left.get(),
             right: navbarF7.right.get()
         };
-    }});
+    }
+});
 
 Template.toolbar.helpers({
     'list': function () {
@@ -115,7 +123,7 @@ Template.registerHelper('eq', function (op1, op2) {
 });
 
 Template.registerHelper('moneyFormat', function (num) {
-    return String(Number(num ? num : 0) + '|').replace(/\d(?=(\d{3})+\|)/g, '$& ').replace('|','');
+    return String(Number(num ? num : 0) + '|').replace(/\d(?=(\d{3})+\|)/g, '$& ').replace('|', '');
 });
 
 Template.registerHelper('consoleLog', function (obj) {

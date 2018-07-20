@@ -24,8 +24,8 @@ Template.signinBlock.helpers({
 
 Template.signinBlock.events({
 
-    'click #fackeBackButton': function () {
-        init();
+    'click .item-input': () => {
+        $('#phone').focus();
     },
 
     'click #sendPhone': function () {

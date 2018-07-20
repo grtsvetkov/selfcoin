@@ -55,7 +55,7 @@ Router.configure({
 
 
 Router.route('/', {
-    title: 'Рабочий стол',
+    title: 'Подборка монет',
     name: 'index'
 });
 
