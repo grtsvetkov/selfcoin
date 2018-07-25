@@ -5,13 +5,13 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.53",
+    "@babel/runtime": "^7.0.0-beta.54",
     "bcrypt": "^2.0.1",
-    "framework7": "^3.0.1",
+    "framework7": "^3.0.7",
     "framework7-icons": "^0.9.1",
     "jquery": "^3.3.1",
     "jquery-mask-plugin": "^1.14.15",
     "meteor-node-stubs": "^0.3.2",
-    "twilio": "^3.17.5"
+    "twilio": "^3.18.0"
   }
 }
