@@ -1,4 +1,4 @@
-Template.welcome.renderedF7 = function () {
+Template.welcome.rendered = function () {
     Meteor.defer(function () {
         let mySwiper = app.swiper.create('.welcome', {
             touchEventsTarget : 'wrapper',

@@ -6,49 +6,51 @@ navbarF7 = {
     right: new ReactiveVar(false)
 };
 
-F7PageInit = function (rName, attempt) {
-
-    if(attempt == 0) {
-
-        if (Template && Template[rName] && typeof Template[rName].renderedF7 == 'function') {
-            this.tmpF = Template[rName].renderedF7;
-        } else {
-            this.tmpF = () => {
-            };
-        }
-    }
-
-    if (app != null && typeof mainView != 'undefined' && mainView != null) {
-
-        let self = this;
-
-        Template[rName].rendered = function () {
-            mainView.emit('pageInit', {$el: $('.page-current')});
-            self.tmpF();
+F7PageInit = function (rName) {
+    Template[rName].renderedNative = Template[rName].rendered || function () {
         };
 
-        Template[rName].rendered.call(Template[rName]);
+    Template[rName].rendered = () => {
 
-    } else if (attempt <= 10) {
-        Meteor.setTimeout(function () {
-            F7PageInit(rName, attempt + 1);
-        }, 333);
+        Template[rName].fixed = true;
+
+        if (typeof Template[rName].attempt == 'undefined') {
+            Template[rName].attempt = 0;
+        }
+
+        Template[rName].attempt++;
+
+        if (app != null && typeof mainView != 'undefined' && mainView != null) {
+            mainView.emit('pageInit', {$el: $('.page-current')});
+            Template[rName].renderedNative.call(Template[rName]);
+        } else if (Template[rName].attempt <= 100) {
+            Meteor.setTimeout(function () {
+                Template[rName].rendered(rName);
+            }, 111);
+        }
     }
 };
+
 
 Router.configure({
     layoutTemplate: 'AppLayout', //AppLayout.html
     notFoundTemplate: 'Error404', //Error404.html
     loadingTemplate: 'Loading', //Loading.html
     controller: RouteController.extend({
-        after: function () {
+        before: function () {
 
+            let rName = this.route.getName();
+
+            if (typeof Template[rName].fixed == 'undefined' || !Template[rName].fixed) {
+                F7PageInit(rName);
+            }
+            this.next();
+        },
+        after: function () {
             navbarF7.left.set(false);
             navbarF7.right.set(false);
             navbarF7.title.set(this.route.options.title ? this.route.options.title : 'Coined Coin');
             currentRouterName.set(this.route.options.menu ? this.route.options.menu : this.route.getName());
-
-            F7PageInit(this.route.getName(), 0);
         }
     })
 });

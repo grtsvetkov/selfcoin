@@ -12,7 +12,7 @@ let signinAction = new ReactiveVar('phone'),
     };
 
 
-Template.signinBlock.renderedF7 = function () {
+Template.signinBlock.rendered = function () {
     init();
 };
 

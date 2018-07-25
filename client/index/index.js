@@ -1,6 +1,6 @@
 let tmpList1 = ['Адидасы', 'Баскеты', 'Боксы', 'Липтоны', 'Маки', 'Мерсы', 'Найки', 'Рыбчики', 'Трофимчик', 'Шашлычная'];
 
-Template.index.renderedF7 = function() {
+Template.index.rendered = function() {
     app.swiper.create('.popular', {
         speed: 400,
         pagination: '.swiper-pagination',
