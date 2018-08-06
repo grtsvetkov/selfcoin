@@ -1,9 +1,6 @@
 Template.profile.events({
     'click #goTo_profileEdit': (e) => {
         e.preventDefault();
-
-        navbarF7.left.set('<a href="#" onclick="event.preventDefault();mainView.router.back(\'/profile\');navbarF7.left.set(false);" class="link back"><i class="icon icon-back" style=""></i><span class="ios-only">Назад</span></a>')
-
         mainView.router.navigate({
                 url: '/profileEdit',
                 route: {

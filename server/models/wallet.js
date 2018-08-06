@@ -1,20 +1,12 @@
 WalletModel = {
     enroll: function (coin_id, to_user, count, description) {
-        let owner = Coin.findOne({_id: coin_id});
+        let owner = Coin.findOne({_id: coin_id, user_id: Meteor.userId()});
 
         if (!owner) { //Нет такой монеты
             return;
         }
 
-        if (owner != Meteor.userId()) { //Владелец не тот
-            return;
-        }
-
         count = Math.trunc(count);
-
-        if (!count) { //Нечего зачислять
-            return;
-        }
 
         let currentW = Wallet.findOne({user_id: to_user, coin_id: coin_id});
 

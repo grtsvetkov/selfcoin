@@ -1,126 +1,150 @@
 <template name="create">
+    {{>navbar}}
     <div data-name="main" class="page">
-        {{>toolbar}}
-        {{>navbar}}
         <div class="page-content">
-            <div class="list" id="my-form">
-                <ul>
-                    <li>
-                        <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-title item-label">Название новой монеты</div>
-                                <div class="item-input-wrap">
-                                    <input type="text" id="name" placeholder="">
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-title item-label">Описание</div>
-                                <div class="item-input-wrap">
-                                    <textarea id="description" class="resizable"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="accordion-item">
-                        <div class="item-link item-content">
-                            <div class="item-inner">
-                                <div class="item-title">Как можно получить</div>
-                            </div>
-                        </div>
-                        <div class="accordion-item-content">
-                            <div id="list_condition" class="block">
-                                <ul>
-                                    {{#each list_condition}}
-                                        <li class="{{backgroundByIndex @index}}">
-                                            <div class="item-content row">
-                                                <div class="col-75">
-                                                    <div class="item-title item-label">Название</div>
-                                                    <input type="text" name="name" placeholder="">
-                                                </div>
-                                                <div class="col-25">
-                                                    <div class="item-title item-label">Цена</div>
-                                                    {{> inputMask value='' type='tel' name='price' mask="### ###" reverse=true}}
-                                                </div>
-                                            </div>
-                                            <div class="row item-content">
-                                                <div class="item-title item-label">Описание</div>
-                                                <textarea name="description" class="resizable"></textarea>
-                                            </div>
-                                        </li>
-                                    {{/each}}
-                                    <li>
-                                        <div class="item-content">
-                                            <button id="add_condition" class="col button button-outline">Добавить пункт
-                                            </button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="accordion-item">
-                        <div class="item-link item-content">
-                            <div class="item-inner">
-                                <div class="item-title">На что можно потратить</div>
-                            </div>
-                        </div>
-                        <div class="accordion-item-content">
-                            <div id="list_spend" class="block">
-                                <ul>
-                                    {{#each list_spend}}
-                                        <li class="{{backgroundByIndex @index}}">
-                                            <div class="item-content row">
-                                                <div class="col-75">
-                                                    <div class="item-title item-label">Название</div>
-                                                    <input type="text" name="name" placeholder="">
-                                                </div>
-                                                <div class="col-25">
-                                                    <div class="item-title item-label">Цена</div>
-                                                    {{> inputMask value='' type='tel' name='price' mask="### ###" reverse=true}}
 
-                                                </div>
-                                            </div>
-                                            <div class="row item-content">
-                                                <div class="item-title item-label">Описание</div>
-                                                <textarea name="description" class="resizable"></textarea>
-                                            </div>
-                                        </li>
-                                    {{/each}}
-                                    <li>
-                                        <div class="item-content">
-                                            <button id="add_spend" class="col button button-outline">Добавить пункт
-                                            </button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+            {{#if firstTime}}
+                <div class="swiper-container welcome">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide slide-1">
+                            <div class="screen-title">Создайте свою монету!</div>
+                            <div class="text-block">Создайте свою монету!</div>
                         </div>
-                    </li>
-                    <li>
-                        <div class="item-content">
-                            <div class="item-inner">
-                                <div class="item-title">Публичная</div>
-                                <div class="item-after">
-                                    <label class="toggle toggle-init">
-                                        <input id="public" type="checkbox" value="yes"><i class="toggle-icon"></i>
-                                    </label>
-                                </div>
-                            </div>
+                        <div class="swiper-slide slide-2">
+                            <div class="screen-title">Создайте свою монету!</div>
+                            <div class="text-block">Создайте свою монету!</div>
                         </div>
-                    </li>
-                    <li>
-
-                    </li>
-                </ul>
-
-                <div class="block">
-                    <button id="createCoin" class="button button-big">Создать монету</button>
+                        <div class="swiper-slide slide-3">
+                            <div class="screen-title">Создайте свою монету!</div>
+                            <div class="text-block">Создайте свою монету!</div>
+                        </div>
+                        <div class="swiper-slide slide-4">
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {{else}}
+
+                <div class="list" id="my-form">
+                    <ul>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Название новой монеты</div>
+                                    <div class="item-input-wrap">
+                                        <input type="text" id="name" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Описание</div>
+                                    <div class="item-input-wrap">
+                                        <textarea id="description" class="resizable"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-item">
+                            <div class="item-link item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">Как можно получить</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item-content">
+                                <div id="list_condition" class="block">
+                                    <ul>
+                                        {{#each list_condition}}
+                                            <li class="{{backgroundByIndex @index}}">
+                                                <div class="item-content row">
+                                                    <div class="col-75">
+                                                        <div class="item-title item-label">Название</div>
+                                                        <input type="text" name="name" placeholder="">
+                                                    </div>
+                                                    <div class="col-25">
+                                                        <div class="item-title item-label">Цена</div>
+                                                        {{> inputMask value='' type='tel' name='price' mask="### ###" reverse=true}}
+                                                    </div>
+                                                </div>
+                                                <div class="row item-content">
+                                                    <div class="item-title item-label">Описание</div>
+                                                    <textarea name="description" class="resizable"></textarea>
+                                                </div>
+                                            </li>
+                                        {{/each}}
+                                        <li>
+                                            <div class="item-content">
+                                                <button id="add_condition" class="col button button-outline">Добавить
+                                                    пункт
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="accordion-item">
+                            <div class="item-link item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">На что можно потратить</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item-content">
+                                <div id="list_spend" class="block">
+                                    <ul>
+                                        {{#each list_spend}}
+                                            <li class="{{backgroundByIndex @index}}">
+                                                <div class="item-content row">
+                                                    <div class="col-75">
+                                                        <div class="item-title item-label">Название</div>
+                                                        <input type="text" name="name" placeholder="">
+                                                    </div>
+                                                    <div class="col-25">
+                                                        <div class="item-title item-label">Цена</div>
+                                                        {{> inputMask value='' type='tel' name='price' mask="### ###" reverse=true}}
+
+                                                    </div>
+                                                </div>
+                                                <div class="row item-content">
+                                                    <div class="item-title item-label">Описание</div>
+                                                    <textarea name="description" class="resizable"></textarea>
+                                                </div>
+                                            </li>
+                                        {{/each}}
+                                        <li>
+                                            <div class="item-content">
+                                                <button id="add_spend" class="col button button-outline">Добавить пункт
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">Публичная</div>
+                                    <div class="item-after">
+                                        <label class="toggle toggle-init">
+                                            <input id="public" type="checkbox" value="yes"><i class="toggle-icon"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+
+                        </li>
+                    </ul>
+
+                    <div class="block">
+                        <button id="createCoin" class="button button-big">Создать монету</button>
+                    </div>
+                </div>
+
+            {{/if}}
         </div>
     </div>
 </template>

@@ -6,7 +6,7 @@ CoinModel = {
             return;
         }
 
-        return Coin.insert({
+        let coin_id = Coin.insert({
             user_id: data.user_id,
             name: String(data.name),
             description: data.description ? String(data.description) : '',
@@ -15,6 +15,10 @@ CoinModel = {
             spend: data.spend,
             count: 0
         });
+
+        WalletModel.enroll(coin_id, Meteor.userId(), 0, 'Добавление участника');
+
+        return coin_id;
     }
 };
 

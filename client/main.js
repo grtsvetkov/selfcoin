@@ -54,11 +54,14 @@ Template.AppLayout.rendered = function () {
         view: {
             main: true,
             stackPages: true,
-            animate: true
+            animate: true,
+            iosDynamicNavbar: false
         }
     });
 
     mainView = app.views.create('.view-main');
+
+
 };
 
 Template.navbar.helpers({

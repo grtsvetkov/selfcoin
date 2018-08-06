@@ -39,7 +39,7 @@ Template.signinBlock.events({
 
         app.dialog.progress('Отправка смс кода');
 
-        Meteor.call('accounts-phone.sendVerificationCode', phone, function (err) {
+        Meteor.call('accounts-phone.sendVerificationCode', phone, (err) => {
             app.dialog.close();
 
             if (err) {

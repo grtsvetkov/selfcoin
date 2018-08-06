@@ -1,13 +1,12 @@
 <template name="contactList">
+    {{>navbar}}
     <div data-name="main" class="page">
-        {{>toolbar}}
-        {{>navbar}}
         <div class="page-content">
 
 
-            <a href="{{pathFor 'contactCreate'}}" class="margin button button-big margin-vertical">Добавить контакт</a>
+            <a href="{{pathFor 'contactCreate'}}" class="margin button button-big margin-vertical">Добавить новый контакт</a>
 
-            <div class="list">
+            <div class="contacts-list list">
                 {{#each contact_list}}
                     <div class="list-group">
                         <ul>

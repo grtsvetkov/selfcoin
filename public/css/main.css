@@ -65,6 +65,13 @@
     margin-top: 15px !important;
 }
 
+.icon {
+    font-size: 1.6em;
+}
+
+
+
+
 /***********************welcome**************************/
 .welcome {
     height: 100%;
@@ -268,4 +275,7 @@
 
 .popular .swiper-slide span {
     font-size: 110%;
+    display: block;
+    padding: 0 10px;
+    overflow: hidden;
 }

@@ -1,6 +1,6 @@
 <template name="profile">
+
     <div data-name="profile" class="page">
-        {{>toolbar}}
         {{>navbar}}
         <div class="page-content">
             <div class="block-title">
@@ -25,7 +25,13 @@
 <template name="profileEdit">
     <div data-name="profileEdit" class="page stacked">
         {{>toolbar}}
-        {{>navbar}}
+        <div class="navbar">
+            <div class="navbar-inner navbar-current">
+                    <div class="left"><a href="#" onclick="event.preventDefault();mainView.router.back('/profile');" class="link back"><i class="icon icon-back" style=""></i><span class="ios-only">Назад</span></a></div>
+                    <div class="title">Редаткирование профиля</div>
+                    <div class="right"> </div>
+            </div>
+        </div>
         <div class="page-content">
 
             <div class="list no-hairlines-md">
@@ -93,7 +99,7 @@
         <div class="navbar">
             <div class="navbar-inner">
                 <div class="left" style="">
-                    <a href="#" onclick="event.preventDefault();mainView.router.back()" class="back">
+                    <a href="#" onclick="event.preventDefault();mainView.router.back('/profileEdit')" class="back">
                         <i class="icon icon-back" style=""></i>
                         <span class="ios-only">Назад</span>
                     </a>

@@ -1,12 +1,4 @@
-currentRouterName = new ReactiveVar();
-
-navbarF7 = {
-    title: new ReactiveVar('Coined Coin'),
-    left: new ReactiveVar(false),
-    right: new ReactiveVar(false)
-};
-
-F7PageInit = function (rName) {
+let F7PageFix = function (rName) {
     Template[rName].renderedNative = Template[rName].rendered || function () {
         };
 
@@ -20,9 +12,17 @@ F7PageInit = function (rName) {
 
         Template[rName].attempt++;
 
-        if (app != null && typeof mainView != 'undefined' && mainView != null) {
-            mainView.emit('pageInit', {$el: $('.page-current')});
-            Template[rName].renderedNative.call(Template[rName]);
+        if (typeof mainView != 'undefined' && mainView != null) {
+
+            Template[rName].attempt = 0;
+
+            Meteor.defer(() => {
+                Template[rName].renderedNative.call(Template[rName]);
+                mainView.emit('pageInit', {$el: $('.page')});
+                mainView.router.clearHistory();
+                mainView.router.init();
+                mainView.router.allowPageChange = true;
+            });
         } else if (Template[rName].attempt <= 100) {
             Meteor.setTimeout(function () {
                 Template[rName].rendered(rName);
@@ -31,21 +31,41 @@ F7PageInit = function (rName) {
     }
 };
 
+RouteController.__super__.render = function (template, options) {
+
+    if (options && (typeof options.data !== 'undefined')) {
+        options.data = bindData(options.data, this);
+    }
+
+    let self = this,
+        tmpl = this._layout.render(template, options),
+        camelTmpl = Iron.utils.camelCase(template);
+
+    if (typeof Template[camelTmpl] != 'undefined' && (typeof Template[camelTmpl].fixed == 'undefined' || !Template[camelTmpl].fixed)) {
+        F7PageFix(camelTmpl);
+    }
+
+    return {
+        data: function (func) {
+            return tmpl.data(bindData(func, self));
+        }
+    };
+};
+
+
+currentRouterName = new ReactiveVar();
+
+navbarF7 = {
+    title: new ReactiveVar('Coined Coin'),
+    left: new ReactiveVar(false),
+    right: new ReactiveVar(false)
+};
 
 Router.configure({
     layoutTemplate: 'AppLayout', //AppLayout.html
     notFoundTemplate: 'Error404', //Error404.html
     loadingTemplate: 'Loading', //Loading.html
     controller: RouteController.extend({
-        before: function () {
-
-            let rName = this.route.getName();
-
-            if (typeof Template[rName].fixed == 'undefined' || !Template[rName].fixed) {
-                F7PageInit(rName);
-            }
-            this.next();
-        },
         after: function () {
             navbarF7.left.set(false);
             navbarF7.right.set(false);
@@ -58,7 +78,13 @@ Router.configure({
 
 Router.route('/', {
     title: 'Подборка монет',
-    name: 'index'
+    name: 'index',
+
+    waitOn: function () {
+        return [
+            Meteor.subscribe('coin', 'only_my')
+        ];
+    }
 });
 
 Router.route('/market', {
@@ -123,7 +149,9 @@ Router.route('/coin/:_id', {
     menu: 'coin',
     waitOn: function () {
         return [
-            Meteor.subscribe('coin', 'only_my')
+            Meteor.subscribe('coin', 'only_my'),
+            Meteor.subscribe('wallet', 'byMyCoin', this.params._id),
+            Meteor.subscribe('contact', 'only_my')
         ];
     }
 });
@@ -142,5 +170,6 @@ Router.route('/coin', {
 
 Router.route('/create', {
     title: 'Создать монету',
-    name: 'create'
+    name: 'create',
+    menu: 'coin'
 });

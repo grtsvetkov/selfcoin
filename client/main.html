@@ -6,19 +6,17 @@
     <meta name="theme-color" content="#2196f3">
     <title>Coined Coin</title>
     <link rel="stylesheet" href="/css/main.css">
-
 </head>
 
 <body>
-
 </body>
 
 <template name="AppLayout">
     <div id="app">
         <div class="statusbar"></div>
-
-        <div class="view view-main ios-edges">
+        <div class="view view-main">
             {{>yield}}
+            {{>toolbar}}
         </div>
     </div>
 </template>
@@ -37,7 +35,6 @@
 
 <template name="toolbar">
     <div class="toolbar tabbar-labels">
-
         <div class="toolbar-inner">
             {{#each list}}
                 <a href="{{pathFor path}}" class="link tab-link {{#if isActive}}tab-link-active{{/if}}">
@@ -60,5 +57,6 @@
 </template>
 
 <template name="inputMask">
-    <input id="{{id}}" placeholder="{{placeholder}}" name="{{name}}" class="{{class}}" value="{{value}}" data-mask="{{mask}}" type="{{type}}"/>
+    <input id="{{id}}" placeholder="{{placeholder}}" name="{{name}}" class="{{class}}" value="{{value}}"
+           data-mask="{{mask}}" type="{{type}}"/>
 </template>

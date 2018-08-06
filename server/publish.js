@@ -12,9 +12,20 @@ Meteor.startup(function () {
 });
 
 Meteor.startup(function () {
-    Meteor.publish('wallet', function (mode) {
+    Meteor.publish('wallet', function (mode, coin_id) {
         if (this.userId) {
             switch (mode) {
+                case 'byMyCoin':
+
+                    let owner = Coin.findOne({_id: coin_id, user_id: this.userId});
+
+                    if (!owner) { //Нет такой монеты
+                        return [];
+                    }
+                    
+                    return Wallet.find({coin_id: coin_id});
+                    break;
+                
                 default:
                     return Wallet.find({user_id: this.userId});
             }
