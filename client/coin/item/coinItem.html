@@ -24,7 +24,7 @@
                                     <div class="item-inner">
                                         <div class="item-title">
                                             <div class="item-header">Создатель</div>
-                                            {{item.user.username}}
+                                            {{user.name}}
                                         </div>
                                     </div>
                                 </div>
@@ -117,21 +117,56 @@
                                 </div>
                             </li>
 
-                            <li id="goTo_coinItemParty" class="">
-                                <div class="item-content item-link">
+                            <li class="{{#if isMy}}goTo_coinItemParty{{/if}}">
+                                <div class="item-content {{#if isMy}}item-link{{/if}}">
                                     <div class="item-inner">
-                                        <div class="item-title">Участники ({{partyCount}})</div>
+                                        <div class="item-title">Участники ({{owner.length}})</div>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </div>
+                {{#unless isMy}}
+                    <div class="block">
+                        <p class="row">
+                            <button id="enroll" class="col button button-big button-fill">Зачисление</button>
+                            <button class="col button button-big">Списание</button>
+                        </p>
+                    </div>
+                {{else}}
+                    {{#with request_enroll}}
+                        <div class="block-title">
+                            Запрос на зачисление
+                        </div>
+                        <div class="data-table">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th class="label-cell">От участника</th>
+                                    <th class="label-cell">За что</th>
+                                    <th class="numeric-cell">Цена</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each .}}
+                                    <tr class="{{backgroundByIndex @index}} actionEnroll" data-id="{{_id}}">
+                                        <td class="label-cell">{{user.name}}</td>
+                                        <td class="label-cell">{{name}}</td>
+                                        <td class="numeric-cell">{{price}}</td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    {{/with}}
+                {{/unless}}
             {{/with}}
         </div>
     </div>
     {{>coinItemParty}}
     {{>coinItemPartyAdd}}
+    {{>coinItemPartyItem}}
 </template>
 
 <template name="coinItemParty">
@@ -143,9 +178,11 @@
                                      class="link back"><i class="icon icon-back" style=""></i><span class="ios-only">Назад</span></a>
                 </div>
                 <div class="title">Участники монеты</div>
-                <div class="right"><div class="coinItemPartyAdd icon">
-                    +
-                </div></div>
+                <div class="right">
+                    <div class="coinItemPartyAdd icon">
+                        +
+                    </div>
+                </div>
             </div>
         </div>
         <div class="page-content">
@@ -171,7 +208,7 @@
                         <ul>
                             <!--li class="list-group-title">{{litera}}</li-->
                             {{#each list}}
-                                <li data-id="{{_id}}">
+                                <li class="partyItem" data-id="{{_id}}">
                                     <div class="item-content">
                                         <div class="item-inner">
                                             <div class="item-title">{{name}}</div>
@@ -228,6 +265,67 @@
                     </div>
                 {{/each}}
             </div>
+        </div>
+    </div>
+</template>
+
+<template name="coinItemPartyItem">
+    <div data-name="coinItemPartyItem" class="page stacked">
+        <div class="navbar">
+            <div class="navbar-inner navbar">
+                <div class="left"><a href="#" onclick="event.preventDefault();mainView.router.back('/coinItemParty');"
+                                     class="link back"><i class="icon icon-back" style=""></i><span class="ios-only">Назад</span></a>
+                </div>
+                <div class="title">Участник монеты</div>
+                <div class="right"></div>
+            </div>
+        </div>
+        <div class="page-content">
+            {{#with item}}
+                <div class="list inline-labels no-hairlines-md">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-media">
+                                <i class="icon demo-list-icon"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title item-label">Имя</div>
+                                <div class="item-input-wrap">
+                                    {{concact.name}}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-media">
+                                <i class="icon demo-list-icon"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title item-label">Телефон</div>
+                                <div class="item-input-wrap">
+                                    {{concact.phone}}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-media">
+                                <i class="icon demo-list-icon"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title item-label">{{coin.name}}</div>
+                                <div class="item-input-wrap">
+                                    {{wallet.count}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="block">
+                    <p class="row">
+                        <button id="enroll" class="col button button-big button-fill">Зачисление</button>
+                        <button class="col button button-big">Списание</button>
+                    </p>
+                </div>
+            {{/with}}
         </div>
     </div>
 </template>

@@ -9,8 +9,13 @@ Template.profile.events({
                 }
             }
         );
+    },
+
+    'click #logout': () => {
+        Meteor.logout();
+        Router.go('/signin');
     }
-})
+});
 
 Template.profileEdit.passwordEdit = (e) => {
     e.preventDefault();

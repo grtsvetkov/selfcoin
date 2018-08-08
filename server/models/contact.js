@@ -26,24 +26,29 @@ ContactModel = {
                 if (err) {
                     console.log('Twilio send SMS error: ', err);
                 } else {
-                    console.log(message);
+                    //console.log(message);
                 }
             });
         }
 
-        Contact.insert({
-            owner_id: user_id,
-            contact_id: contact._id,
-            name: name,
-            description: description,
-            avatar: avatar
-        });
+        let flag = Contact.findOne({owner_id: user_id, contact_id: contact._id});
+
+        if (!flag) {
+
+            Contact.insert({
+                owner_id: user_id,
+                contact_id: contact._id,
+                name: name,
+                description: description,
+                avatar: avatar,
+                phone: username
+            });
+        }
     },
 
 
-
-    edit: function(contact_id, data) {
-        Contact.update({owner_id: Meteor.userId(), contact_id: contact_id}, { $set: data });
+    edit: function (contact_id, data) {
+        Contact.update({owner_id: Meteor.userId(), contact_id: contact_id}, {$set: data});
     }
 };
 

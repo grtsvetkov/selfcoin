@@ -82,7 +82,7 @@ Template.toolbar.helpers({
         return [
             {name: 'Главная', path: 'index', icon: 'home_fill', isActive: crn == 'index'},
             {name: 'Биржа', path: 'market', icon: 'graph_round_fill', isActive: crn == 'market'},
-            {name: 'Мои монеты', path: 'coinList', icon: 'money_dollar_fill', isActive: crn == 'coin'},
+            {name: 'Кошелёк', path: 'coinList', icon: 'money_dollar_fill', isActive: crn == 'coin'},
             {name: 'Контакты', path: 'contactList', icon: 'persons_fill', isActive: crn == 'contact'},
             {name: 'Профиль', path: 'profile', icon: 'person_fill', isActive: crn == 'profile'},
         ]

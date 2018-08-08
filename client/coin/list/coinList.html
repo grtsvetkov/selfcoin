@@ -1,9 +1,42 @@
 <template name="coinList">
-    {{>navbar}}
+    <div class="navbar">
+        <div class="navbar-inner navbar-current">
+                <div class="left"></div>
+                <div class="title">Кошелёк</div>
+                <div class="right"></div>
+        </div>
+    </div>
     <div data-name="coinList" class="page">
         <div class="page-content">
 
             <a href="{{pathFor 'create'}}" class="margin button button-big margin-vertical">Создать новую монету</a>
+
+            {{#with request_list}}
+                <div class="block-title">
+                    Запрос на участие
+                </div>
+
+                <div class="data-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="label-cell">Название</th>
+                            <th class="numeric-cell">Создатель</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#each .}}
+                            <tr class="{{backgroundByIndex @index}} actionRequest" data-id="{{request_id}}">
+                                <td class="label-cell">{{name}}</td>
+                                <td class="numeric-cell">{{creator}}</td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+            {{/with}}
+
 
             <div class="block-title">
                 Мои монеты
@@ -18,10 +51,34 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{#each list}}
+                    {{#each coin_list}}
                         <tr class="{{backgroundByIndex @index}} goToMoney" data-id="{{_id}}">
                             <td class="label-cell">{{name}}</td>
                             <td class="numeric-cell">{{moneyFormat count}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="block-title">
+                Мой кошелёк
+            </div>
+
+            <div class="data-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="label-cell">Название</th>
+                        <th class="numeric-cell">в наличии</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each wallet_list}}
+                        <tr class="{{backgroundByIndex @index}} goToMoney" data-id="{{_id}}">
+                            <td class="label-cell">{{name}}</td>
+                            <td class="numeric-cell">{{moneyFormat wallet.count}}</td>
                         </tr>
                     {{/each}}
                     </tbody>

@@ -151,7 +151,8 @@ Router.route('/coin/:_id', {
         return [
             Meteor.subscribe('coin', 'only_my'),
             Meteor.subscribe('wallet', 'byMyCoin', this.params._id),
-            Meteor.subscribe('contact', 'only_my')
+            Meteor.subscribe('contact', 'only_my'),
+            Meteor.subscribe('request_enroll', 'only_my', this.params._id)
         ];
     }
 });
@@ -163,7 +164,9 @@ Router.route('/coin', {
 
     waitOn: function () {
         return [
-            Meteor.subscribe('coin', 'only_my')
+            Meteor.subscribe('coin', 'only_my'),
+            Meteor.subscribe('wallet'),
+            Meteor.subscribe('requestForParty')
         ];
     }
 });

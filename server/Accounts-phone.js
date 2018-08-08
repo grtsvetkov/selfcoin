@@ -15,7 +15,7 @@ let PhoneCodes = new Mongo.Collection('phoneCodes'),
             if (err) {
                 console.log('Twilio send SMS error: ', err);
             } else {
-                console.log(message);
+                console.log('code ', code);
             }
         });
     };

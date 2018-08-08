@@ -23,6 +23,7 @@ Template.contactCreate.events({
                 console.log(err);
             } else {
                 Router.go('contactList');
+                appAlert('Контакт успешно добавлен');
             }
         });
     }
