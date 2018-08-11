@@ -48,10 +48,12 @@ WalletModel = {
 
         let twilioClient = require('twilio')(twilioConfig.sid, twilioConfig.token);
 
+        let ifWord = count > 0 ? 'Зачисление' : 'Списание';
+        
         twilioClient.messages.create({
             to: '+' + to_user.username,
             from: twilioConfig.from,
-            body: 'Зачисление "'+description+'"! монета '+owner.name
+            body: ifWord+' "'+description+'"! монета '+owner.name
         }, function (err, message) {
             if (err) {
                 console.log('Twilio send SMS error: ', err);
@@ -69,7 +71,7 @@ WalletModel = {
             return;
         }
         
-        RequestEnroll.insert({coin_id: coin_id, user_id: Meteor.userId(), price: price, name: name});
+        RequestEnroll.insert({coin_id: coin_id, user_id: Meteor.userId(), price: price, name: name, type: 'enroll'});
     },
     
     approveEnroll: function(request_id) {
@@ -89,6 +91,36 @@ WalletModel = {
         WalletModel.enroll(request.coin_id, request.user_id, request.price, request.name);
 
         RequestEnroll.remove({_id: request_id});
+    },
+
+    requestOffs: function(coin_id, price, name) {
+
+        let coin = Coin.findOne({_id: coin_id});
+
+        if (!coin) { //Нет такой монеты
+            return;
+        }
+
+        RequestEnroll.insert({coin_id: coin_id, user_id: Meteor.userId(), price: price, name: name, type: 'offs'});
+    },
+
+    approveOffs: function(request_id) {
+
+        let request = RequestEnroll.findOne({_id: request_id});
+
+        if(!request) {
+            return false;
+        }
+
+        let coin = Coin.findOne({_id: request.coin_id, user_id: Meteor.userId()});
+
+        if (!coin) { //Нет такой монеты
+            return;
+        }
+
+        WalletModel.enroll(request.coin_id, request.user_id, -1* request.price, request.name);
+
+        RequestEnroll.remove({_id: request_id});
     }
 };
 
@@ -98,5 +130,7 @@ WalletModel = {
 Meteor.methods({
     'wallet.enroll': WalletModel.enroll,
     'wallet.requestEnroll': WalletModel.requestEnroll,
-    'wallet.approveEnroll': WalletModel.approveEnroll
+    'wallet.approveEnroll': WalletModel.approveEnroll,
+    'wallet.requestOffs': WalletModel.requestOffs,
+    'wallet.approveOffs': WalletModel.approveOffs
 });

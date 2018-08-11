@@ -1,14 +1,22 @@
+let tmpList1 = ['Адидасы', 'Баскеты', 'Боксы', 'Липтоны', 'Маки', 'Мерсы', 'Найки', 'Рыбчики', 'Трофимчик', 'Шашлычная'];
+
 Template.coinList.helpers({
     'coin_list': function () {
-        return Coin.find({user_id: Meteor.userId()}).fetch();
+        return _.map(Coin.find({user_id: Meteor.userId()}).fetch(), (i, key) => {
+            return _.extend(i, {
+                img: '/asserts/img/' + tmpList1[key] + '.png',
+                isPublic: _.random(0, 1) > 0 ? true : false
+            })
+            
+        })
     },
-
-
     'wallet_list': function () {
         let coin = Coin.find({owner: Meteor.userId()}).fetch();
 
-        _.each(coin, function(i){
+        _.each(coin, function(i, key){
             i.wallet = Wallet.findOne({coin_id: i._id, user_id: Meteor.userId()});
+            i.img = '/asserts/img/' + tmpList1[key] + '.png';
+            i.isPublic = _.random(0, 1) > 0 ? true : false
         });
         
         return coin;

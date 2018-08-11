@@ -131,7 +131,7 @@
                     <div class="block">
                         <p class="row">
                             <button id="enroll" class="col button button-big button-fill">Зачисление</button>
-                            <button class="col button button-big">Списание</button>
+                            <button id="offs" class="col button button-big">Списание</button>
                         </p>
                     </div>
                 {{else}}
@@ -151,6 +151,31 @@
                                 <tbody>
                                 {{#each .}}
                                     <tr class="{{backgroundByIndex @index}} actionEnroll" data-id="{{_id}}">
+                                        <td class="label-cell">{{user.name}}</td>
+                                        <td class="label-cell">{{name}}</td>
+                                        <td class="numeric-cell">{{price}}</td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    {{/with}}
+                    {{#with request_offs}}
+                        <div class="block-title">
+                            Запрос на списание
+                        </div>
+                        <div class="data-table">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th class="label-cell">От участника</th>
+                                    <th class="label-cell">За что</th>
+                                    <th class="numeric-cell">Цена</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each .}}
+                                    <tr class="{{backgroundByIndex @index}} actionOffs" data-id="{{_id}}">
                                         <td class="label-cell">{{user.name}}</td>
                                         <td class="label-cell">{{name}}</td>
                                         <td class="numeric-cell">{{price}}</td>

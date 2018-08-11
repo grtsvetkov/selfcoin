@@ -23,7 +23,25 @@ Template.coinItem.helpers({
     },
 
     'request_enroll': () => {
-        let list = RequestEnroll.find({coin_id: Router.current().params._id}).fetch();
+        let list = RequestEnroll.find({coin_id: Router.current().params._id, type: 'enroll'}).fetch();
+
+        _.each(list, function (item) {
+            console.log(item);
+            if (item.user_id != Meteor.userId()) {
+                item.user = Contact.findOne({owner_id: Meteor.userId(), contact_id: item.user_id});
+                item.isMy = false;
+            } else {
+                item.user = Meteor.user();
+                item.user.name = item.user.username;
+                item.isMy = true;
+            }
+        });
+
+        return list;
+    },
+
+    'request_offs': () => {
+        let list = RequestEnroll.find({coin_id: Router.current().params._id, type: 'offs'}).fetch();
 
         _.each(list, function (item) {
             console.log(item);
@@ -89,6 +107,37 @@ Template.coinItem.events({
         }).open();
     },
 
+    'click .actionOffs': (e) => {
+        e.preventDefault();
+
+        app.actions.create({
+            buttons: [
+                {
+                    text: 'Принять',
+                    onClick: function () {
+                        Meteor.call('wallet.approveOffs', e.currentTarget.dataset.id, function() {
+                            appAlert('Списание прошло успешно!');
+                        });
+                    },
+                    color: 'green'
+                },
+                {
+                    text: 'Отклонить',
+                    onClick: function () {
+
+                    },
+                    color: 'red'
+                },
+                {
+                    text: 'Подробнее',
+                    onClick: function () {
+
+                    }
+                }
+            ]
+        }).open();
+    },
+
     'click #enroll': (e) => {
         e.preventDefault();
 
@@ -106,7 +155,46 @@ Template.coinItem.events({
                     console.log(a.params);
 
                     Meteor.call('wallet.requestEnroll', a.params.coin_id, i.price, i.name, ()=> {
-                        appAlert('Успешное зачисление');
+                        appAlert('Успешный запрос на зачисление');
+                    });
+                }
+            })
+        });
+
+        list.push({
+            text: '<div class="action-small">Другое</div>',
+            color: 'greed'
+        });
+
+        list.push({
+            text: '<div class="action-small">Я передумал</div>',
+            color: 'red'
+        });
+
+        app.actions.create({
+            coin_id: coin._id,
+            buttons: list
+        }).open();
+    },
+
+    'click #offs': (e) => {
+        e.preventDefault();
+
+        let coin = Coin.findOne({_id: Router.current().params._id});
+
+        let list = [];
+
+        _.each(coin.spend, (i) => {
+
+            let name = i.name.length > 25 ? i.name.substring(0, 22) + '...' : i.name;
+
+            list.push({
+                text: '<div class="action-small">' + name + '&#160;&#160;&#160;&#160;&#160;&#160;&#160;' + i.price + '</div>',
+                onClick: function (a) {
+                    console.log(a.params);
+
+                    Meteor.call('wallet.requestOffs', a.params.coin_id, i.price, i.name, ()=> {
+                        appAlert('Успешный запрос на списание');
                     });
                 }
             })

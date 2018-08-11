@@ -49,7 +49,7 @@ Template.AppLayout.rendered = function () {
         name: 'Coined Coin',
         id: 'com.coinedcoin.test',
         clicks: {
-            externalLinks: '*'
+            externalLinks: ':not(.tab-link)'
         },
         view: {
             main: true,
@@ -130,7 +130,7 @@ Template.registerHelper('eq', function (op1, op2) {
     return op1 == op2;
 });
 
-Template.registerHelper('moneyFormat', function (num) {
+Template.registerHelper('niceFormat', function (num) {
     return String(Number(num ? num : 0) + '|').replace(/\d(?=(\d{3})+\|)/g, '$& ').replace('|', '');
 });
 
