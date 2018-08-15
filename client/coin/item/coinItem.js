@@ -1,14 +1,48 @@
 let selected_party_item = new ReactiveVar();
 
+let coin_name = ReactiveVar('Монета'),
+    coin_item = ReactiveVar(),
+    wallet_count = new ReactiveVar(0);
+
 Template.coinItem.rendered = function () {
     selected_party_item.set(false);
+
+    Meteor.setTimeout(() => {
+        Meteor.defer(() => {
+            let mySwiper = app.swiper.create('#coinItem-swiper', {
+                pagination: {
+                    el: '.swiper-pagination',
+                    type: 'bullets',
+                },
+                speed: 400,
+                slidesPerView: 1,
+                direction: 'vertical'
+            });
+        })
+    }, 333);
 };
 
 Template.coinItem.helpers({
+
+    'coin_name': () => {
+        return coin_name.get();
+    },
+
     'item': () => {
         let _id = Router.current().params._id;
 
         let item = Coin.findOne({_id: _id});
+
+        if (!item) {
+            console.log('ERROR');
+            return;
+        }
+
+        coin_name.set(item.name);
+
+        let w = Wallet.findOne({user_id: Meteor.userId(), coin_id: _id});
+
+        wallet_count.set(w.count);
 
         if (item.user_id != Meteor.userId()) {
             item.user = Contact.findOne({owner_id: Meteor.userId(), contact_id: item.user_id});
@@ -19,6 +53,7 @@ Template.coinItem.helpers({
             item.isMy = true;
         }
 
+        coin_item.set(item);
         return item;
     },
 
@@ -76,6 +111,35 @@ Template.coinItem.events({
         );
     },
 
+    'click .info-icon': (e) => {
+
+        e.preventDefault();
+
+        let dataset = e.currentTarget.dataset;
+
+        let coin = coin_item.get();
+
+        app.popup.create({
+            content: `<div id="advInfoPopup" class="popup">
+            <div class="navbar">
+            <div class="navbar-inner navbar-current">
+            <div class="left"><a href="#" onclick="app.popup.close(\'#advInfoPopup\', true)"
+                                     class="link back"><i class="icon icon-back" style=""></i></a></div>
+            <div class="title">` + coin[dataset.type][dataset.index].name + `</div>
+            <div class="right"></div>
+            </div>
+            </div>
+            <div class="block">
+            <p>` + coin.name + '</p>' +
+            '<p>' + coin[dataset.type][dataset.index].name + '</p>' +
+            '<p>' + coin[dataset.type][dataset.index].price + '</p>' +
+            '<p>' + coin[dataset.type][dataset.index].description + '</p>' +
+            '</div>' +
+            '</div>'
+        }).open()
+    },
+
+
     'click .actionEnroll': (e) => {
         e.preventDefault();
 
@@ -84,9 +148,9 @@ Template.coinItem.events({
                 {
                     text: 'Принять',
                     onClick: function () {
-                        Meteor.call('wallet.approveEnroll', e.currentTarget.dataset.id, function() {
-                         appAlert('Зачисление прошло успешно!');
-                         });
+                        Meteor.call('wallet.approveEnroll', e.currentTarget.dataset.id, function () {
+                            appAlert('Зачисление прошло успешно!');
+                        });
                     },
                     color: 'green'
                 },
@@ -115,7 +179,7 @@ Template.coinItem.events({
                 {
                     text: 'Принять',
                     onClick: function () {
-                        Meteor.call('wallet.approveOffs', e.currentTarget.dataset.id, function() {
+                        Meteor.call('wallet.approveOffs', e.currentTarget.dataset.id, function () {
                             appAlert('Списание прошло успешно!');
                         });
                     },
@@ -138,36 +202,30 @@ Template.coinItem.events({
         }).open();
     },
 
-    'click #enroll': (e) => {
-        e.preventDefault();
+    'click .enroll': (e) => { //Запрос на зачисление
 
-        let coin = Coin.findOne({_id: Router.current().params._id});
+        if (e.isDefaultPrevented()) {
+            return;
+        }
+
+        let data = e.currentTarget.dataset,
+            coin = Coin.findOne({_id: Router.current().params._id});
 
         let list = [];
 
-        _.each(coin.condition, (i) => {
 
-            let name = i.name.length > 25 ? i.name.substring(0, 22) + '...' : i.name;
+        list.push({
+            text: '<div class="action-small">Запрос на зачисление "' + data.name + '"&#160;&#160;&#160;&#160;&#160;&#160;&#160; за ' + data.price + '</div>',
+            onClick: function (a) {
 
-            list.push({
-                text: '<div class="action-small">' + name + '&#160;&#160;&#160;&#160;&#160;&#160;&#160;' + i.price + '</div>',
-                onClick: function (a) {
-                    console.log(a.params);
-
-                    Meteor.call('wallet.requestEnroll', a.params.coin_id, i.price, i.name, ()=> {
-                        appAlert('Успешный запрос на зачисление');
-                    });
-                }
-            })
+                Meteor.call('wallet.requestEnroll', coin._id, data.price, data.name, ()=> {
+                    appAlert('Успешный запрос на зачисление');
+                });
+            }
         });
 
         list.push({
-            text: '<div class="action-small">Другое</div>',
-            color: 'greed'
-        });
-
-        list.push({
-            text: '<div class="action-small">Я передумал</div>',
+            text: '<div class="action-small">Отмена</div>',
             color: 'red'
         });
 
@@ -177,36 +235,41 @@ Template.coinItem.events({
         }).open();
     },
 
-    'click #offs': (e) => {
-        e.preventDefault();
+    'click .offs': (e) => {  //Запрос на списание
 
-        let coin = Coin.findOne({_id: Router.current().params._id});
+        if (e.isDefaultPrevented()) {
+            return;
+        }
+
+        let data = e.currentTarget.dataset,
+            coin = Coin.findOne({_id: Router.current().params._id});
 
         let list = [];
 
-        _.each(coin.spend, (i) => {
-
-            let name = i.name.length > 25 ? i.name.substring(0, 22) + '...' : i.name;
-
+        if (data.price <= wallet_count.get()) {
             list.push({
-                text: '<div class="action-small">' + name + '&#160;&#160;&#160;&#160;&#160;&#160;&#160;' + i.price + '</div>',
+                text: '<div class="action-small">Запрос на списание "' + data.name + '"&#160;&#160;&#160;&#160;&#160;&#160;&#160; за ' + data.price + '</div>',
                 onClick: function (a) {
-                    console.log(a.params);
 
-                    Meteor.call('wallet.requestOffs', a.params.coin_id, i.price, i.name, ()=> {
+                    Meteor.call('wallet.requestOffs', coin._id, data.price, data.name, ()=> {
                         appAlert('Успешный запрос на списание');
                     });
                 }
             })
-        });
+        } else {
+            list.push({
+                text: '<div class="action-small">Добавить в цели "' + data.name + '"&#160;&#160;&#160;&#160;&#160;&#160;&#160; за ' + data.price + '</div>',
+                onClick: function (a) {
+
+                    Meteor.call('wallet.requestOffs', coin._id, data.price, data.name, ()=> {
+                        appAlert('Успешный запрос на списание');
+                    });
+                }
+            })
+        }
 
         list.push({
-            text: '<div class="action-small">Другое</div>',
-            color: 'greed'
-        });
-
-        list.push({
-            text: '<div class="action-small">Я передумал</div>',
+            text: '<div class="action-small">Отмена</div>',
             color: 'red'
         });
 
@@ -384,7 +447,7 @@ Template.coinItemPartyItem.events({
         });
 
         list.push({
-            text: '<div class="action-small">Я передумал</div>',
+            text: '<div class="action-small">Отмена</div>',
             color: 'red'
         });
 

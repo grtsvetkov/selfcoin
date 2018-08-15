@@ -77,12 +77,13 @@ Router.configure({
 
 
 Router.route('/', {
-    title: 'Подборка монет',
+    title: 'Лента',
     name: 'index',
 
     waitOn: function () {
         return [
-            Meteor.subscribe('coin', 'only_my')
+            Meteor.subscribe('coin', 'only_my'),
+            Meteor.subscribe('wallet'),
         ];
     }
 });
@@ -95,42 +96,6 @@ Router.route('/market', {
 Router.route('/profile', {
     title: 'Профиль',
     name: 'profile'
-});
-
-Router.route('/contact/create', {
-    title: 'Контакты',
-    name: 'contactCreate',
-    menu: 'contact',
-
-    waitOn: function () {
-        return [
-            Meteor.subscribe('contact', 'only_my')
-        ];
-    }
-});
-
-Router.route('/contact/:_id', {
-    title: 'Контакты',
-    name: 'contactItem',
-    menu: 'contact',
-
-    waitOn: function () {
-        return [
-            Meteor.subscribe('contact', 'only_my')
-        ];
-    }
-});
-
-Router.route('/contact', {
-    title: 'Контакты',
-    name: 'contactList',
-    menu: 'contact',
-
-    waitOn: function () {
-        return [
-            Meteor.subscribe('contact', 'only_my')
-        ];
-    }
 });
 
 Router.route('/welcome', {
@@ -166,7 +131,8 @@ Router.route('/coin', {
         return [
             Meteor.subscribe('coin', 'only_my'),
             Meteor.subscribe('wallet'),
-            Meteor.subscribe('requestForParty')
+            Meteor.subscribe('requestForParty'),
+            Meteor.subscribe('request_enroll')
         ];
     }
 });

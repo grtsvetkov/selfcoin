@@ -1,3 +1,29 @@
+.rim-toolbar {
+    top: 43px;
+}
+
+div.tabs-swipeable-wrap.rim-tabs.swiper-container.swiper-container-ios {
+    margin-top: 25px;
+}
+
+.list .item-after.info-icon {
+    margin-left: 10px;
+    vertical-align: text-top;
+    height: 30px;
+}
+
+.info-icon .icon {
+    margin-left: 10px;
+    font-size: 1em;
+    position: relative;
+    top: -9px;
+    right: -7px;
+}
+
+.toolbar .toolbar-inner {
+    justify-content: space-around;
+}
+
 .demo-card-header-pic .card-header {
     height: 40vw;
     background-size: cover;
@@ -69,12 +95,9 @@
     font-size: 1.6em;
 }
 
-
 .actions-group .action-small {
     font-size: 0.8em;
 }
-
-
 
 /***********************welcome**************************/
 .welcome {
@@ -252,50 +275,128 @@
     }
 }
 
-.page[data-name=index] .page-content.tab{
-    padding-bottom: 40px;
+#important {
+    padding-top: 7px;
 }
 
-.index-list:before, .index-list:after {
+#important .swiper-slide {
+    overflow: hidden;
+    text-align: center;
+}
+
+#important .swiper-slide img, #important .swiper-slide svg {
+    height: 40px;
+    text-align: center;
+}
+
+#important .swiper-slide span {
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    margin: 0 5px;
+    white-space: nowrap;
+}
+
+.page[data-name=coinList] .list {
+    margin: 15px 0;
+}
+
+.coin-list:before, .index-list:after, .coin-list:before, .index-list:before {
     content: none !important;
 }
 
-.index-list li .item-content {
+.coin-list li .item-content {
 
 }
 
-.index-list li .item-content .item-media {
+.coin-list li .item-content .item-media {
     width: 60px;
     text-align: left;
 }
 
-.index-list li .item-content .item-media .icon {
+.coin-list li .item-content .item-media .icon {
     height: 50px;
 
 }
 
-.index-list li .item-content .item-inner:after {
+.coin-list li .item-content .item-inner:after, .coin-list li .item-content .item-inner:before {
     content: none;
 }
 
-.index-list li .item-content .item-inner .item-title p {
+.coin-list li .item-content .item-inner .item-title p {
     font-size: 20px;
     margin: 0;
 }
 
-.index-list li .item-content .item-inner .item-title span {
+.coin-list li .item-content .item-inner .item-title p.isMy:before {
+    content: '♛';
+    colo1r: yellow;
+}
+
+.coin-list li .item-content .item-inner .item-title span {
     font-size: 11px;
 }
 
-.index-list li .item-content .item-inner .item-after{
+.coin-list li .item-content .item-inner .item-after {
     display: block;
 }
 
-.index-list li .item-content .item-inner .item-after .t1{
+.coin-list li .item-content .item-inner .item-after .t1 {
     font-size: 11px;
     display: block;
 }
 
-.index-list li .item-content .item-inner .item-after .t2{
+.coin-list li .item-content .item-inner .item-after .t2 {
     display: block;
+}
+
+#coinItem-swiper > .swiper-container-vertical > .swiper-pagination-bullets {
+
+    -webkit-transform: translate3d(0px, -50%, 0);
+    transform: translate3d(0px, -50%, 0);
+    margin-bottom: 10px;
+}
+
+#coinItem-swiper > div.swiper-pagination.swiper-pagination-bullets > span.swiper-pagination-bullet {
+    margin: 12px 8px;
+}
+
+#coinItem-swiper .swiper-pagination {
+    position: absolute;
+    text-align: center;
+    -webkit-transition: .3s opacity;
+    transition: .3s opacity;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    z-index: 10;
+    top: 10px !important;
+    left: 94% !important;
+}
+
+
+.notice-list li {
+    border-bottom: 1px solid #e4e4e4;
+}
+
+.notice-list .item-content .item-media img {
+    height: 40px;
+    width: 40px;
+}
+
+.notice-list .item-content .item-action {
+    width: 100px;
+    margin: 0 10px;
+}
+
+.notice-list .item-content .item-inner {
+    text-align: right;
+}
+
+.notice-list .item-content .item-inner p {
+    width: 100%;
+}
+
+
+.notice-list .item-content.description div {
+    font-size: 80%;
 }

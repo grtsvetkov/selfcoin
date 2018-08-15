@@ -80,11 +80,10 @@ Template.toolbar.helpers({
         let crn = currentRouterName.get();
 
         return [
-            {name: 'Главная', path: 'index', icon: 'home_fill', isActive: crn == 'index'},
-            {name: 'Биржа', path: 'market', icon: 'graph_round_fill', isActive: crn == 'market'},
-            {name: 'Кошелёк', path: 'coinList', icon: 'money_dollar_fill', isActive: crn == 'coin'},
-            {name: 'Контакты', path: 'contactList', icon: 'persons_fill', isActive: crn == 'contact'},
-            {name: 'Профиль', path: 'profile', icon: 'person_fill', isActive: crn == 'profile'},
+            {name: 'Главная', path: 'index', icon: 'star', isActive: crn == 'index'},
+            {name: 'Биржа', path: 'market', icon: 'graph_round', isActive: crn == 'market'},
+            {name: 'Кошелёк', path: 'coinList', icon: 'money_dollar', isActive: crn == 'coin'},
+            {name: 'Профиль', path: 'profile', icon: 'person', isActive: crn == 'profile'},
         ]
     }
 });
@@ -94,6 +93,38 @@ Template.inputMask.rendered = function () {
 };
 
 // =============== GLOBAL FUNCTIONS
+
+$.fn.animateRotate = function(angle, duration, easing, complete) {
+    return this.each(function() {
+        var $elem = $(this);
+
+        $({deg: 0}).animate({deg: angle}, {
+            duration: duration,
+            easing: easing,
+            step: function(now) {
+                $elem.css({
+                    transform: 'rotate(' + now + 'deg)'
+                });
+            },
+            complete: complete || $.noop
+        });
+    });
+};
+
+noticeBell = function() {
+    $('#noticeBell').animateRotate(30);
+    Meteor.setTimeout(() =>{
+        $('#noticeBell').animateRotate(0);
+        Meteor.setTimeout(() =>{
+            $('#noticeBell').animateRotate(-30);
+            Meteor.setTimeout(() => {
+                $('#noticeBell').animateRotate(0);
+            }, 200)
+        }, 200)
+    }, 200)
+
+
+};
 
 appAlert = function (text) {
     app.notification.create({
@@ -125,6 +156,11 @@ getDataFromStruct = function (struct) {
 // =============== GLOBAL FUNCTIONS
 
 // =============== GLOBAL HELPERS
+
+
+Template.registerHelper('concat', function (op1, op2) {
+    return op1 + op2;
+});
 
 Template.registerHelper('eq', function (op1, op2) {
     return op1 == op2;

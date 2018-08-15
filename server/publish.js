@@ -12,11 +12,12 @@ Meteor.startup(function () {
 
 
     Meteor.publish('wallet', function (mode, coin_id) {
+
         if (this.userId) {
             switch (mode) {
                 case 'byMyCoin':
 
-                    let owner = Coin.findOne({_id: coin_id, user_id: this.userId});
+                    let owner = Coin.findOne({_id: coin_id, owner: this.userId});
 
                     if (!owner) { //Нет такой монеты
                         return [];
@@ -36,13 +37,22 @@ Meteor.startup(function () {
     Meteor.publish('request_enroll', function (mode, coin_id) {
         if (this.userId) {
             switch (mode) {
-                default:
 
+                case 'only_my':
                     let coin = Coin.findOne({_id: coin_id, user_id: this.userId});
 
                     if (coin) {
                         return RequestEnroll.find({coin_id: coin_id});
                     }
+                    break;
+
+                default:
+
+                    let list = _.map(Coin.find({user_id: this.userId}).fetch(), (i) => {
+                        return i._id;
+                    });
+
+                    return RequestEnroll.find({coin_id: {$in: list}});
             }
         }
 

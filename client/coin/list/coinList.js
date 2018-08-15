@@ -1,32 +1,35 @@
 let tmpList1 = ['Адидасы', 'Баскеты', 'Боксы', 'Липтоны', 'Маки', 'Мерсы', 'Найки', 'Рыбчики', 'Трофимчик', 'Шашлычная'];
 
 Template.coinList.helpers({
-    'coin_list': function () {
-        return _.map(Coin.find({user_id: Meteor.userId()}).fetch(), (i, key) => {
-            return _.extend(i, {
-                img: '/asserts/img/' + tmpList1[key] + '.png',
-                isPublic: _.random(0, 1) > 0 ? true : false
-            })
-            
-        })
-    },
     'wallet_list': function () {
         let coin = Coin.find({owner: Meteor.userId()}).fetch();
 
         _.each(coin, function(i, key){
             i.wallet = Wallet.findOne({coin_id: i._id, user_id: Meteor.userId()});
             i.img = '/asserts/img/' + tmpList1[key] + '.png';
-            i.isPublic = _.random(0, 1) > 0 ? true : false
+            i.isPublic = _.random(0, 1) > 0 ? true : false;
+            i.isMy = i.user_id == Meteor.userId();
         });
         
         return coin;
+    },
+
+    'notice': function() {
+        let count = 0;
+
+        _.each(Coin.find({user_id: Meteor.userId()}).fetch(), function(i){
+            count += RequestEnroll.find({coin_id: i._id}).count();
+        });
+
+        return count;
     },
 
     'request_list': function() {
         let coin = Coin.find({request: Meteor.userId()}).fetch();
 
         _.each(coin, function(i){
-            let request = RequestForParty.findOne({from_user: i.user_id}); 
+            let request = RequestForParty.findOne({from_user: i.user_id});
+
             i.creator = request.name;
             i.request_id = request._id;
         });
@@ -40,6 +43,19 @@ Template.coinList.helpers({
 });
 
 Template.coinList.events({
+
+    'click #noticeBell': (e) => {
+        e.preventDefault();
+        mainView.router.navigate({
+                url: '/coinNotice',
+                route: {
+                    path: '/coinNotice',
+                    pageName: 'coinNotice'
+                }
+            }
+        );
+    },
+
     'click .goToMoney': (e) => {
         let _id = e.currentTarget.dataset.id;
 

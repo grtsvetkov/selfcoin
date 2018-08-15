@@ -1,132 +1,144 @@
 <template name="coinItem">
 
-    <div data-name="coinItem" class="page">
+    <div data-name="coinItem" class="page  bg-color-white">
         <div class="navbar">
             <div class="navbar-inner navbar-current">
                 <div class="left"></div>
-                <div class="title">Монета</div>
+                <div class="title">{{coin_name}}</div>
                 <div class="right"></div>
             </div>
         </div>
-        <div class="page-content">
 
-            {{#with item}}
-                <div class="block-title">
-                    <img src="https://picsum.photos/70/70/?random" align="left" style="margin-right: 1em">
-                    <h3 style="vertical-align: middle">{{name}}</h3>
+
+
+        {{#with item}}
+            <div class="toolbar tabbar rim-toolbar">
+                <div class="toolbar-inner">
+                    <a href="#tab-1" class="tab-link tab-link-active">Главная</a>
+                    <a href="#tab-2" class="tab-link">Зачисление</a>
+                    <a href="#tab-3" class="tab-link">Списание</a>
                 </div>
-
-                <div class="block">
-                    <div class="list">
-                        <ul>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            <div class="item-header">Создатель</div>
-                                            {{user.name}}
+            </div>
+            <div class="tabs-swipeable-wrap rim-tabs">
+                <div class="tabs">
+                    <div id="tab-1" class="page-content tab tab-active">
+                        <div class="block-title">
+                            <img src="https://picsum.photos/70/70/?random" align="left" style="margin-right: 1em">
+                            <h3 style="vertical-align: middle">{{name}}</h3>
+                        </div>
+                        <div class="block">
+                            <div class="list">
+                                <ul>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                    <div class="item-header">Создатель</div>
+                                                    {{user.name}}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            <div class="item-header">Видимость</div>
-                                            {{#if public}}
-                                                Публичная
-                                            {{else}}
-                                                Не публичная
-                                            {{/if}}
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                    <div class="item-header">Видимость</div>
+                                                    {{#if public}}
+                                                        Публичная
+                                                    {{else}}
+                                                        Не публичная
+                                                    {{/if}}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">
-                                            <div class="item-header">Монет в обращении</div>
-                                            {{moneyFormat count}}
+                                    </li>
+                                    <li>
+                                        <div class="item-content item-link">
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                    <div class="item-header">Монет в обращении</div>
+                                                    {{niceFormat count}}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="accordion-item">
-                                <div class="item-content item-link">
-                                    <div class="item-inner">
-                                        <div class="item-title">Краткое описание</div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item-content">
-                                    <div class="block">
-                                        <p>
-                                            {{description}}
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="accordion-item">
-                                <div class="item-content item-link">
-                                    <div class="item-inner">
-                                        <div class="item-title">Как можно заработать</div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item-content">
-                                    <div class="block">
-                                        <ul>
-                                            {{#each condition}}
-                                                <li>
-                                                    <div class="item-content">
-                                                        <div class="item-inner">
-                                                            <div class="item-title">{{name}}</div>
-                                                            <div class="item-after">{{moneyFormat price}}</div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            {{/each}}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="accordion-item">
-                                <div class="item-content item-link">
-                                    <div class="item-inner">
-                                        <div class="item-title">На что можно потратить</div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item-content">
-                                    <div class="block">
-                                        <ul>
-                                            {{#each spend}}
-                                                <li>
-                                                    <div class="item-content">
-                                                        <div class="item-inner">
-                                                            <div class="item-media"><img
-                                                                    src="https://picsum.photos/30/30/?random"
-                                                                    style="margin-right: 10px"></div>
-                                                            <div class="item-title">{{name}}</div>
-                                                            <div class="item-after">{{moneyFormat price}}</div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            {{/each}}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="{{#if isMy}}goTo_coinItemParty{{/if}}">
-                                <div class="item-content {{#if isMy}}item-link{{/if}}">
-                                    <div class="item-inner">
-                                        <div class="item-title">Участники ({{owner.length}})</div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                                    </li>
+                                    <li class="{{#if isMy}}goTo_coinItemParty{{/if}}">
+                                        <div class="item-content {{#if isMy}}item-link{{/if}}">
+                                            <div class="item-inner">
+                                                <div class="item-title">Участники ({{owner.length}})</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                    <div class="item-header">О монете</div>
+                                                    {{description}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="page-content tab">
+                        <div class="list">
+                            <ul>
+                                {{#each condition}}
+                                    <li class="enroll" data-coint_id="{{_id}}" data-price="{{price}}"
+                                        data-name="{{name}}">
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-media"><img
+                                                        src="https://picsum.photos/30/30/?random"
+                                                        style="margin-right: 10px"></div>
+                                                <div class="item-title">{{name}}</div>
+                                                <div class="item-after">{{niceFormat price}}</div>
+                                                <div class="item-after info-icon" data-index="{{@index}}"
+                                                     data-type="condition"><i class="icon f7-icons">info</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="tab-3" class="page-content tab">
+                        <div class="list">
+                            <ul>
+                                {{#each spend}}
+                                    <li class="offs" data-coint_id="{{_id}}" data-price="{{price}}"
+                                        data-name="{{name}}">
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-media"><img
+                                                        src="https://picsum.photos/30/30/?random"
+                                                        style="margin-right: 10px"></div>
+                                                <div class="item-title">{{name}}</div>
+                                                <div class="item-after">{{niceFormat price}}</div>
+                                                <div class="item-after info-icon" data-index="{{@index}}"
+                                                     data-type="condition"><i class="icon f7-icons">info</i></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
                     </div>
                 </div>
+            </div>
+        {{/with}}
+
+
+
+
+
+        {{#with item}}
+            <!--
                 {{#unless isMy}}
                     <div class="block">
                         <p class="row">
@@ -135,7 +147,7 @@
                         </p>
                     </div>
                 {{else}}
-                    {{#with request_enroll}}
+                {{#with request_enroll}}
                         <div class="block-title">
                             Запрос на зачисление
                         </div>
@@ -160,7 +172,7 @@
                             </table>
                         </div>
                     {{/with}}
-                    {{#with request_offs}}
+                {{#with request_offs}}
                         <div class="block-title">
                             Запрос на списание
                         </div>
@@ -185,9 +197,9 @@
                             </table>
                         </div>
                     {{/with}}
-                {{/unless}}
-            {{/with}}
-        </div>
+            {{/unless}}
+                -->
+        {{/with}}
     </div>
     {{>coinItemParty}}
     {{>coinItemPartyAdd}}
@@ -200,7 +212,7 @@
         <div class="navbar">
             <div class="navbar-inner navbar">
                 <div class="left"><a href="#" onclick="event.preventDefault();mainView.router.back('/coinItem');"
-                                     class="link back"><i class="icon icon-back" style=""></i><span class="ios-only">Назад</span></a>
+                                     class="link back"><i class="icon icon-back" style=""></i></a>
                 </div>
                 <div class="title">Участники монеты</div>
                 <div class="right">
@@ -254,7 +266,7 @@
         <div class="navbar">
             <div class="navbar-inner navbar">
                 <div class="left"><a href="#" onclick="event.preventDefault();mainView.router.back('/coinItemParty');"
-                                     class="link back"><i class="icon icon-back" style=""></i><span class="ios-only">Назад</span></a>
+                                     class="link back"><i class="icon icon-back" style=""></i></a>
                 </div>
                 <div class="title">Добавить участника монеты из контактов</div>
                 <div class="right"></div>
@@ -299,7 +311,7 @@
         <div class="navbar">
             <div class="navbar-inner navbar">
                 <div class="left"><a href="#" onclick="event.preventDefault();mainView.router.back('/coinItemParty');"
-                                     class="link back"><i class="icon icon-back" style=""></i><span class="ios-only">Назад</span></a>
+                                     class="link back"><i class="icon icon-back" style=""></i></a>
                 </div>
                 <div class="title">Участник монеты</div>
                 <div class="right"></div>

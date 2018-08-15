@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/main.css">
 </head>
 
-<body>
+<body class="">
 </body>
 
 <template name="AppLayout">
@@ -38,7 +38,7 @@
         <div class="toolbar-inner">
             {{#each list}}
                 <a href="{{pathFor path}}" class="link {{#if isActive}}tab-link-active{{/if}}">
-                    <i class="icon f7-icons">{{icon}}</i>
+                    <i class="icon f7-icons">{{#if isActive}}{{concat icon '_fill'}} {{else}}{{icon}}{{/if}}</i>
                     <!--span class="tabbar-label">{{name}}</span-->
                 </a>
             {{/each}}

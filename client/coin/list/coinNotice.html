@@ -1,0 +1,41 @@
+<template name="coinNotice">
+    <div data-name="coinNotice" class="page stacked">
+        <div class="navbar">
+            <div class="navbar-inner navbar">
+                <div class="left"><a href="#" onclick="event.preventDefault();mainView.router.back('/coinList');"
+                                     class="link back"><i class="icon icon-back" style=""></i></a>
+                </div>
+                <div class="title">Уведомления</div>
+                <div class="right"></div>
+            </div>
+        </div>
+        <div class="page-content">
+
+            <div class="list">
+                <ul class="notice-list">
+                    {{#each notice_list}}
+                        <li onclick="">
+                            <div class="item-content">
+                                <div class="item-media">
+                                    <img src="{{request.img}}" class="icon"/>
+                                </div>
+                                <div class="item-action" data-id="{{request._id}}" data-type="{{request.type}}">
+                                     ========
+                                </div>
+                                <div class="item-media">
+                                    <img src="{{coin.img}}" class="icon"/>
+                                </div>
+                                <div class="item-inner">
+                                    <p>{{request.price}}</p>
+                                </div>
+                            </div>
+                            <div class="item-content description">
+                                <div>{{{request.text}}}</div>
+                            </div>
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>

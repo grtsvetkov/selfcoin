@@ -7,6 +7,8 @@ let PhoneCodes = new Mongo.Collection('phoneCodes'),
 
         PhoneCodes.update({phone: phone}, {$set: {code: code}}, {upsert: true});
 
+        console.log(phone, 'code ', code);
+
         twilioClient.messages.create({
             to: '+' + phone,
             from: twilioConfig.from,
@@ -15,7 +17,7 @@ let PhoneCodes = new Mongo.Collection('phoneCodes'),
             if (err) {
                 console.log('Twilio send SMS error: ', err);
             } else {
-                console.log('code ', code);
+
             }
         });
     };
