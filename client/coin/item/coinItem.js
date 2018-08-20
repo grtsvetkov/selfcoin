@@ -1,18 +1,22 @@
 let selected_party_item = new ReactiveVar();
 
-let coin_name = ReactiveVar('Монета'),
+let edit_status = new ReactiveVar(false),
+    coin_name = ReactiveVar('Монета'),
     coin_item = ReactiveVar(),
     wallet_count = new ReactiveVar(0);
 
 Template.coinItem.rendered = function () {
+
+    edit_status.set(false);
+
     selected_party_item.set(false);
 
     Meteor.setTimeout(() => {
         Meteor.defer(() => {
-            let mySwiper = app.swiper.create('#coinItem-swiper', {
+            app.swiper.create('#coinItem-swiper', {
                 pagination: {
                     el: '.swiper-pagination',
-                    type: 'bullets',
+                    type: 'bullets'
                 },
                 speed: 400,
                 slidesPerView: 1,
@@ -23,6 +27,10 @@ Template.coinItem.rendered = function () {
 };
 
 Template.coinItem.helpers({
+    
+    'editStatus': () => {
+        return edit_status.get();
+    },
 
     'coin_name': () => {
         return coin_name.get();
@@ -99,6 +107,15 @@ Template.coinItem.helpers({
 });
 
 Template.coinItem.events({
+    
+    'click #setEditStatus': (e) => {
+         edit_status.set(true);
+    },
+
+    'click #saveEditStatus': (e) => {
+        edit_status.set(false);
+    },
+    
     'click .goTo_coinItemParty': (e) => {
         e.preventDefault();
         mainView.router.navigate({
@@ -407,7 +424,7 @@ Template.coinItemPartyAdd.events({
 
 
 Template.coinItemPartyItemCreate.events({
-    'click #create': function() {
+    'click #create': function () {
 
         let phone = $('#phone').val().replace(/\D+/g, '');
 
@@ -421,12 +438,12 @@ Template.coinItemPartyItemCreate.events({
             phone: {val: phone, field: 'Телефон'}
         });
 
-        if(data === false) {
+        if (data === false) {
             return;
         }
 
-        Meteor.call('contact.add', data.phone, data.name, 'Описание контакта', '',  function(err, data){
-            if(err) {
+        Meteor.call('contact.add', data.phone, data.name, 'Описание контакта', '', function (err, data) {
+            if (err) {
                 appAlert(err.reason);
                 console.log(err);
             } else {
@@ -435,7 +452,7 @@ Template.coinItemPartyItemCreate.events({
                     mainView.router.back('/coinItemParty');
                     appAlert('Запрос на добавление отправле участнику');
                 });
-                
+
             }
         });
     }

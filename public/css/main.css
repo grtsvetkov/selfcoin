@@ -374,6 +374,14 @@ div.tabs-swipeable-wrap.rim-tabs.swiper-container.swiper-container-ios {
 }
 
 
+.coin-description .item-header {
+    margin-bottom: 10px;
+}
+
+.coin-description .item-content {
+    white-space: normal;
+}
+
 .notice-list li {
     border-bottom: 1px solid #e4e4e4;
 }

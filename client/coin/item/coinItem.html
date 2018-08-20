@@ -1,17 +1,21 @@
 <template name="coinItem">
 
     <div data-name="coinItem" class="page  bg-color-white">
-        <div class="navbar">
-            <div class="navbar-inner navbar-current">
-                <div class="left"></div>
-                <div class="title">{{coin_name}}</div>
-                <div class="right"></div>
-            </div>
-        </div>
-
-
-
         {{#with item}}
+            <div class="navbar">
+                <div class="navbar-inner navbar-current">
+                    <div class="left"><a href="#" onclick="event.preventDefault();Router.go('coinList')"
+                                         class="link back"><i class="icon icon-back" style=""></i></a></div>
+                    <div class="title">{{coin_name}}</div>
+                    <div class="right">{{#if isMy}}
+                        {{#unless editStatus}}<i class="icon f7-icons" id="setEditStatus">compose</i>
+                        {{else}}
+                            <span id="saveEditStatus">Готово</span>
+                        {{/unless}}
+                    {{/if}}</div>
+                </div>
+            </div>
+
             <div class="toolbar tabbar rim-toolbar">
                 <div class="toolbar-inner">
                     <a href="#tab-1" class="tab-link tab-link-active">Главная</a>
@@ -73,10 +77,11 @@
                                     <li>
                                         <div class="item-content">
                                             <div class="item-inner">
-                                                <div class="item-title">
+                                                <div class="item-title coin-description">
                                                     <div class="item-header">О монете</div>
-                                                    {{description}}
+                                                    <div class="item-content">{{description}}</div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </li>
