@@ -382,6 +382,14 @@ div.tabs-swipeable-wrap.rim-tabs.swiper-container.swiper-container-ios {
     white-space: normal;
 }
 
+.item-inner .item-after input[name='condition_price'] {
+    width: 80px;
+}
+
+#add_fake_condition, #add_fake_spend {
+    margin-top: 35px;
+}
+
 .notice-list li {
     border-bottom: 1px solid #e4e4e4;
 }

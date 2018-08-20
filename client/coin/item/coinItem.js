@@ -65,6 +65,17 @@ Template.coinItem.helpers({
         return item;
     },
 
+    'condition': () => {
+        let ci = coin_item.get();
+        return ci ? ci.condition : null;
+    },
+
+
+    'spend': () => {
+        let ci = coin_item.get();
+        return ci ? ci.spend : null;
+    },
+
     'request_enroll': () => {
         let list = RequestEnroll.find({coin_id: Router.current().params._id, type: 'enroll'}).fetch();
 
@@ -112,8 +123,69 @@ Template.coinItem.events({
          edit_status.set(true);
     },
 
+    'click #add_fake_condition': () => {
+
+        let ci = coin_item.get();
+
+        if(ci) {
+            ci.condition.push({name: '', price: 0, description: ''})
+        }
+
+        coin_item.set(ci);
+    },
+
+    'click #add_fake_spend': () => {
+
+        let ci = coin_item.get();
+
+        if(ci) {
+            ci.spend.push({name: '', price: 0, description: ''})
+        }
+
+        coin_item.set(ci);
+    },
     'click #saveEditStatus': (e) => {
+        
+        let condition = [],
+            spend = [],
+            name = $('#edit_name').val(),
+            description = $('#edit_description').val();
+        
+        if(!name) {
+            appAlert('Введите название монеты');
+            return;
+        }
+
+        if(!description) {
+            appAlert('Введите описание монеты');
+            return;
+        }
+
+        $('.condition_edit').each(function() {
+            let name = $(this).find('input[name="condition_name"]').val(),
+                price = $(this).find('input[name="condition_price"]').val();
+
+            console.log(name, price);
+
+            if(name && price) {
+                condition.push({name: name, price: price, description: ''});
+            }
+        });
+
+        $('.spend_edit').each(function() {
+            let name = $(this).find('input[name="spend_name"]').val(),
+                price = $(this).find('input[name="spend_price"]').val();
+
+            if(name && price) {
+                spend.push({name: name, price: price, description: ''});
+            }
+        });
+
+
         edit_status.set(false);
+        Meteor.call('coin.edit', Router.current().params._id, {name: name, description: description, condition: condition, spend: spend}, (err) => {
+            appAlert('Изменения успешно сохранены');
+        });
     },
     
     'click .goTo_coinItemParty': (e) => {

@@ -4,8 +4,11 @@
         {{#with item}}
             <div class="navbar">
                 <div class="navbar-inner navbar-current">
-                    <div class="left"><a href="#" onclick="event.preventDefault();Router.go('coinList')"
-                                         class="link back"><i class="icon icon-back" style=""></i></a></div>
+                    <div class="left">
+                        {{#unless editStatus}}<a href="#" onclick="event.preventDefault();Router.go('coinList')"
+                                                 class="link back"><i class="icon icon-back" style=""></i></a>
+                        {{/unless}}
+                    </div>
                     <div class="title">{{coin_name}}</div>
                     <div class="right">{{#if isMy}}
                         {{#unless editStatus}}<i class="icon f7-icons" id="setEditStatus">compose</i>
@@ -28,7 +31,10 @@
                     <div id="tab-1" class="page-content tab tab-active">
                         <div class="block-title">
                             <img src="https://picsum.photos/70/70/?random" align="left" style="margin-right: 1em">
-                            <h3 style="vertical-align: middle">{{name}}</h3>
+                            <h3 style="vertical-align: middle">{{#unless editStatus}}{{name}}{{else}}<input type="text"
+                                                                                                            id="edit_name"
+                                                                                                            value="{{name}}">{{/unless}}
+                            </h3>
                         </div>
                         <div class="block">
                             <div class="list">
@@ -79,7 +85,10 @@
                                             <div class="item-inner">
                                                 <div class="item-title coin-description">
                                                     <div class="item-header">О монете</div>
-                                                    <div class="item-content">{{description}}</div>
+                                                    <div class="item-content">
+                                                        {{#unless editStatus}}{{description}}{{else}}<textarea
+                                                                id="edit_description">{{description}}</textarea>{{/unless}}
+                                                    </div>
                                                 </div>
 
                                             </div>
@@ -90,47 +99,105 @@
                         </div>
                     </div>
                     <div id="tab-2" class="page-content tab">
+                        {{#if isMy}}
+                            {{#if editStatus}}
+                                <div class="margin">
+                                    <button id="add_fake_condition" class="button button-big">Добавить условие
+                                        зачисления
+                                    </button>
+                                </div>
+                            {{/if}}
+                        {{/if}}
                         <div class="list">
                             <ul>
-                                {{#each condition}}
-                                    <li class="enroll" data-coint_id="{{_id}}" data-price="{{price}}"
-                                        data-name="{{name}}">
-                                        <div class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-media"><img
-                                                        src="https://picsum.photos/30/30/?random"
-                                                        style="margin-right: 10px"></div>
-                                                <div class="item-title">{{name}}</div>
-                                                <div class="item-after">{{niceFormat price}}</div>
-                                                <div class="item-after info-icon" data-index="{{@index}}"
-                                                     data-type="condition"><i class="icon f7-icons">info</i>
+                                {{#unless editStatus}}
+                                    {{#each condition}}
+                                        <li class="enroll" data-coint_id="{{_id}}" data-price="{{price}}"
+                                            data-name="{{name}}">
+                                            <div class="item-content">
+                                                <div class="item-inner">
+                                                    <div class="item-media"><img
+                                                            src="https://picsum.photos/30/30/?random"
+                                                            style="margin-right: 10px"></div>
+                                                    <div class="item-title">{{name}}</div>
+                                                    <div class="item-after">{{niceFormat price}}</div>
+                                                    <div class="item-after info-icon" data-index="{{@index}}"
+                                                         data-type="condition"><i class="icon f7-icons">info</i>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                {{/each}}
+                                        </li>
+                                    {{/each}}
+                                {{else}}
+                                    {{#each condition}}
+                                        <li class="condition_edit">
+                                            <div class="item-content">
+                                                <div class="item-inner">
+                                                    <div class="item-media"><img
+                                                            src="https://picsum.photos/30/30/?random"
+                                                            style="margin-right: 10px"></div>
+                                                    <div class="item-title"><input type="text" name="condition_name"
+                                                                                   value="{{name}}"></div>
+                                                    <div class="item-after">{{> inputMask value=price type='tel' name='condition_price' mask="###  ### ###" reverse=true}}</div>
+                                                    <div class="item-after info-icon" data-index="{{@index}}"
+                                                         data-type="condition"><i class="icon f7-icons">info</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {{/each}}
+                                {{/unless}}
                             </ul>
                         </div>
                     </div>
                     <div id="tab-3" class="page-content tab">
+                        {{#if isMy}}
+                            {{#if editStatus}}
+                                <div class="margin">
+                                    <button id="add_fake_spend" class="button button-big">Добавить условие
+                                        списания
+                                    </button>
+                                </div>
+                            {{/if}}
+                        {{/if}}
                         <div class="list">
                             <ul>
-                                {{#each spend}}
-                                    <li class="offs" data-coint_id="{{_id}}" data-price="{{price}}"
-                                        data-name="{{name}}">
-                                        <div class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-media"><img
-                                                        src="https://picsum.photos/30/30/?random"
-                                                        style="margin-right: 10px"></div>
-                                                <div class="item-title">{{name}}</div>
-                                                <div class="item-after">{{niceFormat price}}</div>
-                                                <div class="item-after info-icon" data-index="{{@index}}"
-                                                     data-type="condition"><i class="icon f7-icons">info</i></div>
+                                {{#unless editStatus}}
+                                    {{#each spend}}
+                                        <li class="offs" data-coint_id="{{_id}}" data-price="{{price}}"
+                                            data-name="{{name}}">
+                                            <div class="item-content">
+                                                <div class="item-inner">
+                                                    <div class="item-media"><img
+                                                            src="https://picsum.photos/30/30/?random"
+                                                            style="margin-right: 10px"></div>
+                                                    <div class="item-title">{{name}}</div>
+                                                    <div class="item-after">{{niceFormat price}}</div>
+                                                    <div class="item-after info-icon" data-index="{{@index}}"
+                                                         data-type="condition"><i class="icon f7-icons">info</i></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                {{/each}}
+                                        </li>
+                                    {{/each}}
+                                {{else}}
+                                    {{#each spend}}
+                                        <li class="spend_edit">
+                                            <div class="item-content">
+                                                <div class="item-inner">
+                                                    <div class="item-media"><img
+                                                            src="https://picsum.photos/30/30/?random"
+                                                            style="margin-right: 10px"></div>
+                                                    <div class="item-title"><input type="text" name="spend_name"
+                                                                                   value="{{name}}"></div>
+                                                    <div class="item-after">{{> inputMask value=price type='tel' name='spend_price' mask="###  ### ###" reverse=true}}</div>
+                                                    <div class="item-after info-icon" data-index="{{@index}}"
+                                                         data-type="condition"><i class="icon f7-icons">info</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {{/each}}
+                                {{/unless}}
                             </ul>
                         </div>
                     </div>
