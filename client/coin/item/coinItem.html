@@ -203,7 +203,9 @@
     </div>
     {{>coinItemParty}}
     {{>coinItemPartyAdd}}
+    {{>coinItemPartyItemCreate}}
     {{>coinItemPartyItem}}
+
 </template>
 
 <template name="coinItemParty">
@@ -304,6 +306,53 @@
             </div>
         </div>
     </div>
+</template>
+
+<template name="coinItemPartyItemCreate">
+    <div data-name="coinItemPartyItemCreate" class="page stacked">
+        <div class="navbar">
+            <div class="navbar-inner navbar">
+                <div class="left"><a href="#" onclick="event.preventDefault();mainView.router.back('/coinItemParty');"
+                                     class="link back"><i class="icon icon-back" style=""></i></a>
+                </div>
+                <div class="title">Добавить участника</div>
+                <div class="right"></div>
+            </div>
+        </div>
+
+        <div class="page-content">
+
+            <div class="block-title">Добавить участника по номеру телефона</div>
+            <div class="list inline-labels no-hairlines-md">
+                <ul>
+                    <li class="item-content item-input">
+                        <div class="item-media">
+                            <i class="icon demo-list-icon"></i>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-title item-label">Имя</div>
+                            <div class="item-input-wrap">
+                                <input id="name" type="text" placeholder="">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-content item-input">
+                        <div class="item-media">
+                            <i class="icon demo-list-icon"></i>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-title item-label">Телефон</div>
+                            <div class="item-input-wrap">
+                                {{> inputMask id='phone' value='' type='tel' name='phone' mask='+7 (000) 000-00-00' placeholder='' }}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <a href="#" id="create" class="margin button button-big margin-vertical">Добавить контакт</a>
+        </div>
+    </div>
+
 </template>
 
 <template name="coinItemPartyItem">

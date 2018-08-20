@@ -6,7 +6,7 @@ let signinAction = new ReactiveVar('phone'),
         //currentBackButton.set(false);
         $('#phone').val('');
         Meteor.setTimeout(function () {
-            $('#phone').focus();
+            //$('#phone').focus();
         }, 555);
 
     };

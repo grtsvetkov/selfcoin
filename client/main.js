@@ -9,7 +9,7 @@ app = null,
 let flag_welcome = localStorage.getItem('_firstTimeOpenedApp') || null;
 
 if (flag_welcome != "true") {
-    //localStorage.setItem('_firstTimeOpenedApp', true);
+    localStorage.setItem('_firstTimeOpenedApp', true);
     Router.go('welcome');
 }
 
@@ -63,6 +63,12 @@ Template.AppLayout.rendered = function () {
 
 
 };
+
+Template.AppLayout.helpers({
+    'toolbarEnabled': () => {
+        return ['welcome', 'signin'].indexOf(Router.current().route.getName()) > -1 ? false : true;
+    }
+});
 
 Template.navbar.helpers({
     'navbarF5': function () {

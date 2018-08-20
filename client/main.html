@@ -16,7 +16,9 @@
         <div class="statusbar"></div>
         <div class="view view-main">
             {{>yield}}
-            {{>toolbar}}
+            {{#with toolbarEnabled}}
+                {{>toolbar}}
+            {{/with}}
         </div>
     </div>
 </template>

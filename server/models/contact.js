@@ -1,6 +1,6 @@
 ContactModel = {
     add: function (username, name, description, avatar) {
-        ContactModel._add(Meteor.userId(), username, name, description, avatar);
+        return ContactModel._add(Meteor.userId(), username, name, description, avatar);
     },
 
     _add: function (user_id, username, name, description, avatar) {
@@ -35,7 +35,7 @@ ContactModel = {
 
         if (!flag) {
 
-            Contact.insert({
+            return Contact.insert({
                 owner_id: user_id,
                 contact_id: contact._id,
                 name: name,
