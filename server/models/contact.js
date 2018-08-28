@@ -16,7 +16,7 @@ ContactModel = {
             //@TODO надо что-то придумать
             ContactModel._add(contact._id, owner.username, owner.username, '', '');
 
-            let twilioClient = require('twilio')(twilioConfig.sid, twilioConfig.token);
+            /*let twilioClient = require('twilio')(twilioConfig.sid, twilioConfig.token);
 
             twilioClient.messages.create({
                 to: '+' + username,
@@ -28,14 +28,14 @@ ContactModel = {
                 } else {
                     //console.log(message);
                 }
-            });
+            });*/
         }
 
         let flag = Contact.findOne({owner_id: user_id, contact_id: contact._id});
 
         if (!flag) {
 
-            return Contact.insert({
+            Contact.insert({
                 owner_id: user_id,
                 contact_id: contact._id,
                 name: name,
@@ -44,6 +44,8 @@ ContactModel = {
                 phone: username
             });
         }
+
+        return contact._id;
     },
 
 

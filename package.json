@@ -12,6 +12,6 @@
     "jquery": "^3.3.1",
     "jquery-mask-plugin": "^1.14.15",
     "meteor-node-stubs": "^0.3.2",
-    "twilio": "^3.19.1"
+    "twilio": "^3.19.2"
   }
 }

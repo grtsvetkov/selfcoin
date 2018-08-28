@@ -4,10 +4,12 @@
         <div class="navbar">
             <div class="navbar-inner navbar-current">
                 <div class="left">
-                    +
+                    <div class="icon" onclick="Router.go('create')">
+                        +
+                    </div>
                 </div>
                 <div class="title">Кошелёк</div>
-                <div class="right"><span id="noticeBell"><i class="icon f7-icons">bell{{#with notice}}<span
+                <div class="right"><span id="requestFlag"><i class="icon f7-icons">flag{{#with request}}<span
                         class="badge color-red">{{.}}</span>{{/with}}</i></span></div>
             </div>
         </div>
@@ -39,37 +41,5 @@
             </div>
         </div>
     </div>
-
-
-    <!--div data-name="coinList" class="page">
-
-            {{#with request_list}}
-                <div class="block-title">
-                    Запрос на участие
-                </div>
-
-                <div class="data-table">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th class="label-cell">Название</th>
-                            <th class="numeric-cell">Создатель</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {{#each .}}
-                            <tr class="{{backgroundByIndex @index}} actionRequest" data-id="{{request_id}}">
-                                <td class="label-cell">{{name}}</td>
-                                <td class="numeric-cell">{{creator}}</td>
-                            </tr>
-                        {{/each}}
-                        </tbody>
-                    </table>
-                </div>
-
-            {{/with}}
-
-    </div-->
-
-    {{>coinNotice}}
+    {{>coinRequest}}
 </template>

@@ -55,6 +55,17 @@ CoinModel = {
 
     _removeRequest: function (coin_id, user_id) {
         Coin.update({_id: coin_id}, {$pull: {request: user_id}});
+    },
+
+    _recalcCount: function(coin_id) {
+        
+        let count = 0;
+        
+        _.each(Wallet.find({coin_id: coin_id}).fetch(), (i) => {
+            count += i.count;
+        });
+
+        Coin.update({_id: coin_id}, {$set: {count: count}});
     }
 };
 

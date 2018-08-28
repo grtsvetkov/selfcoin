@@ -34,6 +34,17 @@ RequestForPartyModel = {
         CoinModel._removeRequest(request.coin_id, request.to_user);
         ContactModel._add(request.to_user, request.name, request.name, 'Описание контакта', '');
         RequestForParty.remove({_id: request_id});
+    },
+    
+    reject: function(request_id) {
+        let request = RequestForParty.findOne({_id: request_id, to_user: Meteor.userId()});
+
+        if(!request) {
+            return;
+        }
+
+        CoinModel._removeRequest(request.coin_id, request.to_user);
+        RequestForParty.remove({_id: request_id});
     }
 };
 
@@ -42,5 +53,6 @@ RequestForPartyModel = {
  * Методы RequestForParty
  */
 Meteor.methods({
-    'requestForParty.approve': RequestForPartyModel.approve
+    'requestForParty.approve': RequestForPartyModel.approve,
+    'requestForParty.reject': RequestForPartyModel.reject
 });

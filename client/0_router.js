@@ -129,7 +129,7 @@ Router.route('/coin', {
 
     waitOn: function () {
         return [
-            Meteor.subscribe('coin', 'only_my'),
+            Meteor.subscribe('coin'),
             Meteor.subscribe('wallet'),
             Meteor.subscribe('requestForParty'),
             Meteor.subscribe('request_enroll')
@@ -141,4 +141,9 @@ Router.route('/create', {
     title: 'Создать монету',
     name: 'create',
     menu: 'coin'
+});
+
+Router.route('/notice', {
+    title: 'Уведомления',
+    name: 'notice'
 });

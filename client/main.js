@@ -87,15 +87,30 @@ Template.toolbar.helpers({
 
         return [
             {name: 'Главная', path: 'index', icon: 'star', isActive: crn == 'index'},
-            {name: 'Биржа', path: 'market', icon: 'graph_round', isActive: crn == 'market'},
             {name: 'Кошелёк', path: 'coinList', icon: 'money_dollar', isActive: crn == 'coin'},
-            {name: 'Профиль', path: 'profile', icon: 'person', isActive: crn == 'profile'},
+            {name: 'Биржа', path: 'market', icon: 'graph_round', isActive: crn == 'market'},
+            {name: 'Уведомления', path: 'notice', icon: 'bell', isActive: crn == 'notice'},
+            {name: 'Профиль', path: 'profile', icon: 'person', isActive: crn == 'profile'}
         ]
     }
 });
 
+
+let phoneFirstInputFix = function(value, event) {
+    if(value == '+7 (8') {
+        event.target.value = '+7 ('
+    }
+};
+
 Template.inputMask.rendered = function () {
-    $(this.firstNode).mask(this.data.mask, {reverse: this.data.reverse ? this.data.reverse : false});
+
+    let options = {reverse: this.data.reverse ? this.data.reverse : false, placeholder: this.data.placeholder};
+
+    if(this.data.isPhone) {
+        options.onKeyPress = phoneFirstInputFix;
+    }
+
+    $(this.firstNode).mask(this.data.mask, options);
 };
 
 // =============== GLOBAL FUNCTIONS
@@ -117,14 +132,14 @@ $.fn.animateRotate = function(angle, duration, easing, complete) {
     });
 };
 
-noticeBell = function() {
-    $('#noticeBell').animateRotate(30);
+requestFlag = function() {
+    $('#requestFlag').animateRotate(30);
     Meteor.setTimeout(() =>{
-        $('#noticeBell').animateRotate(0);
+        $('#requestFlag').animateRotate(0);
         Meteor.setTimeout(() =>{
-            $('#noticeBell').animateRotate(-30);
+            $('#requestFlag').animateRotate(-30);
             Meteor.setTimeout(() => {
-                $('#noticeBell').animateRotate(0);
+                $('#requestFlag').animateRotate(0);
             }, 200)
         }, 200)
     }, 200)

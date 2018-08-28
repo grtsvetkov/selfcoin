@@ -1,4 +1,5 @@
 Meteor.startup(function () {
+
     Meteor.publish('coin', function (mode) {
         if (this.userId) {
             switch (mode) {

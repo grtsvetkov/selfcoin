@@ -17,6 +17,12 @@ Template.profile.events({
     }
 });
 
+Template.profileEdit.helpers({
+    'test': function() {
+        return Meteor.user().username;
+    }
+})
+
 Template.profileEdit.passwordEdit = (e) => {
     e.preventDefault();
     appAlert('Пароль успешно изменён');

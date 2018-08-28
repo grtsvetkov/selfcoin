@@ -1,6 +1,10 @@
 WalletModel = {
     enroll: function (coin_id, to_user_id, count, description) {
-        WalletModel._enroll(Meteor.userId(), coin_id, to_user_id, count, description)
+
+        console.log(coin_id, to_user_id, count, description);
+        WalletModel._enroll(Meteor.userId(), coin_id, to_user_id, count, description);
+
+        CoinModel._recalcCount(coin_id);
     },
 
     _enroll: function (creator, coin_id, to_user_id, count, description) {
@@ -46,7 +50,7 @@ WalletModel = {
             }
         });
 
-        let twilioClient = require('twilio')(twilioConfig.sid, twilioConfig.token);
+        /*let twilioClient = require('twilio')(twilioConfig.sid, twilioConfig.token);
 
         let ifWord = count > 0 ? 'Зачисление' : 'Списание';
         
@@ -60,7 +64,7 @@ WalletModel = {
             } else {
                 //console.log(message);
             }
-        });
+        });*/
     },
 
     requestEnroll: function(coin_id, price, name) {
@@ -121,6 +125,10 @@ WalletModel = {
         WalletModel.enroll(request.coin_id, request.user_id, -1* request.price, request.name);
 
         RequestEnroll.remove({_id: request_id});
+    },
+
+    rejectEnroll: function(request_id) {
+        RequestEnroll.remove({_id: request_id});
     }
 };
 
@@ -132,5 +140,6 @@ Meteor.methods({
     'wallet.requestEnroll': WalletModel.requestEnroll,
     'wallet.approveEnroll': WalletModel.approveEnroll,
     'wallet.requestOffs': WalletModel.requestOffs,
-    'wallet.approveOffs': WalletModel.approveOffs
+    'wallet.approveOffs': WalletModel.approveOffs,
+    'wallet.rejectEnroll': WalletModel.rejectEnroll
 });

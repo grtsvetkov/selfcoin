@@ -1,0 +1,207 @@
+<template name="coinItemParty">
+
+    <div data-name="coinItemParty" class="page stacked">
+        <div class="navbar">
+            <div class="navbar-inner navbar">
+                <div class="left"><a href="#" onclick="event.preventDefault();mainView.router.back('/coinItem');"
+                                     class="link back"><i class="icon icon-back" style=""></i></a>
+                </div>
+                <div class="title">Участники монеты</div>
+                <div class="right">
+                    <div class="coinItemPartyAdd icon">
+                        +
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-content">
+
+            <div class="searchbar-backdrop"></div>
+
+            <form class="searchbar">
+                <div class="searchbar-inner">
+                    <div class="searchbar-input-wrap">
+                        <input type="search" placeholder="Search">
+                        <i class="searchbar-icon"></i>
+                        <span class="input-clear-button"></span>
+                    </div>
+                    <span class="searchbar-disable-button">Cancel</span>
+                </div>
+            </form>
+
+            <a href="#" class="coinItemPartyAdd margin button button-big margin-vertical">Добавить участника</a>
+
+            <div class="list contacts-list">
+                {{#each contact_list}}
+                    <div class="list-group">
+                        <ul>
+                            <!--li class="list-group-title">{{litera}}</li-->
+                            {{#each list}}
+                                <li class="partyItem" data-id="{{contact_id}}">
+                                    <div class="item-content {{#unless contact_id}}isMy{{/unless}}">
+                                        <div class="item-inner">
+                                            <div class="item-title">{{name}}</div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="coinItemPartyAdd">
+    <div data-name="coinItemPartyAdd" class="page stacked">
+        <div class="navbar">
+            <div class="navbar-inner navbar">
+                <div class="left"><a href="#" onclick="event.preventDefault();mainView.router.back('/coinItemParty');"
+                                     class="link back"><i class="icon icon-back" style=""></i></a>
+                </div>
+                <div class="title">Добавить участника монеты из контактов</div>
+                <div class="right"></div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="searchbar-backdrop"></div>
+            <form class="searchbar">
+                <div class="searchbar-inner">
+                    <div class="searchbar-input-wrap">
+                        <input type="search" placeholder="Search">
+                        <i class="searchbar-icon"></i>
+                        <span class="input-clear-button"></span>
+                    </div>
+                    <span class="searchbar-disable-button">Cancel</span>
+                </div>
+            </form>
+            <div class="list contacts-list">
+                {{#each contact_list}}
+                    <div class="list-group">
+                        <ul>
+                            <li class="list-group-title">{{litera}}</li>
+                            {{#each list}}
+                                <li class="itemAdd" data-id="{{_id}}">
+                                    <div class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">{{name}}</div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="coinItemPartyItemCreate">
+    <div data-name="coinItemPartyItemCreate" class="page stacked">
+        <div class="navbar">
+            <div class="navbar-inner navbar">
+                <div class="left"><a href="#" onclick="event.preventDefault();mainView.router.back('/coinItemParty');"
+                                     class="link back"><i class="icon icon-back" style=""></i></a>
+                </div>
+                <div class="title">Добавить участника</div>
+                <div class="right"></div>
+            </div>
+        </div>
+
+        <div class="page-content">
+
+            <div class="block-title">Добавить участника по номеру телефона</div>
+            <div class="list inline-labels no-hairlines-md">
+                <ul>
+                    <li class="item-content item-input">
+                        <div class="item-media">
+                            <i class="icon demo-list-icon"></i>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-title item-label">Имя</div>
+                            <div class="item-input-wrap">
+                                <input id="name" type="text" placeholder="">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-content item-input">
+                        <div class="item-media">
+                            <i class="icon demo-list-icon"></i>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-title item-label">Телефон</div>
+                            <div class="item-input-wrap">
+                                {{> inputMask id='phone' value='' type='tel' name='phone' mask='+7 (000) 000-00-00' placeholder='' isPhone=true}}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <a href="#" id="create" class="margin button button-big margin-vertical">Добавить контакт</a>
+        </div>
+    </div>
+
+</template>
+
+<template name="coinItemPartyItem">
+    <div data-name="coinItemPartyItem" class="page stacked">
+        <div class="navbar">
+            <div class="navbar-inner navbar">
+                <div class="left"><a href="#" onclick="event.preventDefault();mainView.router.back('/coinItemParty');"
+                                     class="link back"><i class="icon icon-back" style=""></i></a>
+                </div>
+                <div class="title">Участник монеты</div>
+                <div class="right"></div>
+            </div>
+        </div>
+        <div class="page-content">
+            {{#with item}}
+                <div class="list inline-labels no-hairlines-md">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-media">
+                                <i class="icon demo-list-icon"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title item-label">Имя</div>
+                                <div class="item-input-wrap">
+                                    {{contact.name}}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-media">
+                                <i class="icon demo-list-icon"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title item-label">Телефон</div>
+                                <div class="item-input-wrap">
+                                    {{contact.phone}}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-media">
+                                <i class="icon demo-list-icon"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title item-label">В наличии</div>
+                                <div class="item-input-wrap">
+                                    {{wallet.count}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="block">
+                    <p class="row">
+                        <button id="enroll" class="col button button-big button-fill">Зачисление</button>
+                        <button class="col button button-big">Списание</button>
+                    </p>
+                </div>
+            {{/with}}
+        </div>
+    </div>
+</template>
