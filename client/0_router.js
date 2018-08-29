@@ -82,7 +82,7 @@ Router.route('/', {
 
     waitOn: function () {
         return [
-            Meteor.subscribe('coin', 'only_my'),
+            Meteor.subscribe('coin'),
             Meteor.subscribe('wallet'),
         ];
     }

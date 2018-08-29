@@ -1,0 +1,29 @@
+<template name="coinItemEditLogo">
+    <div data-name="coinItemEditLogo" class="page stacked">
+        <div class="navbar">
+            <div class="navbar-inner navbar">
+                <div class="left"><a href="#" onclick="event.preventDefault();mainView.router.back('/coinItem');"
+                                     class="link back"><i class="icon icon-back" style=""></i></a>
+                </div>
+                <div class="title">Конструктор логотипа</div>
+                <div class="right">
+                    <div id="saveLogo">
+                        Сохранить
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div id="coinItemEditLogoSwiper" data-space-between="10" data-slides-per-view="3" class="swiper-container">
+                <div class="swiper-wrapper">
+                    {{#each standart_list}}
+                        <div class="logoItem swiper-slide {{#if selected}}selected{{/if}}" data-name="{{name}}">
+                            {{{coinLogo . '200x200'}}}
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="wheel" id="colorWheel"></div>
+        </div>
+    </div>
+</template>

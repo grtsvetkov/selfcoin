@@ -45,6 +45,7 @@ RequestForPartyModel = {
 
         CoinModel._removeRequest(request.coin_id, request.to_user);
         RequestForParty.remove({_id: request_id});
+        WalletModel._remove(Meteor.userId(), request.coin_id);
     }
 };
 

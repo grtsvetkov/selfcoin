@@ -19,18 +19,15 @@ Template.index.helpers({
 
         let list = [];
 
-        _.each(Wallet.find({user_id: Meteor.userId()}).fetch(), function(i, key){
+        _.each(Wallet.find({user_id: Meteor.userId()}).fetch(), function (i, key) {
+
             let coin = Coin.findOne({_id: i.coin_id});
-            list.push({name: coin.name, img: '/asserts/img/' + tmpList1[key] + '.png'})
-        });
 
-        _.each(_.shuffle(tmpList1), function (item) {
-
-            let name = item.length > 12 ? item.substr(0, 10) + '...' : item;
+            console.log(i.coin_id, coin)
 
             list.push({
-                name: name,
-                img: '/asserts/img/' + item + '.png',
+                name: coin.name,
+                img: '/asserts/standart/' + 1 + '.svg',
             })
         });
 

@@ -12,8 +12,7 @@
     </div>
     <div data-name="index" class="page bg-color-white">
         <div class="page-content">
-            <div id="important" data-space-between="10" data-slides-per-view="3"
-                 class="swiper-container swiper-init demo-swiper">
+            <div id="important" data-space-between="10" data-slides-per-view="3" class="swiper-container swiper-init demo-swiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" onclick="Router.go('create')">
                         <svg style="width:40px;height:40px" viewBox="0 0 128 128">
@@ -28,7 +27,7 @@
                     </div>
                     {{#each important_list}}
                         <div class="swiper-slide">
-                            <img src="{{img}}" alt="">
+                            {{{coinLogo logo '60x60'}}}
                             <span>{{name}}</span>
                         </div>
                     {{/each}}

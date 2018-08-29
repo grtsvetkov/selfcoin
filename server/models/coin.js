@@ -15,7 +15,8 @@ CoinModel = {
             spend: data.spend,
             count: 0,
             owner: [],
-            request: []
+            request: [],
+            logo: {}
         });
 
         WalletModel.enroll(coin_id, Meteor.userId(), 0, 'Добавление участника');
@@ -26,10 +27,7 @@ CoinModel = {
     edit: (coin_id, data) => {
         let coin = Coin.findOne({_id: coin_id, user_id: Meteor.userId()});
 
-        //console.log(coin_id, data);
-
         if (!coin) {
-            console.log(coin, '3');
             throw new Meteor.Error('01', 'Ошибка редактирования монеты');
         }
 
@@ -39,7 +37,7 @@ CoinModel = {
 
                 let s = {};
                 s[key] = val;
-                
+
                 Coin.update({_id: coin_id, user_id: Meteor.userId()}, {$set: s});
             }
         });
@@ -57,15 +55,31 @@ CoinModel = {
         Coin.update({_id: coin_id}, {$pull: {request: user_id}});
     },
 
-    _recalcCount: function(coin_id) {
-        
+    _recalcCount: function (coin_id) {
+
         let count = 0;
-        
+
         _.each(Wallet.find({coin_id: coin_id}).fetch(), (i) => {
             count += i.count;
         });
 
         Coin.update({_id: coin_id}, {$set: {count: count}});
+    },
+
+
+    setStandartLogo: (coin_id, name, color) => {
+        let coin = Coin.findOne({_id: coin_id, user_id: Meteor.userId()});
+
+        if (!coin) {
+            throw new Meteor.Error('01', 'Ошибка редактирования монеты');
+        }
+
+        
+        Coin.update({_id: coin._id}, { $set: { logo: {
+            type: 'standart',
+            name: name,
+            color: color
+        } } })
     }
 };
 
@@ -74,5 +88,6 @@ CoinModel = {
  */
 Meteor.methods({
     'coin.add': CoinModel.add, //Создание новой монеты
-    'coin.edit': CoinModel.edit //
+    'coin.edit': CoinModel.edit,
+    'coin.setStandartLogo': CoinModel.setStandartLogo //
 });

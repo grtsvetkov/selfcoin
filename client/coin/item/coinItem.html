@@ -29,9 +29,13 @@
             <div class="tabs-swipeable-wrap rim-tabs">
                 <div class="tabs">
                     <div id="tab-1" class="page-content tab tab-active">
+
+
+
                         <div class="block-title">
                             <div class="title-logo">
-                                <img src="https://picsum.photos/70/70/?random" align="center">
+                                {{{coinLogo logo '200x200'}}}
+                                {{#if editStatus}}<br/><a id="logoEdit" href="#">Изменить логотип</a>{{/if}}
                             </div>
                             <h3 style="vertical-align: middle">
                                 {{#unless editStatus}}
@@ -49,6 +53,8 @@
                                             <div class="item-inner">
                                                 <div class="item-title">
                                                     <div class="item-header">Создатель</div>
+
+
                                                     {{user.name}}
                                                 </div>
                                             </div>
@@ -214,5 +220,7 @@
     {{>coinItemPartyAdd}}
     {{>coinItemPartyItemCreate}}
     {{>coinItemPartyItem}}
+
+    {{>coinItemEditLogo}}
 
 </template>

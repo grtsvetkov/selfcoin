@@ -96,8 +96,8 @@ Template.toolbar.helpers({
 });
 
 
-let phoneFirstInputFix = function(value, event) {
-    if(value == '+7 (8') {
+let phoneFirstInputFix = function (value, event) {
+    if (value == '+7 (8') {
         event.target.value = '+7 ('
     }
 };
@@ -106,7 +106,7 @@ Template.inputMask.rendered = function () {
 
     let options = {reverse: this.data.reverse ? this.data.reverse : false, placeholder: this.data.placeholder};
 
-    if(this.data.isPhone) {
+    if (this.data.isPhone) {
         options.onKeyPress = phoneFirstInputFix;
     }
 
@@ -115,14 +115,14 @@ Template.inputMask.rendered = function () {
 
 // =============== GLOBAL FUNCTIONS
 
-$.fn.animateRotate = function(angle, duration, easing, complete) {
-    return this.each(function() {
+$.fn.animateRotate = function (angle, duration, easing, complete) {
+    return this.each(function () {
         var $elem = $(this);
 
         $({deg: 0}).animate({deg: angle}, {
             duration: duration,
             easing: easing,
-            step: function(now) {
+            step: function (now) {
                 $elem.css({
                     transform: 'rotate(' + now + 'deg)'
                 });
@@ -132,11 +132,11 @@ $.fn.animateRotate = function(angle, duration, easing, complete) {
     });
 };
 
-requestFlag = function() {
+requestFlag = function () {
     $('#requestFlag').animateRotate(30);
-    Meteor.setTimeout(() =>{
+    Meteor.setTimeout(() => {
         $('#requestFlag').animateRotate(0);
-        Meteor.setTimeout(() =>{
+        Meteor.setTimeout(() => {
             $('#requestFlag').animateRotate(-30);
             Meteor.setTimeout(() => {
                 $('#requestFlag').animateRotate(0);
@@ -174,10 +174,46 @@ getDataFromStruct = function (struct) {
     return data;
 };
 
+let randomString = function () {
+    let digits = [],
+        str = '23456789ABCDEFGHJKLMNPQRSTWXYZabcdefghijkmnopqrstuvwxyz';
+    for (let i = 0; i < 20; i++) {
+        digits[i] = str.substr(Math.floor(Math.random() * str.length), 1);
+    }
+    return digits.join("");
+};
+
 // =============== GLOBAL FUNCTIONS
+
 
 // =============== GLOBAL HELPERS
 
+
+Template.registerHelper('coinLogo', function (logo, sizeString) {
+
+
+    let size = sizeString.split('x');
+
+    if (logo) {
+        switch (logo.type) {
+            case 'standart':
+
+                let img_id = randomString();
+
+                $.get('/asserts/standart/' + logo.name + '._svg').done(function (data) {
+
+                    $('#'+img_id).html(data);
+                    $('#'+img_id).find('path').attr('fill', logo.color);
+                 });
+
+                return '<svg class="coinLogo" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" id="'+img_id+'" width="'+size[0]+'" height="'+size[1]+'" viewBox="0 0 256 256"></svg>';
+
+                break;
+        }
+    } else {
+        return '<img src="/asserts/img/default.png" width="'+size[0]+'" height="">';
+    }
+});
 
 Template.registerHelper('concat', function (op1, op2) {
     return op1 + op2;

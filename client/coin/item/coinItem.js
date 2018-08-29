@@ -1,5 +1,3 @@
-
-
 let edit_status = new ReactiveVar(false),
     coin_name = ReactiveVar('Монета'),
     coin_item = ReactiveVar(),
@@ -75,9 +73,48 @@ Template.coinItem.helpers({
 });
 
 Template.coinItem.events({
-    
+
     'click #setEditStatus': (e) => {
          edit_status.set(true);
+    },
+
+    'click #logoEdit': (e) => {
+        e.preventDefault();
+
+        app.actions.create({
+            buttons: [
+                {
+                    text: 'Конструктор логотипа',
+                    onClick: function () {
+                        mainView.router.navigate({
+                                url: '/coinItemEditLogo',
+                                route: {
+                                    path: '/coinItemEditLogo',
+                                    pageName: 'coinItemEditLogo'
+                                }
+                            }
+                        );
+                        coinItemEditLogoReinit();
+                    }
+                },
+                {
+                    text: 'Сделать снимок',
+                    onClick: function () {
+                    }
+                },
+                {
+                    text: 'Выбрать из галереи',
+                    onClick: function () {
+                    }
+                },
+                {
+                    text: 'Отклонить',
+                    onClick: function () {
+
+                    },
+                }
+            ]
+        }).open();
     },
 
     'click #add_fake_condition': () => {

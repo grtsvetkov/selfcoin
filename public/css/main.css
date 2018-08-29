@@ -12,7 +12,7 @@
 }
 
 .title-logo {
-    display: inline-flex;
+    display: block;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -37,6 +37,11 @@
     width: 200px;
     height: 200px;
     border-radius: 100px;
+}
+
+.title-logo svg {
+    width: 200px;
+    height: 200px;
 }
 
 .rim-toolbar {
@@ -328,6 +333,7 @@ div.tabs-swipeable-wrap.rim-tabs.swiper-container.swiper-container-ios {
 
 #important .swiper-slide img, #important .swiper-slide svg {
     height: 40px;
+    width: 40px;
     text-align: center;
 }
 
@@ -353,6 +359,7 @@ div.tabs-swipeable-wrap.rim-tabs.swiper-container.swiper-container-ios {
 
 .coin-list li .item-content .item-media {
     width: 60px;
+    height: 60px;
     text-align: left;
 }
 
@@ -475,4 +482,19 @@ div.tabs-swipeable-wrap.rim-tabs.swiper-container.swiper-container-ios {
 
 .request-list .item-content.description div {
     font-size: 70%;
+}
+
+#coinItemEditLogoSwiper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#coinItemEditLogoSwiper .logoItem {
+    padding: 4px;
+}
+
+#coinItemEditLogoSwiper .selected {
+    border: 2px solid #bbbbbb;
+
+    border-radius: 12px;
 }

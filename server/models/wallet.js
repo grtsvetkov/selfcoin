@@ -1,4 +1,14 @@
 WalletModel = {
+
+    _remove: function(user_id, coin_id) {
+        let currentW = Wallet.findOne({user_id: user_id, coin_id: coin_id});
+
+        //@TODO сделать првеки
+
+
+        Wallet.remove({_id: currentW._id});
+    },
+
     enroll: function (coin_id, to_user_id, count, description) {
 
         console.log(coin_id, to_user_id, count, description);
