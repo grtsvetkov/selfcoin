@@ -1,10 +1,19 @@
 let iro = require("@jaames/iro");
 
-coinItemEditLogoReinit = function() {
-    app.swiper.create('#coinItemEditLogoSwiper', {
+
+const IconCOUNT = 115;
+
+coinItemEditLogoReinit = function(selected) {
+    let mySwiper = app.swiper.create('#coinItemEditLogoSwiper', {
         width: 128 + 8,
         height: 128 + 8
     });
+    
+    if(selected !== null) {
+        $('.logoItem[data-name='+selected+']').addClass('selected');
+        let m = parseInt(selected);
+        mySwiper.slideTo(m - 1, Math.exp( m / IconCOUNT  ) * 2000);
+    }
 };
 
 colorWheel = false;
@@ -15,14 +24,15 @@ let selectedCoin = new ReactiveVar(),
 Template.coinItemEditLogo.rendered = function () {
     Meteor.setTimeout(() => {
         Meteor.defer(() => {
-            coinItemEditLogoReinit();
+
+            coinItemEditLogoReinit(null);
 
             colorWheel = new iro.ColorPicker("#colorWheel", {
                 width: 200,
                 height: 200,
                 padding: 4,
                 markerRadius: 8,
-                color: "rgb(118, 144, 249)",
+                color: "rgb(118, 144, 249)"
             });
 
             colorWheel.on("color:change", function(color) {
@@ -39,7 +49,7 @@ Template.coinItemEditLogo.helpers({
 
         let result = [];
         
-        for(let i = 1; i <= 115; i++) {
+        for(let i = 1; i <= IconCOUNT; i++) {
             result.push({type: 'standart', name: i});
         }
         

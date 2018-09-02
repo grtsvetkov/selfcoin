@@ -86,6 +86,11 @@ Template.coinItem.events({
                 {
                     text: 'Конструктор логотипа',
                     onClick: function () {
+
+                        let coin = coin_item.get(),
+
+                            selected = coin.logo.name ? coin.logo.name : null;
+
                         mainView.router.navigate({
                                 url: '/coinItemEditLogo',
                                 route: {
@@ -94,7 +99,7 @@ Template.coinItem.events({
                                 }
                             }
                         );
-                        coinItemEditLogoReinit();
+                        coinItemEditLogoReinit(selected);
                     }
                 },
                 {
