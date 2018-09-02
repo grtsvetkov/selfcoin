@@ -29,9 +29,6 @@
             <div class="tabs-swipeable-wrap rim-tabs">
                 <div class="tabs">
                     <div id="tab-1" class="page-content tab tab-active">
-
-
-
                         <div class="block-title">
                             <div class="title-logo">
                                 {{{coinLogo logo '200x200'}}}
@@ -132,8 +129,8 @@
                                                             style="margin-right: 10px"></div>
                                                     <div class="item-title">{{name}}</div>
                                                     <div class="item-after">{{niceFormat price}}</div>
-                                                    <div class="item-after info-icon" data-index="{{@index}}"
-                                                         data-type="condition"><i class="icon f7-icons">info</i>
+                                                    <div class="item-after info-icon" data-index="{{@index}}" data-type="condition">
+                                                        <i class="icon f7-icons">info</i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -150,8 +147,8 @@
                                                     <div class="item-title"><input type="text" name="condition_name"
                                                                                    value="{{name}}"></div>
                                                     <div class="item-after">{{> inputMask value=price type='tel' name='condition_price' mask="###  ### ###" reverse=true}}</div>
-                                                    <div class="item-after info-icon" data-index="{{@index}}"
-                                                         data-type="condition"><i class="icon f7-icons">info</i>
+                                                    <div class="item-after info-icon" data-index="{{@index}}" data-edit="true"
+                                                         data-type="condition"><i class="icon f7-icons" id="setEditStatus">compose</i>
                                                     </div>
                                                 </div>
                                             </div>

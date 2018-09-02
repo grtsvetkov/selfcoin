@@ -23,9 +23,8 @@ Template.index.helpers({
 
             let coin = Coin.findOne({_id: i.coin_id});
 
-            console.log(i.coin_id, coin)
-
             list.push({
+                _id: coin._id,
                 name: coin.name,
                 img: '/asserts/standart/' + 1 + '.svg',
             })

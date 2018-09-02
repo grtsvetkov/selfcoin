@@ -14,16 +14,30 @@
             </div>
         </div>
         <div class="page-content">
-            <div id="coinItemEditLogoSwiper" data-space-between="10" data-slides-per-view="3" class="swiper-container">
+            <div id="coinItemEditLogoSwiper" class="swiper-container">
                 <div class="swiper-wrapper">
                     {{#each standart_list}}
-                        <div class="logoItem swiper-slide {{#if selected}}selected{{/if}}" data-name="{{name}}">
-                            {{{coinLogo . '200x200'}}}
+                        <div class="logoItem swiper-slide" data-name="{{name}}">
+                            {{{coinLogo . '128x128'}}}
                         </div>
                     {{/each}}
                 </div>
             </div>
-            <div class="wheel" id="colorWheel"></div>
+            <div id="colorRim">
+                <div class="wheel" id="colorWheel"></div>
+                <div id="colorGrad">
+                    <div id="black"></div>
+                    <div id="white"></div>
+                    <div id="red"></div>
+                    <div id="orange"></div>
+                    <div id="yellow"></div>
+                    <div id="green"></div>
+                    <div id="blue"></div>
+                    <div id="indigo"></div>
+                    <div id="violet"></div>
+                    <div id="corp"></div>
+                </div>
+            </div>
         </div>
     </div>
 </template>

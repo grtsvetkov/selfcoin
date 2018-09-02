@@ -1,33 +1,33 @@
+let iro = require("@jaames/iro");
+
 coinItemEditLogoReinit = function() {
-    let mySwiper = app.swiper.create('#coinItemEditLogoSwiper', {
-        //speed: 400,
-        //slidesPerView: 2,
-        width: 200,
-        height: 200,
-        spaceBetween: 20
+    app.swiper.create('#coinItemEditLogoSwiper', {
+        width: 128 + 8,
+        height: 128 + 8
     });
 };
 
 colorWheel = false;
 
-let selectedCoin = new ReactiveVar();
+let selectedCoin = new ReactiveVar(),
+    selectedColors = {};
 
 Template.coinItemEditLogo.rendered = function () {
     Meteor.setTimeout(() => {
         Meteor.defer(() => {
             coinItemEditLogoReinit();
 
-            colorWheel = iro.ColorWheel("#colorWheel", {
-                width: 320,
-                height: 320,
+            colorWheel = new iro.ColorPicker("#colorWheel", {
+                width: 200,
+                height: 200,
                 padding: 4,
                 markerRadius: 8,
-                color: "rgb(68, 255, 158)",
-                css: {
-                    ".coinLogo": {
-                        "fill": "rgb"
-                    }
-                }
+                color: "rgb(118, 144, 249)",
+            });
+
+            colorWheel.on("color:change", function(color) {
+                selectedColors.start = color.hexString;
+                $('.coinLogo>defs>linearGradient>stop[offset=0]').css({'stop-color': color.hexString});
             });
         })
     }, 333);
@@ -37,10 +37,10 @@ Template.coinItemEditLogo.rendered = function () {
 Template.coinItemEditLogo.helpers({
     'standart_list': () => {
 
-        let sel = selectedCoin.get(), result = [];
+        let result = [];
         
-        for(let i = 1; i <= 25; i++) {
-            result.push({type: 'standart', name: i, selected: sel == i});
+        for(let i = 1; i <= 115; i++) {
+            result.push({type: 'standart', name: i});
         }
         
         return result;
@@ -50,11 +50,27 @@ Template.coinItemEditLogo.helpers({
 Template.coinItemEditLogo.events({
     'click .logoItem': (e) => {
         selectedCoin.set(e.currentTarget.dataset.name);
+        $('.logoItem').removeClass('selected');
+        $(e.currentTarget).addClass('selected');
     },
 
     'click #saveLogo': (e) => {
         let sel = selectedCoin.get();
-        Meteor.call('coin.setStandartLogo', Router.current().params._id, sel, $('.logoItem:eq(0)>svg').css('fill'))
+
+        if(!sel || !Router.current().params._id) {
+            appAlert('Выберете иконку');
+            return;
+        }
+
+
+        Meteor.call('coin.setStandartLogo', Router.current().params._id, sel, selectedColors)
         mainView.router.back('/coinItem');
     },
-})
+
+    'click #colorGrad>div': (e) => {
+        $('#colorGrad>div').removeClass('selected');
+        $(e.currentTarget).addClass('selected');
+        $('.coinLogo>defs>linearGradient>stop[offset=1]').css({'stop-color': $(e.currentTarget).css('background-color')});
+        selectedColors.stop = $(e.currentTarget).css('background-color');
+    }
+});

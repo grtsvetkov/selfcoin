@@ -67,7 +67,7 @@ CoinModel = {
     },
 
 
-    setStandartLogo: (coin_id, name, color) => {
+    setStandartLogo: (coin_id, name, colors) => {
         let coin = Coin.findOne({_id: coin_id, user_id: Meteor.userId()});
 
         if (!coin) {
@@ -78,7 +78,7 @@ CoinModel = {
         Coin.update({_id: coin._id}, { $set: { logo: {
             type: 'standart',
             name: name,
-            color: color
+            colors: colors
         } } })
     }
 };

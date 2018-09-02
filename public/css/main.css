@@ -489,12 +489,73 @@ div.tabs-swipeable-wrap.rim-tabs.swiper-container.swiper-container-ios {
     margin-bottom: 20px;
 }
 
-#coinItemEditLogoSwiper .logoItem {
+#coinItemEditLogoSwiper .logoItem svg{
     padding: 4px;
 }
 
-#coinItemEditLogoSwiper .selected {
-    border: 2px solid #bbbbbb;
-
+#coinItemEditLogoSwiper .logoItem.selected svg{
+    border: 3px solid #bbbbbb;
+    padding: 1px;
     border-radius: 12px;
+}
+
+#colorRim {
+    display: flex;
+    justify-content: space-around;
+}
+
+#colorWheel {
+
+}
+
+#colorGrad {
+    width: 90px;
+}
+
+#colorGrad div {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+    display: inline-block;
+    border-radius: 20px;
+    border: 1px solid #bbbbbb;
+}
+
+#colorGrad div#black {
+    background-color: black;
+}
+#colorGrad div#white {
+    background-color: white;
+}
+#colorGrad div#red {
+    background-color: red;
+}
+#colorGrad div#orange {
+    background-color: orange;
+}
+#colorGrad div#yellow {
+    background-color: yellow;
+}
+#colorGrad div#green {
+    background-color: green;
+}
+#colorGrad div#blue {
+    background-color: blue;
+}
+#colorGrad div#indigo {
+    background-color: indigo;
+}
+#colorGrad div#violet {
+    background-color: violet;
+}
+#colorGrad div#corp {
+    background-color: #7690F9;
+}
+
+#advInfoPopup {
+
+}
+
+#advInfoPopup input {
+
 }

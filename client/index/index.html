@@ -26,7 +26,7 @@
                         <span style="color: #7690c9">Создать</span>
                     </div>
                     {{#each important_list}}
-                        <div class="swiper-slide">
+                        <div class="swiper-slide" onclick="Router.go('coinItem', {_id: '{{_id}}'})">
                             {{{coinLogo logo '60x60'}}}
                             <span>{{name}}</span>
                         </div>

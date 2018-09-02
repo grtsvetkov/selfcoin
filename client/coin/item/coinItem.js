@@ -23,7 +23,7 @@ Template.coinItem.rendered = function () {
 };
 
 Template.coinItem.helpers({
-    
+
     'editStatus': () => {
         return edit_status.get();
     },
@@ -75,7 +75,7 @@ Template.coinItem.helpers({
 Template.coinItem.events({
 
     'click #setEditStatus': (e) => {
-         edit_status.set(true);
+        edit_status.set(true);
     },
 
     'click #logoEdit': (e) => {
@@ -121,7 +121,7 @@ Template.coinItem.events({
 
         let ci = coin_item.get();
 
-        if(ci) {
+        if (ci) {
             ci.condition.push({name: '', price: 0, description: ''})
         }
 
@@ -132,54 +132,59 @@ Template.coinItem.events({
 
         let ci = coin_item.get();
 
-        if(ci) {
+        if (ci) {
             ci.spend.push({name: '', price: 0, description: ''})
         }
 
         coin_item.set(ci);
     },
     'click #saveEditStatus': (e) => {
-        
+
         let condition = [],
             spend = [],
             name = $('#edit_name').val(),
             description = $('#edit_description').val();
-        
-        if(!name) {
+
+        if (!name) {
             appAlert('Введите название монеты');
             return;
         }
 
-        if(!description) {
+        if (!description) {
             appAlert('Введите описание монеты');
             return;
         }
 
-        $('.condition_edit').each(function() {
+        $('.condition_edit').each(function () {
             let name = $(this).find('input[name="condition_name"]').val(),
                 price = $(this).find('input[name="condition_price"]').val().replace(/\D+/g, '');
 
-            if(name && price) {
+            if (name && price) {
                 condition.push({name: name, price: price, description: ''});
             }
         });
 
-        $('.spend_edit').each(function() {
+        $('.spend_edit').each(function () {
             let name = $(this).find('input[name="spend_name"]').val(),
                 price = $(this).find('input[name="spend_price"]').val().replace(/\D+/g, '');
 
-            if(name && price) {
+            if (name && price) {
                 spend.push({name: name, price: price, description: ''});
             }
         });
 
 
         edit_status.set(false);
-        Meteor.call('coin.edit', Router.current().params._id, {name: name, description: description, condition: condition, spend: spend}, (err) => {
+        Meteor.call('coin.edit', Router.current().params._id, {
+            name: name,
+            description: description,
+            condition: condition,
+            spend: spend
+        }, (err) => {
             appAlert('Изменения успешно сохранены');
         });
     },
-    
+
     'click .goTo_coinItemParty': (e) => {
         e.preventDefault();
         mainView.router.navigate({
@@ -200,8 +205,27 @@ Template.coinItem.events({
 
         let coin = coin_item.get();
 
-        app.popup.create({
-            content: `<div id="advInfoPopup" class="popup">
+        if (dataset.edit && dataset.edit == "true") {
+            app.popup.create({
+                content: `<div id="advInfoPopup" class="popup">
+            <div class="navbar">
+            <div class="navbar-inner navbar-current">
+            <div class="left"><a href="#" onclick="app.popup.close(\'#advInfoPopup\', true)"
+                                     class="link back"><i class="icon icon-back" style=""></i></a></div>
+            <div class="title">` + coin[dataset.type][dataset.index].name + `</div>
+            <div class="right"></div>
+            </div>
+            </div>
+            <div class="block">` +
+                '<p><input type="text" value="' + coin[dataset.type][dataset.index].name + '" /></p>' +
+                '<p><input type="tel" value="' + coin[dataset.type][dataset.index].price + '" /></p>' +
+                '<p><textarea>' + coin[dataset.type][dataset.index].description + '</textarea></p>' +
+                '</div>' +
+                '</div>'
+            }).open()
+        } else {
+            app.popup.create({
+                content: `<div id="advInfoPopup" class="popup">
             <div class="navbar">
             <div class="navbar-inner navbar-current">
             <div class="left"><a href="#" onclick="app.popup.close(\'#advInfoPopup\', true)"
@@ -212,12 +236,13 @@ Template.coinItem.events({
             </div>
             <div class="block">
             <p>` + coin.name + '</p>' +
-            '<p>' + coin[dataset.type][dataset.index].name + '</p>' +
-            '<p>' + coin[dataset.type][dataset.index].price + '</p>' +
-            '<p>' + coin[dataset.type][dataset.index].description + '</p>' +
-            '</div>' +
-            '</div>'
-        }).open()
+                '<p>' + coin[dataset.type][dataset.index].name + '</p>' +
+                '<p>' + coin[dataset.type][dataset.index].price + '</p>' +
+                '<p>' + coin[dataset.type][dataset.index].description + '</p>' +
+                '</div>' +
+                '</div>'
+            }).open()
+        }
     },
 
 

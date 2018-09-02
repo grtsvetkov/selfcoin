@@ -194,16 +194,30 @@ Template.registerHelper('coinLogo', function (logo, sizeString) {
 
     let size = sizeString.split('x');
 
-    if (logo) {
+
+
+    if (logo && logo.name) {
         switch (logo.type) {
             case 'standart':
 
                 let img_id = randomString();
 
-                $.get('/asserts/standart/' + logo.name + '._svg').done(function (data) {
+                $.get('/asserts/standart/' + logo.name + '.svg').done(function (data) {
 
-                    $('#'+img_id).html(data);
-                    $('#'+img_id).find('path').attr('fill', logo.color);
+                    if(logo.colors) {
+                        //console.log(img_id,  $('#' + img_id).find('defs').html());
+                        $(data).find('defs>style').html('.fil'+img_id+' {fill:url(#'+img_id+'_lg)}');
+                        $(data).find('defs>linearGradient').attr('id', img_id+'_lg');
+                        $(data).find('defs>linearGradient stop[offset=0]').css({'stop-color': logo.colors.start});
+                        $(data).find('defs>linearGradient stop[offset=1]').css({'stop-color': logo.colors.stop});
+                        $(data).find('path').attr('class', 'fil'+img_id);
+                    }
+
+                    $('#'+img_id).append($(data).find('defs')[0]);
+                    $('#'+img_id).append($(data).find('path')[0]);
+
+
+                    //$('#'+img_id).find('path').attr('fill', logo.color);
                  });
 
                 return '<svg class="coinLogo" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" id="'+img_id+'" width="'+size[0]+'" height="'+size[1]+'" viewBox="0 0 256 256"></svg>';
