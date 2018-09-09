@@ -50,8 +50,6 @@
                                             <div class="item-inner">
                                                 <div class="item-title">
                                                     <div class="item-header">Создатель</div>
-
-
                                                     {{user.name}}
                                                 </div>
                                             </div>
@@ -124,9 +122,9 @@
                                             data-name="{{name}}">
                                             <div class="item-content">
                                                 <div class="item-inner">
-                                                    <div class="item-media"><img
-                                                            src="https://picsum.photos/30/30/?random"
-                                                            style="margin-right: 10px"></div>
+                                                    <div class="item-media">
+                                                        <img class="ckeckIcon" src="/assets/icons/check.svg">
+                                                    </div>
                                                     <div class="item-title">{{name}}</div>
                                                     <div class="item-after">{{niceFormat price}}</div>
                                                     <div class="item-after info-icon" data-index="{{@index}}" data-type="condition">
@@ -141,9 +139,9 @@
                                         <li class="condition_edit">
                                             <div class="item-content">
                                                 <div class="item-inner">
-                                                    <div class="item-media"><img
-                                                            src="https://picsum.photos/30/30/?random"
-                                                            style="margin-right: 10px"></div>
+                                                    <div class="item-media">
+                                                        <img class="ckeckIcon" src="/assets/icons/check.svg">
+                                                    </div>
                                                     <div class="item-title"><input type="text" name="condition_name"
                                                                                    value="{{name}}"></div>
                                                     <div class="item-after">{{> inputMask value=price type='tel' name='condition_price' mask="###  ### ###" reverse=true}}</div>
@@ -176,9 +174,9 @@
                                             data-name="{{name}}">
                                             <div class="item-content">
                                                 <div class="item-inner">
-                                                    <div class="item-media"><img
-                                                            src="https://picsum.photos/30/30/?random"
-                                                            style="margin-right: 10px"></div>
+                                                    <div class="item-media">
+                                                        <img class="giftIcon" src="/assets/icons/gift.svg">
+                                                    </div>
                                                     <div class="item-title">{{name}}</div>
                                                     <div class="item-after">{{niceFormat price}}</div>
                                                     <div class="item-after info-icon" data-index="{{@index}}"
@@ -192,9 +190,9 @@
                                         <li class="spend_edit">
                                             <div class="item-content">
                                                 <div class="item-inner">
-                                                    <div class="item-media"><img
-                                                            src="https://picsum.photos/30/30/?random"
-                                                            style="margin-right: 10px"></div>
+                                                    <div class="item-media">
+                                                        <img class="giftIcon" src="/assets/icons/gift.svg">
+                                                    </div>
                                                     <div class="item-title"><input type="text" name="spend_name"
                                                                                    value="{{name}}"></div>
                                                     <div class="item-after">{{> inputMask value=price type='tel' name='spend_price' mask="###  ### ###" reverse=true}}</div>

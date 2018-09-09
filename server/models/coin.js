@@ -74,12 +74,33 @@ CoinModel = {
             throw new Meteor.Error('01', 'Ошибка редактирования монеты');
         }
 
-        
-        Coin.update({_id: coin._id}, { $set: { logo: {
-            type: 'standart',
-            name: name,
-            colors: colors
-        } } })
+
+        Coin.update({_id: coin._id}, {
+            $set: {
+                logo: {
+                    type: 'standart',
+                    name: name,
+                    colors: colors
+                }
+            }
+        })
+    },
+
+    setFileLogo: (coin_id, file_id) => {
+        let coin = Coin.findOne({_id: coin_id, user_id: Meteor.userId()});
+
+        if (!coin) {
+            throw new Meteor.Error('01', 'Ошибка редактирования монеты');
+        }
+
+        Coin.update({_id: coin._id}, {
+            $set: {
+                logo: {
+                    type: 'file',
+                    _id: file_id
+                }
+            }
+        })
     }
 };
 
@@ -89,5 +110,6 @@ CoinModel = {
 Meteor.methods({
     'coin.add': CoinModel.add, //Создание новой монеты
     'coin.edit': CoinModel.edit,
-    'coin.setStandartLogo': CoinModel.setStandartLogo //
+    'coin.setStandartLogo': CoinModel.setStandartLogo, //
+    'coin.setFileLogo': CoinModel.setFileLogo //
 });

@@ -11,6 +11,22 @@ Meteor.startup(function () {
         return [];
     });
 
+    Meteor.publish('avatar128', function (mode) {
+        if (this.userId) {
+            return Avatar128.find();
+        }
+
+        return [];
+    });
+
+    Meteor.publish('logo128', function (mode) {
+        if (this.userId) {
+            return Logo128.find();
+        }
+
+        return [];
+    });
+
 
     Meteor.publish('wallet', function (mode, coin_id) {
 

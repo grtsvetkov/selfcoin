@@ -53,7 +53,7 @@ Template.coinItem.helpers({
             item.isMy = false;
         } else {
             item.user = Meteor.user();
-            item.user.name = item.user.username;
+            item.user.name = item.user.profile.name;
             item.isMy = true;
         }
 
@@ -105,6 +105,34 @@ Template.coinItem.events({
                 {
                     text: 'Сделать снимок',
                     onClick: function () {
+                        UploadFS.selectFiles(function (file) {
+                            let uploader = new UploadFS.Uploader({
+                                store: LogoStore,
+                                adaptive: true,
+                                capacity: 0.8, // 80%
+                                chunkSize: 8 * 1024, // 8k
+                                maxChunkSize: 128 * 1024, // 128k
+                                maxTries: 5,
+                                data: file,
+                                file: {
+                                    name: file.name,
+                                    size: file.size,
+                                    type: file.type
+                                },
+                                onError(err, file) {
+                                    console.error(err);
+                                },
+                                onCreate(file) {
+                                    //appAlert(file.name + ' has been created with ID ' + file._id);
+                                    Meteor.call('coin.setFileLogo', Router.current().params._id, file._id);
+                                },
+                            });
+
+                            uploader.start();
+
+                            //uploader.stop();
+                            //uploader.abort();
+                        });
                     }
                 },
                 {

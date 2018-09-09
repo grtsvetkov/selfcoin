@@ -7,11 +7,11 @@ Template.coinRequest.helpers({
 
         _.each(Coin.find({user_id: Meteor.userId()}).fetch(), (i, key) => {
 
-            i.img = '/asserts/img/' + tmpList1[key] + '.png';
+            i.img = '/assets/img/' + tmpList1[key] + '.png';
 
             _.each(RequestEnroll.find({coin_id: i._id}).fetch(), (j, key) => {
 
-                j.img = '/asserts/img/ava.png';
+                j.img = '/assets/img/ava.png';
 
                 j.text = '<strong>' + j.user_id + '</strong> создал запрос на <strong>'+ (j.type == 'enroll' ? 'зачисление' : 'списание') + '</strong> монеты <strong>'+ i.name + '</strong> за <strong>'+ j.name + '</strong>' +
                     ' стоимостью <strong>' + j.price + '</strong>';
@@ -27,11 +27,11 @@ Template.coinRequest.helpers({
 
         _.each(Coin.find({request: Meteor.userId()}).fetch(), (i, key) => {
 
-            i.img = '/asserts/img/' + tmpList1[key] + '.png';
+            i.img = '/assets/img/' + tmpList1[key] + '.png';
 
             let request = RequestForParty.findOne({from_user: i.user_id});
 
-            request.img = '/asserts/img/ava.png';
+            request.img = '/assets/img/ava.png';
 
             request.text = '<strong>' + request.name + '</strong> приглашает стать участником монеты <strong>'+ i.name + '</strong>';
 

@@ -13,6 +13,9 @@ if (flag_welcome != "true") {
     Router.go('welcome');
 }
 
+Meteor.subscribe('avatar128');
+Meteor.subscribe('logo128');
+
 document.addEventListener('deviceready', function () {
     if (cordova && cordova.plugins && cordova.plugins.statusbarOverlay) {
         cordova.plugins.statusbarOverlay.show();
@@ -88,7 +91,7 @@ Template.toolbar.helpers({
         return [
             {name: 'Главная', path: 'index', icon: 'star', isActive: crn == 'index'},
             {name: 'Кошелёк', path: 'coinList', icon: 'money_dollar', isActive: crn == 'coin'},
-            {name: 'Биржа', path: 'market', icon: 'graph_round', isActive: crn == 'market'},
+            //{name: 'Биржа', path: 'market', icon: 'graph_round', isActive: crn == 'market'},
             {name: 'Уведомления', path: 'notice', icon: 'bell', isActive: crn == 'notice'},
             {name: 'Профиль', path: 'profile', icon: 'person', isActive: crn == 'profile'}
         ]
@@ -143,8 +146,6 @@ requestFlag = function () {
             }, 200)
         }, 200)
     }, 200)
-
-
 };
 
 appAlert = function (text) {
@@ -194,19 +195,17 @@ Template.registerHelper('coinLogo', function (logo, sizeString) {
 
     let size = sizeString.split('x');
 
-
-
-    if (logo && logo.name) {
+    if (logo && logo.type) {
         switch (logo.type) {
             case 'standart':
 
                 let img_id = randomString();
 
-                $.get('/asserts/standart/' + logo.name + '.svg').done(function (data) {
+                $.get('/assets/standart/' + logo.name + '.svg').done(function (data) {
 
                     if(logo.colors) {
                         //console.log(img_id,  $('#' + img_id).find('defs').html());
-                        $(data).find('defs>style').html('.fil'+img_id+' {fill:url(#'+img_id+'_lg)}');
+                        $(data).find('defs>style').html('.fil'+img_id+' {fill:url(#'+img_id+'_lg)}' );
                         $(data).find('defs>linearGradient').attr('id', img_id+'_lg');
                         $(data).find('defs>linearGradient stop[offset=0]').css({'stop-color': logo.colors.start});
                         $(data).find('defs>linearGradient stop[offset=1]').css({'stop-color': logo.colors.stop});
@@ -223,9 +222,42 @@ Template.registerHelper('coinLogo', function (logo, sizeString) {
                 return '<svg class="coinLogo" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" id="'+img_id+'" width="'+size[0]+'" height="'+size[1]+'" viewBox="0 0 256 256"></svg>';
 
                 break;
+
+            case 'file':
+
+                let logoFile = Logo128.findOne({originalId: logo._id});
+
+                if(logoFile) {
+
+                    if(logoFile.uploading) {
+                        return '<div class="preloader" style="width: 44px; height: 44px"></div>';
+                    } else {
+                        return '<img class="coinLogo" src="'+logoFile.url+'?token='+logoFile.token+'" width="'+size[0]+'" height="">';
+                    }
+                } else {
+                    return '<div class="preloader" style="width: 44px; height: 44px"></div>';
+                }
+
+                break;
         }
     } else {
-        return '<img src="/asserts/img/default.png" width="'+size[0]+'" height="">';
+        return '<img src="/assets/img/default.svg" width="'+size[0]+'" height="">';
+    }
+});
+
+Template.registerHelper('AvatarImg', function (avatar_file_id) {
+    
+    let avatar = Avatar128.findOne({originalId: avatar_file_id});
+    
+    if(avatar) {
+
+        if(avatar.uploading) {
+            return '<div class="preloader" style="width: 44px; height: 44px"></div>';
+        } else {
+            return '<img class="avatar" src="'+avatar.url+'?token='+avatar.token+'">';
+        }
+    } else {
+        return '<div class="preloader" style="width: 44px; height: 44px"></div>';
     }
 });
 

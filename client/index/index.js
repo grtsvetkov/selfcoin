@@ -17,17 +17,20 @@ Template.index.helpers({
 
     'important_list': () => {
 
-        let list = [];
+        let user_id = Meteor.userId(),
+            list = [];
 
-        _.each(Wallet.find({user_id: Meteor.userId()}).fetch(), function (i, key) {
+        _.each(Wallet.find({user_id: user_id}).fetch(), function (i, key) {
 
-            let coin = Coin.findOne({_id: i.coin_id});
+            let coin = Coin.findOne({_id: i.coin_id, owner: user_id});
 
-            list.push({
-                _id: coin._id,
-                name: coin.name,
-                img: '/asserts/standart/' + 1 + '.svg',
-            })
+            if (coin) {
+                list.push({
+                    _id: coin._id,
+                    name: coin.name,
+                    logo: coin.logo
+                })
+            }
         });
 
         return list;

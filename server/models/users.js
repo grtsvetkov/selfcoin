@@ -4,13 +4,19 @@ UserModel = {
      * @param data данные пользователя
      * @returns {*}
      */
-    add: function (username) {
+    add: function (username, name) {
         if(UserModel._getUserByUsername(username)) {
             throw new Meteor.Error('501', 'Пользователь с таким телефоном уже зарегестрирован');
         }
 
+        let profile = {};
+        
+        if(name) {
+            profile['name'] = name;
+        }
+        
         return {
-            _id: Accounts.createUser({username: UserModel._normalizeUsername(username)})
+            _id: Accounts.createUser({username: UserModel._normalizeUsername(username), profile: profile})
         };
     },
     
@@ -30,6 +36,27 @@ UserModel = {
         }
         
         return username;
+    },
+    
+    setAvatar: function(file_id) {
+        let user = Meteor.user();
+        
+        if(!user) {
+            return;
+        }
+        
+        Meteor.users.update({_id: user._id}, { $set: { 'profile.avatar': file_id } });
+    },
+
+    setName: function(name) {
+
+        let user = Meteor.user();
+
+        if(!user) {
+            return;
+        }
+
+        Meteor.users.update({_id: user._id}, { $set: { 'profile.name': name } });
     }
 };
 
@@ -37,5 +64,8 @@ UserModel = {
  * Методы Users
  */
 Meteor.methods({
-    'user.add': UserModel.add //Создание нового пользователя
+    'user.add': UserModel.add, //Создание нового пользователя
+    
+    'user.setAvatar': UserModel.setAvatar,
+    'user.setName': UserModel.setName
 });

@@ -11,7 +11,7 @@ ContactModel = {
             contact = UserModel._getUserByUsername(username);
 
         if (!contact) {
-            contact = UserModel.add(username);
+            contact = UserModel.add(username, name);
 
             //@TODO надо что-то придумать
             ContactModel._add(contact._id, owner.username, owner.username, '', '');

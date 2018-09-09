@@ -6,7 +6,7 @@ Template.coinList.helpers({
 
         _.each(coin, function (i, key) {
             i.wallet = Wallet.findOne({coin_id: i._id, user_id: Meteor.userId()});
-            i.img = '/asserts/img/' + tmpList1[key] + '.png';
+            i.img = '/assets/img/' + tmpList1[key] + '.png';
             i.isPublic = _.random(0, 1) > 0 ? true : false;
             i.isMy = i.user_id == Meteor.userId();
         });
