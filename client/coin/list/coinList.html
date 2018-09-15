@@ -1,6 +1,7 @@
 <template name="coinList">
 
     <div data-name="coinList" class="page bg-color-white">
+
         <div class="navbar">
             <div class="navbar-inner navbar-current">
                 <div class="left">
@@ -8,37 +9,80 @@
                         +
                     </div>
                 </div>
-                <div class="title">Кошелёк</div>
+                <div class="title">Мой Кошелёк</div>
                 <div class="right"><span id="requestFlag"><i class="icon f7-icons">flag{{#with request}}<span
                         class="badge color-red">{{.}}</span>{{/with}}</i></span></div>
             </div>
         </div>
 
-        <div class="page-content">
-
-            <div class="list">
-                <ul class="coin-list">
-                    {{#each wallet_list}}
-                        <li onclick="Router.go('coinItem', {_id: '{{_id}}' })">
-                            <div class="item-content">
-                                <div class="item-media item-logo">
-                                    {{{coinLogo logo '60x60'}}}
-                                </div>
-                                <div class="item-inner">
-                                    <div class="item-title">
-                                        <p class="{{#if isMy}}isMy{{/if}}">{{name}}</p>
-                                        <span>{{#if isPublic}}Публичная{{else}}Не публичная{{/if}}</span>
-                                    </div>
-                                    <div class="item-after">
-                                        <span class="t1">в наличии</span>
-                                        <span class="t2">{{niceFormat wallet.count}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    {{/each}}
-                </ul>
+        <div class="toolbar tabbar rim-toolbar">
+            <div class="toolbar-inner">
+                <a href="#coinList_tab-1" class="tab-link tab-link-active">Монеты</a>
+                <a href="#coinList_tab-2" class="tab-link">Цели</a>
             </div>
+        </div>
+        <div class="tabs-swipeable-wrap rim-tabs">
+            <div class="tabs">
+                <div id="coinList_tab-1" class="page-content tab tab-active">
+                    <div class="list">
+                        <ul class="coin-list">
+                            {{#each wallet_list}}
+                                <li onclick="Router.go('coinItem', {_id: '{{_id}}' })">
+                                    <div class="item-content">
+                                        <div class="item-media item-logo">
+                                            {{{coinLogo logo '60x60'}}}
+                                        </div>
+                                        <div class="item-inner">
+                                            <div class="item-title">
+                                                <p class="{{#if isMy}}isMy{{/if}}">{{name}}</p>
+                                                <span>{{#if isPublic}}Публичная{{else}}Не публичная{{/if}}</span>
+                                            </div>
+                                            <div class="item-after">
+                                                <span class="t1">в наличии</span>
+                                                <span class="t2">{{niceFormat wallet.count}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+                <div id="coinList_tab-2" class="page-content tab">
+                    <div class="list">
+                        <ul class="coin-list">
+                            {{#each goal_list}}
+                                <li class="goal-item" data-id="{{_id}}" data-coin_id={{coin_id}} data-name="{{name}}" data-count="{{count}}" data-price="{{price}}">
+                                    <div class="item-content">
+                                        <div class="item-media item-logo">
+                                            {{{coinLogo logo '60x60'}}}
+                                        </div>
+                                        <div class="item-inner">
+                                            <div class="item-title">
+                                                {{coin_name}}<br/>
+                                                {{name}}<br/>
+                                                {{count}}/{{price}}
+                                            </div>
+                                            <div class="item-after">
+                                                <img src="{{#if eq progress 100}}/assets/icons/gift1.svg{{else}}/assets/icons/gift.svg{{/if}}"
+                                                     width="{{gw}}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-subinner">
+                                        <div class="progress" style="width:{{progress}}%">
+                                            {{#each backgroundHeper}}
+                                                {{{coinLogo ../logo '30x30'}}}
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     {{>coinRequest}}

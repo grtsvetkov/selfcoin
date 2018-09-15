@@ -20,3 +20,6 @@ iron:router
 underscore@1.0.10
 
 accounts-password@1.5.1 #для авторизации
+browser-policy
+jalik:ufs
+jalik:ufs-local

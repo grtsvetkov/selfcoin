@@ -11,6 +11,17 @@ Meteor.startup(function () {
         return [];
     });
 
+    Meteor.publish('goal', function (mode) {
+        if (this.userId) {
+            switch (mode) {
+                default:
+                    return Goal.find({user_id: this.userId});
+            }
+        }
+
+        return [];
+    });
+
     Meteor.publish('avatar128', function (mode) {
         if (this.userId) {
             return Avatar128.find();

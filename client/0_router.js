@@ -130,6 +130,7 @@ Router.route('/coin', {
     waitOn: function () {
         return [
             Meteor.subscribe('coin'),
+            Meteor.subscribe('goal'),
             Meteor.subscribe('wallet'),
             Meteor.subscribe('requestForParty'),
             Meteor.subscribe('request_enroll')

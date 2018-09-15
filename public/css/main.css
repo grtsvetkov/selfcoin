@@ -33,12 +33,9 @@
     text-align: center;
 }
 
-.item-media img {
+.item-media .coinLogo {
     width: 60px;
     height: 60px;
-}
-
-.item-media .coinLogo {
     border-radius: 30px;
 }
 
@@ -597,4 +594,20 @@ div.tabs-swipeable-wrap.rim-tabs.swiper-container.swiper-container-ios {
 .preloader {
     min-width: 200px;
     min-height: 200px;
+}
+
+.goal-item .item-subinner{
+    overflow: hidden;
+    display: inline-block;
+}
+
+.goal-item .item-subinner .progress{
+    height: 30px;
+    min-width:30px;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.goal-item .item-subinner .progress img, .goal-item .item-subinner .progress svg{
+    display: inline-block;
 }

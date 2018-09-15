@@ -400,8 +400,8 @@ Template.coinItem.events({
                 text: '<div class="action-small">Добавить в цели "' + data.name + '"&#160;&#160;&#160;&#160;&#160;&#160;&#160; за ' + data.price + '</div>',
                 onClick: function (a) {
 
-                    Meteor.call('wallet.requestOffs', coin._id, data.price, data.name, ()=> {
-                        appAlert('Успешный запрос на списание');
+                    Meteor.call('goal.add', coin._id, data.price, data.name, ()=> {
+                        appAlert('Успешное добавление в цели');
                     });
                 }
             })
