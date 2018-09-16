@@ -11,8 +11,9 @@ WalletModel = {
 
     enroll: function (coin_id, to_user_id, count, description) {
 
-        console.log(coin_id, to_user_id, count, description);
         WalletModel._enroll(Meteor.userId(), coin_id, to_user_id, count, description);
+
+        //GoalModel._checkByCoin(to_user_id, coin_id);
 
         CoinModel._recalcCount(coin_id);
     },
@@ -92,6 +93,7 @@ WalletModel = {
 
         let request = RequestEnroll.findOne({_id: request_id});
 
+
         if(!request) {
             return false;
         }
@@ -103,7 +105,13 @@ WalletModel = {
         }
 
         WalletModel.enroll(request.coin_id, request.user_id, request.price, request.name);
-
+        
+        NoticeModel.add(request.user_id, 'approveEnroll', {
+            owner_id: Meteor.userId(),
+            coin: coin,
+            request: request
+        });
+        
         RequestEnroll.remove({_id: request_id});
     },
 
@@ -134,10 +142,35 @@ WalletModel = {
 
         WalletModel.enroll(request.coin_id, request.user_id, -1* request.price, request.name);
 
+        NoticeModel.add(request.user_id, 'approveOffs', {
+            owner_id: Meteor.userId(),
+            coin: coin,
+            request: request
+        });
+
         RequestEnroll.remove({_id: request_id});
     },
 
     rejectEnroll: function(request_id) {
+
+        let request = RequestEnroll.findOne({_id: request_id});
+
+        if(!request) {
+            return false;
+        }
+
+        let coin = Coin.findOne({_id: request.coin_id, user_id: Meteor.userId()});
+
+        if (!coin) { //Нет такой монеты
+            return;
+        }
+
+        NoticeModel.add(request.user_id, (request.type == 'enroll' ? 'rejectEnroll' : 'rejectOffs'), {
+            owner_id: Meteor.userId(),
+            coin: coin,
+            request: request
+        });
+
         RequestEnroll.remove({_id: request_id});
     }
 };

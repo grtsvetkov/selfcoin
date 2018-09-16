@@ -18,7 +18,8 @@
         <div class="toolbar tabbar rim-toolbar">
             <div class="toolbar-inner">
                 <a href="#coinList_tab-1" class="tab-link tab-link-active">Монеты</a>
-                <a href="#coinList_tab-2" class="tab-link">Цели</a>
+                <a href="#coinList_tab-2" class="tab-link">Цели {{#with goalCount}}<span
+                        class="badge">{{.}}</span>{{/with}}</a>
             </div>
         </div>
         <div class="tabs-swipeable-wrap rim-tabs">
@@ -52,7 +53,8 @@
                     <div class="list">
                         <ul class="coin-list">
                             {{#each goal_list}}
-                                <li class="goal-item" data-id="{{_id}}" data-coin_id={{coin_id}} data-name="{{name}}" data-count="{{count}}" data-price="{{price}}">
+                                <li class="goal-item" data-id="{{_id}}" data-coin_id={{coin_id}} data-name="{{name}}"
+                                    data-count="{{count}}" data-price="{{price}}">
                                     <div class="item-content">
                                         <div class="item-media item-logo">
                                             {{{coinLogo logo '60x60'}}}
@@ -71,9 +73,11 @@
                                     </div>
                                     <div class="item-subinner">
                                         <div class="progress" style="width:{{progress}}%">
-                                            {{#each backgroundHeper}}
-                                                {{{coinLogo ../logo '30x30'}}}
-                                            {{/each}}
+                                            {{#unless eq count 0}}
+                                                {{#each backgroundHeper}}
+                                                    {{{coinLogo ../logo '30x30'}}}
+                                                {{/each}}
+                                            {{/unless}}
                                         </div>
                                     </div>
                                 </li>

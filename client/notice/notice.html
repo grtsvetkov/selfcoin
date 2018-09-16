@@ -6,37 +6,109 @@
 
                 </div>
                 <div class="title">Уведомления</div>
+                <div class="right"><span id="removeAll"><i class="icon f7-icons">trash</i></span></div>
             </div>
         </div>
 
         <div class="page-content">
 
-            <div class="list media-list chevron-center">
-                <ul>
-                    <li>
-                        <a href="#" class="item-link item-content">
-                            <div class="item-inner">
-                                <div class="item-title-row">
-                                    <div class="item-title">Facebook</div>
-                                    <div class="item-after">17:14</div>
+            <div class="list">
+                <ul class="coin-list">
+                    {{#each list}}
+                        {{#if eq type 'goal'}}
+                            <li class="notice-item goal-item swipeout notice-{{type}}" data-id="{{_id}}">
+                                <div class="item-content">
+                                    <div class="item-media item-logo">
+                                        {{{coinLogo data.coin.logo '80x80'}}}
+                                    </div>
+                                    <div class="item-inner">
+                                        <div class="item-title">
+                                            {{data.coin.name}}<br/>
+                                            {{data.goal.name}}<br/>
+                                            {{data.count}}/{{data.goal.price}}
+                                        </div>
+                                        <div class="item-after">
+                                            <img src="/assets/icons/gift1.svg" width="60"/>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="item-subtitle">New messages from John Doe</div>
-                                <div class="item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus.</div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="item-link item-content">
-                            <div class="item-inner">
-                                <div class="item-title-row">
-                                    <div class="item-title">John Doe (via Twitter)</div>
-                                    <div class="item-after">17:11</div>
+                                <div class="item-subinner">
+                                    <div class="progress" style="width:{{progress}}%">
+                                        {{#each backgroundHeper}}
+                                            {{{coinLogo ../data.coin.logo '30x30'}}}
+                                        {{/each}}
+                                    </div>
                                 </div>
-                                <div class="item-subtitle">John Doe (@_johndoe) mentioned you on Twitter!</div>
-                                <div class="item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus.</div>
-                            </div>
-                        </a>
-                    </li>
+                                <div class="swipeout-actions-right">
+                                    <a href="#" data-id="{{_id}}" class="swipeout-delete">Удалить</a>
+                                </div>
+                                <img class="stamp" src="/assets/icons/stamp_goal.svg">
+                            </li>
+                        {{else}}
+                            <li class="notice-item swipeout notice-{{type}}" data-id="{{_id}}">
+                                <div class="item-content swipeout-content">
+                                    <div class="item-media item-logo">
+                                        {{{avatarImg data.owner_id}}}
+                                        {{#if eq type 'approveEnroll'}}
+                                            <img src="/assets/icons/check.svg" width="20">
+                                        {{/if}}
+                                        {{#if eq type 'approveOffs'}}
+                                            <img src="/assets/icons/gift1.svg" width="20">
+                                        {{/if}}
+                                        {{#if eq type 'approveParty'}}
+                                            <img src="/assets/icons/welcome.svg" width="60">
+                                        {{/if}}
+                                        {{#if eq type 'rejectEnroll'}}
+                                            <img src="/assets/icons/check.svg" width="20">
+                                        {{/if}}
+                                        {{#if eq type 'rejectOffs'}}
+                                            <img src="/assets/icons/gift1.svg" width="20">
+                                        {{/if}}
+                                        {{#if eq type 'rejectParty'}}
+                                            <img src="/assets/icons/welcome.svg" width="60">
+                                        {{/if}}
+                                    </div>
+                                    <div class="item-inner">
+                                        <div class="item-title">
+                                            <div>{{data.owner.name}}</div>
+                                            <div>{{data.request.name}}</div>
+                                        </div>
+                                        <div class="item-after">
+                                            {{#if eq type 'approveEnroll'}}
+                                                <span class="green">{{data.request.price}}</span>
+                                            {{/if}}
+                                            {{#if eq type 'approveOffs'}}
+                                                <span class="red">{{data.request.price}}</span>
+                                            {{/if}}
+                                            {{{coinLogo data.coin.logo '60x60'}}}<br>
+                                            {{data.coin.name}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swipeout-actions-right">
+                                    <a href="#" data-id="{{_id}}" class="swipeout-delete">Удалить</a>
+                                </div>
+                                {{#if eq type 'approveEnroll'}}
+                                    <img class="stamp" src="/assets/icons/stamp_requestEnroll.svg">
+                                {{/if}}
+                                {{#if eq type 'rejectEnroll'}}
+                                    <img class="stamp" src="/assets/icons/stamp_reject.svg">
+                                {{/if}}
+                                {{#if eq type 'approveOffs'}}
+                                    <img class="stamp" src="/assets/icons/stamp_requestOffs.svg">
+                                {{/if}}
+                                {{#if eq type 'rejectOffs'}}
+                                    <img class="stamp" src="/assets/icons/stamp_reject.svg">
+                                {{/if}}
+                                {{#if eq type 'approveParty'}}
+                                    <img class="stamp" src="/assets/icons/stamp_approveParty.svg">
+                                {{/if}}
+                                {{#if eq type 'rejectParty'}}
+                                    <img class="stamp" src="/assets/icons/stamp_reject.svg">
+                                {{/if}}
+                            </li>
+                        {{/if}}
+                    {{/each}}
                 </ul>
             </div>
         </div>

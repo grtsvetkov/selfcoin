@@ -15,31 +15,35 @@ Template.coinList.helpers({
     },
 
     'goal_list': function () {
-        let goal = Goal.find({user_id: Meteor.userId()}).fetch();
 
-        let max_width_goal = 60;
-        let min_width_goal = 20;
+        let max_width_goal = 60,
+            min_width_goal = 20,
+            goal = Goal.find({user_id: Meteor.userId()}).fetch();
 
         _.each(goal, function (i, key) {
-            let coin = Coin.findOne({_id: i.coin_id});
-            let wallet = Wallet.findOne({coin_id: i.coin_id, user_id: Meteor.userId()})
+            let coin = Coin.findOne({_id: i.coin_id}),
+                wallet = Wallet.findOne({coin_id: i.coin_id, user_id: Meteor.userId()});
 
             i.logo = coin.logo;
             i.coin_name = coin.name;
             i.coin_id = coin._id;
-            i.count = wallet.count;
+            i.count = parseInt(wallet.count);
+
+            if(i.count < 0) {
+                i.count = 0;
+            }
+
+            if(i.price < 0) {
+                i.price = 0;
+            }
+
             i.progress = Math.ceil(i.count * 100 / i.price);
             i.backgroundHeper = _.times(50, function (n) {
-                return n
+                return n;
             });
-
 
             i.progress = i.progress > 100 ? 100 : i.progress;
             i.gw = Math.ceil(min_width_goal + ( (max_width_goal - min_width_goal) * i.progress / 100 ));
-
-            /*i.wallet = Wallet.findOne({coin_id: i._id, user_id: Meteor.userId()});
-             i.img = '/assets/img/' + tmpList1[key] + '.png';
-             i.isMy = i.user_id == Meteor.userId();*/
         });
 
         return goal;
@@ -78,7 +82,7 @@ Template.coinList.events({
             }
         }];
 
-        if(parseInt(data.count) >= parseInt(data.price)) {
+        if (parseInt(data.count) >= parseInt(data.price)) {
             list.push({
                 text: '<div class="action-small">Запрос на списание "' + data.name + '"&#160;&#160;&#160;&#160;&#160;&#160;&#160; за ' + data.price + '</div>',
                 onClick: function (a) {

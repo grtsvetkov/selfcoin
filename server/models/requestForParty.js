@@ -27,12 +27,22 @@ RequestForPartyModel = {
             return;
         }
 
-        console.log(request);
+        let coin = Coin.findOne({_id: request.coin_id});
+
+        if (!coin) { //Нет такой монеты
+            return;
+        }
 
         CoinModel._addOwner(request.coin_id, request.to_user);
         WalletModel._enroll(request.from_user, request.coin_id, request.to_user, 0, 'Добавление участника');
         CoinModel._removeRequest(request.coin_id, request.to_user);
         ContactModel._add(request.to_user, request.name, request.name, 'Описание контакта', '');
+
+        NoticeModel.add(request.from_user, 'approveParty', {
+            owner_id: request.to_user,
+            coin: coin
+        });
+
         RequestForParty.remove({_id: request_id});
     },
     
@@ -46,6 +56,17 @@ RequestForPartyModel = {
         CoinModel._removeRequest(request.coin_id, request.to_user);
         RequestForParty.remove({_id: request_id});
         WalletModel._remove(Meteor.userId(), request.coin_id);
+
+        let coin = Coin.findOne({_id: request.coin_id});
+
+        if (!coin) { //Нет такой монеты
+            return;
+        }
+
+        NoticeModel.add(request.from_user, 'rejectParty', {
+            owner_id: request.to_user,
+            coin: coin
+        });
     }
 };
 

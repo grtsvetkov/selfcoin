@@ -1,5 +1,6 @@
 Template.profile.helpers({
     'name': () => {
+
         let user = Meteor.user();
 
         return user && user.profile.name ? user.profile.name :'Имя не указано';
@@ -24,7 +25,7 @@ Template.profile.events({
         Router.go('/signin');
     },
 
-    'click .avatar': (e) => {
+    'click .avatarBlock': (e) => {
 
         UploadFS.selectFiles(function (file) {
             let uploader = new UploadFS.Uploader({

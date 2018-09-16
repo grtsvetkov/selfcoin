@@ -12,10 +12,10 @@ Meteor.startup(function () {
      BrowserPolicy.framing.disallow();*/
 
     // Listen to incoming HTTP requests, can only be used on the server
-    /*WebApp.connectHandlers.use(function (req, res, next) {
+    WebApp.connectHandlers.use(function (req, res, next) {
         res.setHeader("Access-Control-Allow-Origin", "*");
         return next();
-    });*/
+    });
 
     UploadFS.config.defaultStorePermissions = new UploadFS.StorePermissions({
         insert(userId, doc) {
@@ -32,7 +32,7 @@ Meteor.startup(function () {
 
     //UploadFS.config.https = true;
     UploadFS.config.storesPath = 'uploads';
-    UploadFS.config.tmpDir = '/tmp/uploads';
+    UploadFS.config.tmpDir = '/tmp';
     UploadFS.config.tmpDirPermissions = '0700';
     //UploadFS.config.simulateWriteDelay = 1000 * 20; // 2 sec
 });

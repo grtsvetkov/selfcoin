@@ -599,10 +599,11 @@ div.tabs-swipeable-wrap.rim-tabs.swiper-container.swiper-container-ios {
 .goal-item .item-subinner{
     overflow: hidden;
     display: inline-block;
+    height: 30px;
 }
 
 .goal-item .item-subinner .progress{
-    height: 30px;
+    height: 100%;
     min-width:30px;
     overflow: hidden;
     display: inline-block;
@@ -610,4 +611,64 @@ div.tabs-swipeable-wrap.rim-tabs.swiper-container.swiper-container-ios {
 
 .goal-item .item-subinner .progress img, .goal-item .item-subinner .progress svg{
     display: inline-block;
+}
+
+.notice-item .item-content, .notice-item .item-subinner{
+    position: relative;
+    opacity: 0.4;
+}
+
+.notice-item .item-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.coin-list.notice-item li .item-content .item-media {
+    width: auto;
+    height: auto;
+}
+
+.notice-item .item-logo {
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.notice-item .item-logo .coinLogo {
+    width: 80px !important;
+    height: 80px !important;
+}
+
+.notice-item .item-logo .avatar{
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: block;
+}
+
+.notice-item .item-content .item-after {
+    text-align: right;
+    color: #000000 !important;
+}
+
+.notice-item .item-content .item-after span {
+    font-size: 130%;
+}
+
+.notice-item .item-content .item-after span.green {
+    color: #009846;
+}
+
+.notice-item .item-content .item-after span.red {
+    color: #e63a3a;
+}
+
+.notice-item .stamp {
+    position: absolute;
+    top: 1%;
+    left: 30%;
+    transform: rotate(-15deg);
+    width: 37%;
 }

@@ -146,5 +146,12 @@ Router.route('/create', {
 
 Router.route('/notice', {
     title: 'Уведомления',
-    name: 'notice'
+    name: 'notice',
+
+    waitOn: function () {
+        return [
+            Meteor.subscribe('notice'),
+            Meteor.subscribe('contact', 'only_my'),
+        ];
+    }
 });

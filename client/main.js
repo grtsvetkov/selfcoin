@@ -192,7 +192,6 @@ let randomString = function () {
 
 Template.registerHelper('coinLogo', function (logo, sizeString) {
 
-
     let size = sizeString.split('x');
 
     if (logo && logo.type) {
@@ -245,16 +244,17 @@ Template.registerHelper('coinLogo', function (logo, sizeString) {
     }
 });
 
-Template.registerHelper('AvatarImg', function (avatar_file_id) {
-    
-    let avatar = Avatar128.findOne({originalId: avatar_file_id});
-    
-    if(avatar) {
+Template.registerHelper('avatarImg', function (user_id) {
+    let avatar128 = Avatar128.findOne({userId: user_id}, {sort: { uploadedAt: -1 }});
 
-        if(avatar.uploading) {
+    if(avatar128) {
+        if(avatar128.uploading) {
             return '<div class="preloader" style="width: 44px; height: 44px"></div>';
         } else {
-            return '<img class="avatar" src="'+avatar.url+'?token='+avatar.token+'">';
+
+            let url = avatar128.url+'?token='+avatar128.token;
+
+            return '<img class="avatar" src="'+url+'">';
         }
     } else {
         return '<div class="preloader" style="width: 44px; height: 44px"></div>';
